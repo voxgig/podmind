@@ -1,0 +1,31 @@
+
+core: name: podcastic
+core: short: pdc
+core: token: 'podcastic-auth'
+
+
+
+shared: plugin: gateway_express: {
+  auth: token: name: $.main.conf.core.token
+}
+
+shared: plugin: gateway_auth: {
+  spec: express_cookie: {
+    active: true
+    token: name: $.main.conf.core.token
+    user: auth: true
+  }
+}
+
+
+plugin: 'gateway_express$public': $.main.conf.shared.plugin.gateway_express
+
+plugin: 'gateway_express$private': $.main.conf.shared.plugin.gateway_express
+
+plugin: 'gateway_auth$public': $.main.conf.shared.plugin.gateway_auth & {
+  spec: express_cookie: user: require: false
+}
+
+plugin: 'gateway_auth$private': $.main.conf.shared.plugin.gateway_auth & {
+  spec: express_cookie: user: require: true
+}

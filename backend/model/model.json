@@ -1,0 +1,902 @@
+{
+  "main": {
+    "msg": {
+      "aim": {
+        "monitor": {
+          "get": {
+            "info": {}
+          },
+          "calc": {
+            "sum": {
+              "$": {
+                "params": {
+                  "lhs": "Number",
+                  "rhs": "Number"
+                }
+              }
+            }
+          }
+        },
+        "auth": {
+          "get": {
+            "info": {}
+          },
+          "load": {
+            "auth": {}
+          },
+          "signin": {
+            "user": {}
+          },
+          "signout": {
+            "user": {}
+          },
+          "reset": {
+            "user": {}
+          }
+        },
+        "user": {
+          "get": {
+            "info": {}
+          },
+          "load": {
+            "user": {}
+          }
+        },
+        "entity": {
+          "get": {
+            "info": {}
+          },
+          "load": {
+            "entity": {}
+          },
+          "save": {
+            "entity": {}
+          },
+          "list": {
+            "entity": {}
+          },
+          "remove": {
+            "entity": {}
+          }
+        },
+        "ingest": {
+          "get": {
+            "info": {}
+          },
+          "register": {
+            "podcast": {}
+          },
+          "ingest": {
+            "podcast": {}
+          }
+        },
+        "widget": {
+          "get": {
+            "info": {}
+          },
+          "create": {
+            "widget": {}
+          },
+          "start": {
+            "widget": {}
+          },
+          "chat": {
+            "query": {}
+          }
+        },
+        "chat": {
+          "get": {
+            "info": {}
+          },
+          "chat": {
+            "query": {}
+          }
+        },
+        "req": {
+          "get": {
+            "info": {}
+          },
+          "on": {
+            "auth": {
+              "signin": {
+                "user": {
+                  "$": {
+                    "file": "./web_signin_user"
+                  }
+                }
+              },
+              "signout": {
+                "user": {
+                  "$": {
+                    "file": "./web_signout_user"
+                  }
+                }
+              },
+              "reset": {
+                "user": {
+                  "$": {
+                    "file": "./web_reset_user"
+                  }
+                }
+              },
+              "load": {
+                "auth": {
+                  "$": {
+                    "file": "./web_load_auth"
+                  }
+                }
+              }
+            },
+            "user": {
+              "load": {
+                "user": {
+                  "$": {
+                    "file": "./web_load_user"
+                  }
+                }
+              }
+            },
+            "entity": {
+              "load": {
+                "entity": {
+                  "$": {
+                    "file": "./web_load_entity"
+                  }
+                }
+              },
+              "save": {
+                "entity": {
+                  "$": {
+                    "file": "./web_save_entity"
+                  }
+                }
+              },
+              "list": {
+                "entity": {
+                  "$": {
+                    "file": "./web_list_entity"
+                  }
+                }
+              },
+              "remove": {
+                "entity": {
+                  "$": {
+                    "file": "./web_remove_entity"
+                  }
+                }
+              }
+            },
+            "widget": {
+              "start": {
+                "widget": {
+                  "$": {
+                    "file": "./web_start_widget"
+                  }
+                }
+              },
+              "chat": {
+                "query": {
+                  "$": {
+                    "file": "./web_chat_query"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "srv": {
+      "monitor": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 30,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": true,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "active": false
+          }
+        },
+        "in": {
+          "aim": {
+            "monitor": {}
+          }
+        },
+        "deps": {}
+      },
+      "auth": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 30,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": true,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
+              "area": "public/",
+              "suffix": ""
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "auth": {},
+            "req": {
+              "on": {
+                "auth": {}
+              }
+            }
+          }
+        },
+        "deps": {}
+      },
+      "user": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 30,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": true,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
+              "area": "private/",
+              "suffix": ""
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "user": {},
+            "req": {
+              "on": {
+                "user": {}
+              }
+            }
+          }
+        },
+        "deps": {}
+      },
+      "entity": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 30,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": true,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
+              "area": "private/",
+              "suffix": ""
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "entity": {},
+            "req": {
+              "on": {
+                "entity": {}
+              }
+            }
+          }
+        },
+        "deps": {}
+      },
+      "chat": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 30,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": true,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
+              "area": "public/",
+              "suffix": ""
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "chat": {},
+            "req": {
+              "on": {
+                "chat": {}
+              }
+            }
+          }
+        },
+        "deps": {}
+      },
+      "widget": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 30,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": true,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
+              "area": "public/",
+              "suffix": ""
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "widget": {},
+            "req": {
+              "on": {
+                "widget": {}
+              }
+            }
+          }
+        },
+        "deps": {}
+      },
+      "ingest": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 30,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": true,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
+              "active": false
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "ingest": {}
+          }
+        },
+        "deps": {}
+      }
+    },
+    "conf": {
+      "core": {
+        "name": "podcastic",
+        "short": "pdc",
+        "token": "podcastic-auth"
+      },
+      "shared": {
+        "plugin": {
+          "gateway_express": {
+            "auth": {
+              "token": {
+                "name": "podcastic-auth"
+              }
+            }
+          },
+          "gateway_auth": {
+            "spec": {
+              "express_cookie": {
+                "active": true,
+                "token": {
+                  "name": "podcastic-auth"
+                },
+                "user": {
+                  "auth": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "plugin": {
+        "gateway_express$public": {
+          "auth": {
+            "token": {
+              "name": "podcastic-auth"
+            }
+          }
+        },
+        "gateway_express$private": {
+          "auth": {
+            "token": {
+              "name": "podcastic-auth"
+            }
+          }
+        },
+        "gateway_auth$public": {
+          "spec": {
+            "express_cookie": {
+              "user": {
+                "require": false,
+                "auth": true
+              },
+              "active": true,
+              "token": {
+                "name": "podcastic-auth"
+              }
+            }
+          }
+        },
+        "gateway_auth$private": {
+          "spec": {
+            "express_cookie": {
+              "user": {
+                "require": true,
+                "auth": true
+              },
+              "active": true,
+              "token": {
+                "name": "podcastic-auth"
+              }
+            }
+          }
+        }
+      },
+      "port": {
+        "backend": 50400,
+        "frontend": 50401,
+        "repl": 50402
+      }
+    },
+    "ent": {
+      "sys": {
+        "user": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "login": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      },
+      "pdc": {
+        "podcast": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "name": {
+              "label": "Name",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "episode": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "name": {
+              "label": "Name",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "transcript": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "widget": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "chat": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      }
+    },
+    "shape": {
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "String",
+            "inputType": "text",
+            "displayType": "text",
+            "required": true,
+            "editable": true,
+            "options": {}
+          }
+        }
+      }
+    }
+  },
+  "sys": {
+    "shape": {
+      "srv": {
+        "base": {
+          "in": {},
+          "deps": {},
+          "api": {
+            "web": {
+              "path": {},
+              "cors": {}
+            }
+          },
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {}
+              }
+            }
+          }
+        },
+        "std": {
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "env": {
+            "lambda": {
+              "active": false,
+              "timeout": 30,
+              "handler": {
+                "path": {
+                  "suffix": ".handler"
+                }
+              },
+              "kind": "standard"
+            }
+          },
+          "in": {},
+          "deps": {}
+        },
+        "std_js": {
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {
+                  "prefix": "src/handler/lambda/",
+                  "suffix": ".handler"
+                }
+              },
+              "active": false,
+              "timeout": 30,
+              "kind": "standard"
+            }
+          },
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "in": {},
+          "deps": {}
+        },
+        "std_ts": {
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {
+                  "prefix": "dist/handler/lambda/",
+                  "suffix": ".handler"
+                }
+              },
+              "active": false,
+              "timeout": 30,
+              "kind": "standard"
+            }
+          },
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "in": {},
+          "deps": {}
+        }
+      },
+      "app": {},
+      "part": {
+        "img": {}
+      }
+    }
+  }
+}

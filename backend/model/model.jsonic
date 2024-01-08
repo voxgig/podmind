@@ -1,0 +1,7 @@
+
+@'@voxgig/podcastic-common/model/common.jsonic'
+
+main: msg: @"msg.jsonic"       # Seneca Messages
+main: srv: @"srv.jsonic"       # Services
+main: conf: @"conf.jsonic"     # Configuration
+

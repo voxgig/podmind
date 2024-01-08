@@ -1,0 +1,17 @@
+{
+  "sys": {
+    "model": {
+      "builders": {
+        "srv_yml": {
+          "load": "build/srv_yml"
+        },
+        "srv_handler": {
+          "load": "build/srv_handler"
+        },
+        "res_yml": {
+          "load": "build/res_yml"
+        }
+      }
+    }
+  }
+}

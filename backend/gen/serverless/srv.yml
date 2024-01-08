@@ -1,0 +1,88 @@
+monitor:
+  handler: dist/handler/lambda/monitor.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/undefinedmonitorundefined"
+        method: POST
+        cors: false
+
+
+
+
+
+auth:
+  handler: dist/handler/lambda/auth.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/undefinedauthundefined"
+        method: POST
+        cors: false
+
+
+
+
+
+user:
+  handler: dist/handler/lambda/user.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/undefineduserundefined"
+        method: POST
+        cors: false
+
+
+
+
+
+entity:
+  handler: dist/handler/lambda/entity.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/undefinedentityundefined"
+        method: POST
+        cors: false
+
+
+
+
+
+chat:
+  handler: dist/handler/lambda/chat.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/undefinedchatundefined"
+        method: POST
+        cors: false
+
+
+
+
+
+widget:
+  handler: dist/handler/lambda/widget.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/undefinedwidgetundefined"
+        method: POST
+        cors: false
+
+
+
+
+
+ingest:
+  handler: dist/handler/lambda/ingest.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/undefinedingestundefined"
+        method: POST
+        cors: false
+
+

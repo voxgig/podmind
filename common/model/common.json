@@ -66,8 +66,7 @@
               "editable": true,
               "options": {}
             }
-          },
-          "title": "Podcast"
+          }
         },
         "episode": {
           "id": {
@@ -101,8 +100,7 @@
               "editable": true,
               "options": {}
             }
-          },
-          "title": "Episode"
+          }
         },
         "transcript": {
           "id": {
@@ -136,8 +134,7 @@
               "editable": true,
               "options": {}
             }
-          },
-          "title": "Transcript"
+          }
         },
         "widget": {
           "id": {
@@ -171,8 +168,7 @@
               "editable": true,
               "options": {}
             }
-          },
-          "title": "Widget"
+          }
         },
         "chat": {
           "id": {
@@ -206,8 +202,7 @@
               "editable": true,
               "options": {}
             }
-          },
-          "title": "chat"
+          }
         }
       }
     },

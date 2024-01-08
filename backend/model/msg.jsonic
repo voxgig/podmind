@@ -1,0 +1,101 @@
+
+# Message Patterns
+
+aim: monitor: {
+  get: info: {}
+  calc: sum: {}
+}
+
+
+aim: auth: {
+  get: info: {}
+  load: auth: {}
+  signin: user: {}
+  signout: user: {}
+  reset: user: {}
+}
+
+
+aim: user: {
+  get: info: {}
+  load: user: {}
+}
+
+
+aim: entity: {
+  get: info: {}
+  load: entity: {}
+  save: entity: {}
+  list: entity: {}
+  remove: entity: {}
+}
+
+
+aim: ingest: {
+  get: info: {}
+  register: podcast: {}
+  ingest: podcast: {}
+}
+
+
+aim: widget: {
+  get: info: {}
+  create: widget: {}
+  start: widget: {}
+  chat: query: {}
+}
+
+
+aim: chat: {
+  get: info: {}
+  chat: query: {}
+}
+
+
+
+
+aim: req: {
+  get: info: {}
+  on: auth: {
+    signin: user: { '$': { file: './web_signin_user' }}
+    signout: user: { '$': { file: './web_signout_user' }}
+    reset: user: { '$': { file: './web_reset_user' }}   
+    load: auth: { '$': { file: './web_load_auth' }} 
+  }
+  on: user: {
+    load: user: { '$': { file: './web_load_user' }} 
+  }
+  on: entity: {
+    load: entity: { '$': { file: './web_load_entity' }}
+    save: entity: { '$': { file: './web_save_entity' }}
+    list: entity: { '$': { file: './web_list_entity' }}
+    remove: entity: { '$': { file: './web_remove_entity' }} 
+  }
+  on: widget: {
+    start: widget: { '$': { file: './web_start_widget' }}
+    chat: query: { '$': { file: './web_chat_query' }}
+  }
+}
+
+
+
+# Message Parameters
+
+aim: monitor: calc: sum: '$': params: {
+  lhs: Number
+  rhs: Number
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

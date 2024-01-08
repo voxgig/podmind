@@ -1,0 +1,79 @@
+
+&: $.sys.shape.srv.std_ts
+
+
+monitor: {
+  in: {
+    aim: monitor: {}
+  }
+  api: req: { active: false }
+  env: lambda: active: true
+}
+
+
+auth: {
+  in: {
+    aim: auth: {}
+    aim: req: on: auth: {}
+  }
+
+  api: req: path: { area: 'public/', suffix: ''  }
+  env: lambda: active: true
+}
+
+
+user: {
+  in: {
+    aim: user: {}
+    aim: req: on: user: {}
+  }
+
+  api: req: path: { area: 'private/', suffix: ''  }
+  env: lambda: active: true
+}
+
+
+entity: {
+  in: {
+    aim: entity: {}
+    aim: req: on: entity: {}
+  }
+
+  api: req: path: { area: 'private/', suffix: ''  }
+  env: lambda: active: true
+}
+
+
+chat: {
+  in: {
+    aim: chat: {}
+    aim: req: on: chat: {}
+  }
+
+  api: req: path: { area: 'public/', suffix: ''  }
+  env: lambda: active: true
+}
+
+
+widget: {
+  in: {
+    aim: widget: {}
+    aim: req: on: widget: {}
+  }
+
+  api: req: path: { area: 'public/', suffix: ''  }
+  env: lambda: active: true
+}
+
+
+ingest: {
+  in: {
+    aim: ingest: {}
+  }
+
+  api: req: path: { active: false  }
+  env: lambda: active: true
+}
+
+
+
