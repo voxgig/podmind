@@ -1,0 +1,6 @@
+# Copyright (c) Nodezoo Ltd. 2023
+
+@'@voxgig/model/model/.model-config/sys.jsonic'
+
+sys: model: builders: {}
+

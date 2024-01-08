@@ -1,0 +1,9 @@
+
+
+port: &: number
+
+port: {
+  backend: 50400
+  frontend: 50401
+  repl: 50402
+}

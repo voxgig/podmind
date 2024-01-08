@@ -1,0 +1,90 @@
+sys: &: $.main.shape.ent
+pdc: &: $.main.shape.ent
+
+sys: user: {
+  field: {}
+}
+
+sys: login: {
+  field: {}
+}
+
+pdc: podcast: {
+  title: 'Podcast'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    name: {
+      label: 'Name'
+    }
+    owner_id: {
+      label: Owner
+    }
+  }
+}
+
+
+pdc: episode: {
+  title: 'Episode'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    name: {
+      label: 'Name'
+    }
+    owner_id: {
+      label: Owner
+    }
+  }
+}
+
+
+pdc: transcript: {
+  title: 'Transcript'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    podcast_id: {
+      label: Podcast
+    }
+    owner_id: {
+      label: Owner
+    }
+  }
+}
+
+
+pdc: widget: {
+  title: 'Widget'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    podcast_id: {
+      label: Podcast
+    }
+    owner_id: {
+      label: Owner
+    }
+  }
+}
+
+
+pdc: chat: {
+  title: 'chat'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    podcast_id: {
+      label: Podcast
+    }
+    owner_id: {
+      label: Owner
+    }
+  }
+}
+
