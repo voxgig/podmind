@@ -25,11 +25,11 @@ module.exports = function make_web_list_entity() {
     //   // TODO: should be on client
     //   out.update = [
     //     {
-    //       section: 'pdc.ent.list.main.' + msg.canon,
+    //       section: 'pdm.ent.list.main.' + msg.canon,
     //       content: res.list,
     //     },
     //     {
-    //       section: 'pdc.ent.meta.main.' + msg.canon + '.state',
+    //       section: 'pdm.ent.meta.main.' + msg.canon + '.state',
     //       content: 'loaded',
     //     },
     //   ]

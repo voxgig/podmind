@@ -1,5 +1,5 @@
 sys: &: $.main.shape.ent
-pdc: &: $.main.shape.ent
+pdm: &: $.main.shape.ent
 
 sys: user: {
   field: {}
@@ -9,7 +9,7 @@ sys: login: {
   field: {}
 }
 
-pdc: podcast: {
+pdm: podcast: {
   # title: 'Podcast'
   field: {
     id: {
@@ -25,7 +25,7 @@ pdc: podcast: {
 }
 
 
-pdc: episode: {
+pdm: episode: {
   # title: 'Episode'
   field: {
     id: {
@@ -41,7 +41,7 @@ pdc: episode: {
 }
 
 
-pdc: transcript: {
+pdm: transcript: {
   # title: 'Transcript'
   field: {
     id: {
@@ -57,7 +57,7 @@ pdc: transcript: {
 }
 
 
-pdc: widget: {
+pdm: widget: {
   # title: 'Widget'
   field: {
     id: {
@@ -73,7 +73,7 @@ pdc: widget: {
 }
 
 
-pdc: chat: {
+pdm: chat: {
   # title: 'chat'
   field: {
     id: {

@@ -1,0 +1,23 @@
+html {
+  --pdm-cb0: 255, 255, 255;
+  --pdm-cb1: 39, 50, 73;
+  --pdm-cb2: 100, 166, 206;
+  --pdm-ct0: 50, 64, 103;
+  --pdm-ct1: 255, 255, 255;
+  --pdm-ct2: 162, 207, 250;
+  --pdm-ci0: 46, 122, 193;
+}
+
+body {
+  margin: 0px;
+}
+
+#root {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: bold !important;
+}

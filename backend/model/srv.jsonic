@@ -71,6 +71,19 @@ ingest: {
     aim: ingest: {}
   }
 
+  on: file: {
+    provider: aws
+    events: [
+      {
+        source: s3
+        bucket: 'podmind01-backend01-transcript01-${self:provider.stage}'
+        event: 's3:ObjectCreated:*'
+        rules: prefix: 'folder01'
+        msg: 'aim:ingest,handle:transcript'
+      }
+    ]
+  }
+
   api: req: path: { active: false  }
   env: lambda: active: true
 }

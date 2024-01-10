@@ -36,7 +36,7 @@ async function runSeneca(info: any) {
   const { deep } = Seneca.util
 
   const seneca = Seneca(deep(base.seneca, {
-    tag: 'pdc-local',
+    tag: 'pdm-local',
     plugin: pluginConf,
   }))
 
@@ -56,9 +56,14 @@ async function runSeneca(info: any) {
     .use('repl', { port: port.repl })
 
     .use('gateway$public', {
+      debug: {
+        log: true,
+        response: true,
+      },
       // TODO: should be shared
       allow: {
         'aim:req,on:auth': true,
+        'aim:req,on:widget,chat:query': true,
       }
     })
     .use('gateway$private', {
@@ -81,10 +86,13 @@ async function runSeneca(info: any) {
     })
 
     .use('s3-store', {
+      debug: true,
       map: {
-        '-/pdc/archive': '*'
+        '-/pdm/transcript': '*',
+        '-/pdm/rss': '*',
+        '-/pdm/audio': '*',
       },
-      folder: 'archive01',
+      folder: 'transcript-bucket01',
       local: {
         active: true,
         folder: __dirname + '/../../../data/storage',

@@ -1,0 +1,18 @@
+
+
+kind: basic
+
+part: main: {
+  view: default: 'track'
+}
+
+
+page: auth: {
+  title: 'Sign In'
+  img: logo: '/podmind.png'
+  signin: {
+    debug: false
+    view: $.app.web.frame.public.part.main.view.default
+  }
+}
+

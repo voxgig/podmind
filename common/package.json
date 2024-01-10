@@ -1,7 +1,7 @@
 {
-  "name": "@voxgig/podcastic-common",
+  "name": "@voxgig/podmind-common",
   "version": "0.0.1",
-  "description": "Podcastic Common",
+  "description": "Podmind Common",
   "main": "index.js",
   "scripts": {
     "test": "echo no-test",
@@ -12,8 +12,8 @@
     "clean": "rm -rf dist node_modules npm.lock package-lock.json",
     "reset": "npm run clean && npm install && npm run build && npm test",
     "local": "node dist/env/local/local.js --seneca.log.debug",
-    "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: pdc-common-v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
-    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: pdc-common-v$REPO_VERSION && git add -u . && git commit -m pdc-common-v$REPO_VERSION && git push && git tag pdc-common-v$REPO_VERSION && git push --tags",
+    "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: pdm-common-v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
+    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: pdm-common-v$REPO_VERSION && git add -u . && git commit -m pdm-common-v$REPO_VERSION && git push && git tag pdm-common-v$REPO_VERSION && git push --tags",
     "repo-publish": "npm run repo-check && npm run clean && npm install --registry https://registry.npmjs.org && npm run repo-publish-quick",
     "repo-publish-quick": "npm run repo-check && npm run build && npm run test && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access public"
   },

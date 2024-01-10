@@ -6,7 +6,7 @@ module.exports = function make_archive_entity() {
     const archive_id = ent.id + '~' + msg.tag
     const canon = ent.entity$
 
-    await seneca.entity('pdc/archive').save$({
+    await seneca.entity('pdm/archive').save$({
       data: ent.data$(),
       canon,
       when: Date.now(),

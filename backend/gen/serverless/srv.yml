@@ -80,6 +80,12 @@ ingest:
   handler: dist/handler/lambda/ingest.handler
   timeout: 30
   events:
+    - s3:
+        bucket: podmind01-backend01-transcript01-${self:provider.stage}
+        event: s3:ObjectCreated:*
+        existing: true
+        rules:
+          - prefix: folder01
     - http:
         path: "/api/undefinedingestundefined"
         method: POST

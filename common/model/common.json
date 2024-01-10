@@ -33,7 +33,7 @@
           }
         }
       },
-      "pdc": {
+      "pdm": {
         "podcast": {
           "id": {
             "field": "id"

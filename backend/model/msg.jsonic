@@ -33,16 +33,18 @@ aim: entity: {
 
 aim: ingest: {
   get: info: {}
-  register: podcast: {}
+  handle: transcript: {}
+  ingest: transcript: {}
+  subscribe: podcast: {}
   ingest: podcast: {}
+  handle: episode: {}
+  transcribe: episode: {}
 }
 
 
 aim: widget: {
   get: info: {}
   create: widget: {}
-  start: widget: {}
-  chat: query: {}
 }
 
 

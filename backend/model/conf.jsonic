@@ -1,8 +1,14 @@
 
-core: name: podcastic
-core: short: pdc
-core: token: 'podcastic-auth'
+core: name: podmind
+core: short: pdm
+core: token: 'podmind-auth'
 
+
+cloud: aws: region: 'us-east-1'
+cloud: aws: bedrock: model: 'ai21.j2-ultra-v1'
+
+cloud: opensearch: url: 'https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.com'
+cloud: opensearch: index: 'transcription01a'
 
 
 shared: plugin: gateway_express: {

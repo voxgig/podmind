@@ -19,7 +19,7 @@ function basic(seneca: any, options?: any) {
 
 const base = {
   seneca: {
-    timeout: 98765,
+    timeout: 5 * 60 * 1000,// 98765,
     legacy: false,
     log: {
       logger: 'flat',

@@ -1,0 +1,90 @@
+
+
+kind: basic
+
+
+nav: {
+  section: one: {
+    name: one
+  }
+    
+  section: one: item: search: {
+    # active: false
+    name: search
+    view: search
+  }
+
+  section: one: item: track: {
+    name: track
+    view: track
+  }  
+}
+
+
+
+tool: {
+  logo: {
+    name: logo
+    kind: logo
+    attr: img: '/podmind.png'
+  }
+
+  add: {
+    name: add
+    kind: add
+  }
+
+  find: {
+    name: find
+    kind: search
+  }
+
+  avatar: {
+    name: avatar
+    kind: account
+  }
+}
+
+
+part: head: {
+  tool: logo: {}
+  tool: add: active: false
+  tool: find: active: false 
+  tool: avatar: align: right
+}
+
+
+part: side: {
+}
+
+
+part: main: {
+  view: default: $.app.web.frame.public.part.main.view.default
+}
+
+
+part: foot: {
+}
+
+
+
+view: search: {
+  title: 'Search'
+  name: search
+  kind: custom
+  cmp: Search
+  spec: {}
+}
+
+
+view: track: {
+  # active: false
+  title: 'Track'
+  name: track
+  kind: led
+  spec: {
+    ent: 'pdm/track'
+  }
+}
+
+

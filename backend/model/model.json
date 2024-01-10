@@ -63,11 +63,19 @@
           "get": {
             "info": {}
           },
-          "register": {
-            "podcast": {}
+          "handle": {
+            "transcript": {},
+            "episode": {}
           },
           "ingest": {
+            "transcript": {},
             "podcast": {}
+          },
+          "subscribe": {
+            "podcast": {}
+          },
+          "transcribe": {
+            "episode": {}
           }
         },
         "widget": {
@@ -76,12 +84,6 @@
           },
           "create": {
             "widget": {}
-          },
-          "start": {
-            "widget": {}
-          },
-          "chat": {
-            "query": {}
           }
         },
         "chat": {
@@ -479,21 +481,49 @@
             "ingest": {}
           }
         },
-        "deps": {}
+        "deps": {},
+        "on": {
+          "file": {
+            "provider": "aws",
+            "events": [
+              {
+                "source": "s3",
+                "bucket": "podmind01-backend01-transcript01-${self:provider.stage}",
+                "event": "s3:ObjectCreated:*",
+                "rules": {
+                  "prefix": "folder01"
+                },
+                "msg": "aim:ingest,handle:transcript"
+              }
+            ]
+          }
+        }
       }
     },
     "conf": {
       "core": {
-        "name": "podcastic",
-        "short": "pdc",
-        "token": "podcastic-auth"
+        "name": "podmind",
+        "short": "pdm",
+        "token": "podmind-auth"
+      },
+      "cloud": {
+        "aws": {
+          "region": "us-east-1",
+          "bedrock": {
+            "model": "ai21.j2-ultra-v1"
+          }
+        },
+        "opensearch": {
+          "url": "https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.com",
+          "index": "transcription01a"
+        }
       },
       "shared": {
         "plugin": {
           "gateway_express": {
             "auth": {
               "token": {
-                "name": "podcastic-auth"
+                "name": "podmind-auth"
               }
             }
           },
@@ -502,7 +532,7 @@
               "express_cookie": {
                 "active": true,
                 "token": {
-                  "name": "podcastic-auth"
+                  "name": "podmind-auth"
                 },
                 "user": {
                   "auth": true
@@ -516,14 +546,14 @@
         "gateway_express$public": {
           "auth": {
             "token": {
-              "name": "podcastic-auth"
+              "name": "podmind-auth"
             }
           }
         },
         "gateway_express$private": {
           "auth": {
             "token": {
-              "name": "podcastic-auth"
+              "name": "podmind-auth"
             }
           }
         },
@@ -536,7 +566,7 @@
               },
               "active": true,
               "token": {
-                "name": "podcastic-auth"
+                "name": "podmind-auth"
               }
             }
           }
@@ -550,7 +580,7 @@
               },
               "active": true,
               "token": {
-                "name": "podcastic-auth"
+                "name": "podmind-auth"
               }
             }
           }
@@ -595,7 +625,7 @@
           }
         }
       },
-      "pdc": {
+      "pdm": {
         "podcast": {
           "id": {
             "field": "id"

@@ -1,0 +1,510 @@
+{
+  "app": {
+    "web": {
+      "frame": {
+        "public": {
+          "kind": "basic",
+          "part": {
+            "main": {
+              "view": {
+                "default": "track"
+              }
+            }
+          },
+          "page": {
+            "auth": {
+              "title": "Sign In",
+              "img": {
+                "logo": "/podmind.png"
+              },
+              "signin": {
+                "debug": false,
+                "view": "track"
+              }
+            }
+          },
+          "name": "public",
+          "nav": {
+            "section": {}
+          },
+          "view": {}
+        },
+        "private": {
+          "kind": "basic",
+          "nav": {
+            "section": {
+              "one": {
+                "name": "one",
+                "item": {
+                  "search": {
+                    "name": "search",
+                    "view": "search",
+                    "active": true
+                  },
+                  "track": {
+                    "name": "track",
+                    "view": "track",
+                    "active": true
+                  }
+                },
+                "active": true
+              }
+            }
+          },
+          "tool": {
+            "logo": {
+              "name": "logo",
+              "kind": "logo",
+              "attr": {
+                "img": "/podmind.png"
+              }
+            },
+            "add": {
+              "name": "add",
+              "kind": "add"
+            },
+            "find": {
+              "name": "find",
+              "kind": "search"
+            },
+            "avatar": {
+              "name": "avatar",
+              "kind": "account"
+            }
+          },
+          "part": {
+            "head": {
+              "tool": {
+                "logo": {
+                  "active": true,
+                  "align": "left"
+                },
+                "add": {
+                  "active": false,
+                  "align": "left"
+                },
+                "find": {
+                  "active": false,
+                  "align": "left"
+                },
+                "avatar": {
+                  "align": "right",
+                  "active": true
+                }
+              },
+              "name": "head",
+              "active": true
+            },
+            "side": {
+              "name": "side",
+              "active": true
+            },
+            "main": {
+              "view": {
+                "default": "track"
+              },
+              "name": "main",
+              "active": true
+            },
+            "foot": {
+              "name": "foot",
+              "active": true
+            }
+          },
+          "view": {
+            "search": {
+              "title": "Search",
+              "name": "search",
+              "kind": "custom",
+              "cmp": "Search",
+              "spec": {},
+              "active": true
+            },
+            "track": {
+              "title": "Track",
+              "name": "track",
+              "kind": "led",
+              "spec": {
+                "ent": "pdm/track"
+              },
+              "active": true
+            }
+          },
+          "name": "private"
+        }
+      }
+    }
+  },
+  "sys": {
+    "shape": {
+      "app": {
+        "web": {
+          "part": {
+            "head": {
+              "name": "head",
+              "tool": {},
+              "active": true
+            },
+            "side": {
+              "name": "side",
+              "active": true
+            },
+            "main": {
+              "name": "main",
+              "active": true
+            },
+            "foot": {
+              "name": "foot",
+              "active": true
+            }
+          },
+          "nav": {
+            "section": {}
+          },
+          "tool": {},
+          "view": {}
+        }
+      },
+      "srv": {
+        "base": {
+          "in": {},
+          "deps": {},
+          "api": {
+            "web": {
+              "path": {},
+              "cors": {}
+            }
+          },
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {}
+              }
+            }
+          }
+        },
+        "std": {
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "env": {
+            "lambda": {
+              "active": false,
+              "timeout": 30,
+              "handler": {
+                "path": {
+                  "suffix": ".handler"
+                }
+              },
+              "kind": "standard"
+            }
+          },
+          "in": {},
+          "deps": {}
+        },
+        "std_js": {
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {
+                  "prefix": "src/handler/lambda/",
+                  "suffix": ".handler"
+                }
+              },
+              "active": false,
+              "timeout": 30,
+              "kind": "standard"
+            }
+          },
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "in": {},
+          "deps": {}
+        },
+        "std_ts": {
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {
+                  "prefix": "dist/handler/lambda/",
+                  "suffix": ".handler"
+                }
+              },
+              "active": false,
+              "timeout": 30,
+              "kind": "standard"
+            }
+          },
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "in": {},
+          "deps": {}
+        }
+      },
+      "part": {
+        "img": {}
+      }
+    }
+  },
+  "main": {
+    "ent": {
+      "sys": {
+        "user": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "login": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      },
+      "pdm": {
+        "podcast": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "name": {
+              "label": "Name",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "episode": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "name": {
+              "label": "Name",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "transcript": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "widget": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "chat": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      }
+    },
+    "conf": {
+      "port": {
+        "backend": 50400,
+        "frontend": 50401,
+        "repl": 50402
+      }
+    },
+    "shape": {
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "String",
+            "inputType": "text",
+            "displayType": "text",
+            "required": true,
+            "editable": true,
+            "options": {}
+          }
+        }
+      }
+    }
+  }
+}

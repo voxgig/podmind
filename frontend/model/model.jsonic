@@ -1,0 +1,92 @@
+
+
+# sys: @'frontend.jsonic'
+
+@'@voxgig/podmind-common/model/common.jsonic'
+
+
+app: web: frame: public: @"public.jsonic"
+
+app: web: frame: private: @"private.jsonic"
+
+
+# TODO: move to @voxgig/model
+
+app: web: frame: &: {
+  name: .$KEY
+  nav: $.sys.shape.app.web.nav
+  view: $.sys.shape.app.web.view
+}
+
+  
+
+
+app: web: frame: private: part: {
+  head: $.sys.shape.app.web.part.head
+  side: $.sys.shape.app.web.part.side
+  main: $.sys.shape.app.web.part.main
+  foot: $.sys.shape.app.web.part.foot
+}
+
+
+sys: shape: app: web: part: &: {
+  active: *true | boolean  
+}
+
+
+sys: shape: app: web: part: head: {
+  name: .$KEY
+  tool: &: {
+    active: *true | boolean
+    align: *left | string
+  }
+}
+
+
+
+sys: shape: app: web: part: side: {
+  name: .$KEY
+}
+
+
+sys: shape: app: web: part: main: {
+  name: .$KEY
+}
+
+
+sys: shape: app: web: part: foot: {
+  name: .$KEY
+}
+
+
+sys: shape: app: web: nav: {
+  section: &: {
+    active: *true | boolean
+    name: string
+    item: &: {
+      active: *true | boolean
+      name: string
+      view: string
+    }
+  }
+}
+
+
+sys: shape: app: web: tool: & : {
+  active: *true | boolean
+  name: string
+  kind: string
+  attr: {}
+  sx: {}
+  style: {}
+}
+
+
+sys: shape: app: web: view: &: {
+  active: *true | boolean  
+  title: string
+  kind: string
+  cmp: string
+  spec: {}
+}
+
