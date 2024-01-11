@@ -53,6 +53,7 @@ module.exports = function make_transcribe_episode() {
         await seneca.entity('pdm/transcript').save$({
           id: 'folder01/transcript01/' + episodeEnt.podcast_id + '/' +
             episodeEnt.id + '-dg01',
+          deepgram: res.result
         })
 
       }
