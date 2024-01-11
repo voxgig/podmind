@@ -19,6 +19,8 @@ const getIslands = () => {
       .replace(/.island.(tsx|ts)/g, '')
 
     let elementName = `${name}-island`
+    // let elementName = `${name}`
+
     /**
      * If you want to name your web component something different than the filename of the island (not
      * recommended). Please override them here.
@@ -27,12 +29,16 @@ const getIslands = () => {
     //   elementName = 'something-else'
     // }
 
-    return {
+    let out = {
       path,
       name,
       elementName,
       layer: name,
     }
+
+    console.log('getIslands', out)
+    
+    return out
   })
 }
 
@@ -100,7 +106,7 @@ const buildCssLayersFromEntryPoints = () => {
                 var target = document.querySelector(e.detail.target).shadowRoot
 
                 if (!target) {
-                  /*
+/*
                   console.error(
                     `Could not find a web component query selector target for "${styleTarget}". No styles will be appended. Did you name the web component at createIslandWebComponent something different than your file name? If so, you will need to override it at getIslands inside of the webpack config. This is what is expected
                     
@@ -110,6 +116,7 @@ createIslandWebComponent('${styleTarget}', YourComponent).render({
 })`,
 )
 */
+                  
                   return
                 }
 
@@ -260,12 +267,14 @@ module.exports = ({ dev, prod }) => {
         filename: isDev ? 'index.html' : '../index.html',
       }),
       new VanillaExtractPlugin(),
+
       /**
        * Define environmental variables here that you need for the islands to function.
        */
       new DefinePlugin({
         ISLAND_API_URL: JSON.stringify(process.env.ISLAND_API_URL),
       }),
+      
       ...(isProd ? [new FileSizePlugin()] : []),
     ],
     stats: 'errors-warnings',

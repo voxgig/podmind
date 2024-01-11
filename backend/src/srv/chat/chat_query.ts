@@ -28,7 +28,12 @@ module.exports = function make_chat_query() {
     const answer = await askQuestion(context, query, {
       region,
       model,
-      modelSettings: { maxTokens: 1525, temperature: 0.7, region },
+      modelSettings: {
+        maxTokens: 1525,
+        // temperature: 0.7,
+        temperature: 0.9,
+        region
+      },
     })
 
 
