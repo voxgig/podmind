@@ -5,9 +5,10 @@ module.exports = function make_handle_transcript() {
     let out: any = { ok: false, why: '', path: '', paths: [] }
 
     let path = msg.path
+    let episode_id = msg.episode_id
 
     // AWS S3 event
-    if (null == path) {
+    if (null == path && null == episode_id) {
       // const bucket = event.Records[0].s3.bucket.name
 
       console.log('Records', msg.event?.Records)
@@ -36,22 +37,25 @@ module.exports = function make_handle_transcript() {
       return out
     }
     else {
-      console.log('SINGLE PATH', path)
+      console.log('SINGLE TRANSCRIPT', path, episode_id)
 
-      // folder01/transcript01/PODCASTID-EPISODEID.txt
-      // let m = path.match(/folder01\/transcript01\/(([a-f0-9]{32})-([a-f0-9]{32}).txt)$/)
-      // let m = path.match(/folder01\/transcript01\/(([^-]+)-([^-]+).txt)$/)
-      let m = path.match(/folder01\/transcript01\/([^-]+)\/([^-]+)/)
 
-      if (null == m) {
-        out.why = 'filename-mismatch'
-        return out
+      if (null == episode_id) {
+        let m = path.match(/folder01\/transcript01\/([^-]+)\/([^-]+)/)
+
+        if (null == m) {
+          out.why = 'filename-mismatch'
+          return out
+        }
+        episode_id = m[2]
       }
 
-      // let filepath = m[0]
-      // let filename = m[1]
-      let podcast_id = m[1]
-      let episode_id = m[2]
+      let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
+      let podcast_id = episodeEnt.podcast_id
+
+      if (null == path) {
+        path = `folder01\/transcript01/${podcast_id}/${episode_id}-dg01.json`
+      }
 
       console.log('TRANSCRIPT', path, podcast_id, episode_id)
 

@@ -30,7 +30,8 @@ module.exports = function make_ingest_podcast() {
       rss
     })
 
-    let episodes = rss.items.slice(0, 1)
+    let episodes = rss.items // .slice(0, 1)
+    console.log('EPISODES', podcastEnt.id, feed, episodes.length)
 
     out.episodes = episodes.length
 
@@ -40,8 +41,9 @@ module.exports = function make_ingest_podcast() {
         guid: episode.guid
       })
 
-      // console.log('EP', epI, episode, episodeEnt)
+      console.log('EP', epI, episode, episodeEnt)
 
+      // TODO: update existing
       if (null == episodeEnt) {
         episodeEnt = await seneca.entity('pdm/episode').save$({
           podcast_id: podcastEnt.id,

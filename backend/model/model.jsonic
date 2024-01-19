@@ -1,7 +1,10 @@
 
 @'@voxgig/podmind-common/model/common.jsonic'
 
+voxgig: build: version: '2'
+
 main: msg: @"msg.jsonic"       # Seneca Messages
 main: srv: @"srv.jsonic"       # Services
 main: conf: @"conf.jsonic"     # Configuration
+main: ent: @"ent.jsonic"       # Entities
 

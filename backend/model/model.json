@@ -1,4 +1,9 @@
 {
+  "voxgig": {
+    "build": {
+      "version": "2"
+    }
+  },
   "main": {
     "msg": {
       "aim": {
@@ -76,6 +81,28 @@
           },
           "transcribe": {
             "episode": {}
+          },
+          "embed": {
+            "chunk": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true
+                  }
+                }
+              }
+            }
+          },
+          "store": {
+            "embed": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true
+                  }
+                }
+              }
+            }
           }
         },
         "widget": {
@@ -482,6 +509,18 @@
           }
         },
         "deps": {},
+        "out": {
+          "aim": {
+            "ingest": {
+              "embed": {
+                "chunk": {}
+              },
+              "store": {
+                "embed": {}
+              }
+            }
+          }
+        },
         "on": {
           "file": {
             "provider": "aws",
@@ -515,7 +554,7 @@
         },
         "opensearch": {
           "url": "https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.com",
-          "index": "transcription01a"
+          "index": "transcription01b"
         }
       },
       "shared": {
@@ -607,6 +646,12 @@
               "editable": true,
               "options": {}
             }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
           }
         },
         "login": {
@@ -622,6 +667,12 @@
               "editable": true,
               "options": {}
             }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
           }
         }
       },
@@ -658,6 +709,12 @@
               "editable": true,
               "options": {}
             }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
           }
         },
         "episode": {
@@ -692,6 +749,12 @@
               "editable": true,
               "options": {}
             }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
           }
         },
         "transcript": {
@@ -726,6 +789,12 @@
               "editable": true,
               "options": {}
             }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
           }
         },
         "widget": {
@@ -760,6 +829,12 @@
               "editable": true,
               "options": {}
             }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
           }
         },
         "chat": {
@@ -794,6 +869,12 @@
               "editable": true,
               "options": {}
             }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
           }
         }
       }

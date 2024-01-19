@@ -6,6 +6,7 @@ function basic(seneca: any, options?: any) {
 
   seneca
     .use('promisify', deep(base.options.promisify, options.promisify))
+    .use('telemetry', deep(base.options.telemetry, options.telemetry))
     .use('env', deep(base.options.env, options.env))
     .use('entity', deep(base.options.entity, options.entity))
     .use('capture', deep(base.options.capture, options.capture))
@@ -28,6 +29,9 @@ const base = {
   },
   options: {
     promisify: {},
+    telemetry: {
+      active: true,
+    },
     env: {
       file: [__dirname + '/../local/local-env.js;?'],
       var: {

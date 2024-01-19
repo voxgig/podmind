@@ -6,6 +6,21 @@ exports.handler = async (
 ) => {
   
   let seneca = await getSeneca('ingest')
+  
+  seneca.listen({type:'sqs',pin:'aim:ingest,embed:chunk'})
+
+  seneca.listen({type:'sqs',pin:'aim:ingest,store:embed'})
+
+  seneca.client({type:'sqs',pin:'aim:ingest,embed:chunk'})
+
+  seneca.client({type:'sqs',pin:'aim:ingest,store:embed'})
+
+  const makeGatewayHandler = seneca.export('s3-store/makeGatewayHandler')
+
+  seneca
+    .act('sys:gateway,kind:lambda,add:hook,hook:handler', {
+       handler: makeGatewayHandler('aim:ingest,handle:transcript') })
+
   let handler = seneca.export('gateway-lambda/handler')
   let res = await handler(event, context)
   return res

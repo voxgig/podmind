@@ -6,6 +6,7 @@ exports.handler = async (
 ) => {
   
   let seneca = await getSeneca('chat')
+  
   let handler = seneca.export('gateway-lambda/handler')
   let res = await handler(event, context)
   return res

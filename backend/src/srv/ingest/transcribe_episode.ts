@@ -33,8 +33,18 @@ module.exports = function make_transcribe_episode() {
       const res = await deepgram.listen.prerecorded.transcribeFile(
         audio.content,
         {
-          smart_format: true,
-          model: "nova",
+          diarize: true,
+          paragraphs: true,
+          punctuate: true,
+          model: 'nova-2-phonecall',
+          language: 'en',
+          version: 'latest',
+          keywords: {
+            devrel: 2,
+            developer: 2,
+            relations: 2,
+            voxgig: 2,
+          }
         }
       )
 
@@ -53,7 +63,10 @@ module.exports = function make_transcribe_episode() {
         await seneca.entity('pdm/transcript').save$({
           id: 'folder01/transcript01/' + episodeEnt.podcast_id + '/' +
             episodeEnt.id + '-dg01',
-          deepgram: res.result
+          deepgram: res.result,
+          audioLoadedDur: out.audioLoadedDur,
+          deepgramDur: out.deepgramDur,
+          duration: out.duration,
         })
 
       }

@@ -1,19 +1,9 @@
-import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime'
-import { AwsSigv4Signer } from '@opensearch-project/opensearch/aws'
-import { Client } from '@opensearch-project/opensearch'
-import { defaultProvider } from '@aws-sdk/credential-provider-node'
-
-
-import { chunk as Chunk } from 'llm-chunk'
 
 
 module.exports = function make_ingest_transcript() {
   return async function ingest_transcript(this: any, msg: any) {
     const seneca = this
 
-    const region = seneca.context.model.main.conf.cloud.aws.region
-    const node = seneca.context.model.main.conf.cloud.opensearch.url
-    const index = seneca.context.model.main.conf.cloud.opensearch.index
 
     let out: any = { ok: false, why: '' }
 
@@ -32,103 +22,97 @@ module.exports = function make_ingest_transcript() {
       return out
     }
 
-    // console.log(transcriptEnt)
+    const transcriptResults =
+      transcriptEnt.deepgram.results
 
-    // const transcriptText = transcriptEnt.content.toString()
-    const transcriptText =
-      transcriptEnt.deepgram.result.results.channels[0].alternatives[0].transcript
-    // console.log('transcript', transcriptText)
+    const alt0 = transcriptResults
+      .channels[0]
+      .alternatives[0]
+
+    const transcriptText = alt0.transcript
+    const paragraphs = alt0.paragraphs.paragraphs
 
     out.transcript = transcriptText.length
+    out.paragraphs = paragraphs.length
 
-    /*
-    const chunks = Chunk(transcriptText, {
-      minLength: 111,
-      maxLength: 1111,
-      // splitter: 'paragraph',
-      splitter: 'sentence',
-      overlap: 22,
-      delimiters: '\n'
-    })
-    */
+    let chunks: string[] = []
 
-    let chunks = []
-    for (let pI = 0; pI < transcriptText.length; pI += 1000) {
-      chunks.push(transcriptText.substring(pI, pI + 1050))
+    // TUNING
+    // assume para 0 is standard intro
+
+    // let speaker: any[] = []
+    for (let pI = 1; pI < paragraphs.length; pI++) {
+      let para: any = paragraphs[pI]
+
+      let qparts = []
+      while (para && 0 === para.speaker) {
+        qparts.push(para.sentences.map((s: any) => s.text).join(''))
+        para = paragraphs[++pI]
+      }
+      let question = qparts.join('')
+
+      // console.log('Q: ' + question)
+
+      while (para && 1 === para.speaker) {
+        let answer = para.sentences.map((s: any) => s.text).join('')
+        let chunk = question + ' :: ' + answer
+        chunks.push(chunk)
+
+        para = paragraphs[++pI]
+      }
+
+      pI--
     }
 
     chunks = chunks.filter((c: string) => 0 < c.length)
 
-    const client = getOpenSearchClient(region, node)
+    console.log('CHUNKS', chunks.length)
 
-    for (let chunk of chunks) {
-      let startTime = Date.now()
-      let embedding = await getEmbeddings(chunk, { region })
-      let embedDur = Date.now() - startTime
-      console.log('EMBED', embedDur, chunk.length, embedding.length)
-      let storeRes = await store(client, index, chunk, embedding)
-      let storeDur = Date.now() - (startTime + embedDur)
-      console.log('STORE', storeDur, storeRes.statusCode)
+    let chunksOK = 0
+    for (let chunkI = 0; chunkI < chunks.length; chunkI++) {
+      let chunk = chunks[chunkI]
+
+      try {
+
+        let embedRes = await seneca.post('aim:ingest,embed:chunk', {
+          chunk,
+          podcast_id,
+          episode_id,
+        })
+
+        if (!embedRes.ok) {
+          console.log('ingest_transcript embed fail', embedRes)
+          continue
+        }
+
+        chunksOK++
+        let embedding = embedRes.embedding
+
+        let storeRes = await seneca.post('aim:ingest,store:embed', {
+          chunk,
+          embedding,
+          podcast_id,
+          episode_id,
+        })
+
+        if (!storeRes.ok) {
+          console.log('ingest_transcript store fail', storeRes)
+          continue
+        }
+      }
+      catch (e: any) {
+        console.log('ingest_transcript', podcast_id, episode_id, e)
+      }
     }
 
 
-    out.ok = true
+    out.ok = chunksOK === chunks.length
     out.chunks = chunks.length
+    out.chunksOK = chunksOK
+    out.podcast_id = podcast_id
+    out.episode_id = episode_id
+
 
     return out
   }
-}
-
-
-async function store(client: Client, index: string, input: string, embeddings: number[][]) {
-  if (!input || !embeddings) throw new Error('Missing required input in store()!')
-
-  return await client.index(createIndexObject(index, input, embeddings))
-}
-
-
-function getOpenSearchClient(region: string, node: string) {
-  return new Client({
-    ...AwsSigv4Signer({
-      region,
-      service: 'aoss',
-      getCredentials: () => {
-        const credentialsProvider = defaultProvider()
-        return credentialsProvider()
-      }
-    }),
-    node
-  })
-}
-
-
-export function createIndexObject(index: string, text: string, embeddings: number[][]) {
-  return {
-    index,
-    body: {
-      text,
-      document_vector: embeddings
-    }
-  }
-}
-
-
-async function getEmbeddings(input: string, config: any): Promise<number[][]> {
-  const { region } = config
-
-  const client = new BedrockRuntimeClient({ region })
-
-  const response = await client.send(
-    new InvokeModelCommand({
-      modelId: 'amazon.titan-embed-text-v1',
-      body: JSON.stringify({
-        inputText: input
-      }),
-      accept: 'application/json',
-      contentType: 'application/json'
-    })
-  )
-
-  const result = JSON.parse(Buffer.from(response.body).toString())
-  return result.embedding
 }

@@ -64,6 +64,9 @@ module.exports = function make_handle_episode() {
           out.ok = true
         }
       }
+      else {
+        out.why = 'not-found'
+      }
     }
 
     return out

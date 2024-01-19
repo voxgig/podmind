@@ -39,6 +39,8 @@ aim: ingest: {
   ingest: podcast: {}
   handle: episode: {}
   transcribe: episode: {}
+  embed: chunk: {}
+  store: embed: {}
 }
 
 
@@ -77,6 +79,14 @@ aim: req: {
     start: widget: { '$': { file: './web_start_widget' }}
     chat: query: { '$': { file: './web_chat_query' }}
   }
+}
+
+
+# Message Transports
+
+aim: ingest: {
+  embed: chunk: '$': transport: queue: active: true
+  store: embed: '$': transport: queue: active: true
 }
 
 

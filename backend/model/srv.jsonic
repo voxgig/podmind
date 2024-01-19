@@ -70,6 +70,12 @@ ingest: {
   in: {
     aim: ingest: {}
   }
+  out: {
+    aim: ingest: {
+      embed: chunk: {}
+      store: embed: {}
+    }
+  }
 
   on: file: {
     provider: aws

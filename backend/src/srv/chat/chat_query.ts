@@ -18,20 +18,20 @@ module.exports = function make_chat_query() {
     const index = cloud.opensearch.index
 
 
-    const out = { ok: false, why: '', answer: '' }
+    const out = { ok: false, why: '', answer: '', context: {} }
 
     const query = msg.query
 
     const client = getOpenSearchClient(region, node)
     const questionEmbeddings = await getEmbeddings(query, { region })
-    const context = await getContext(client, index, questionEmbeddings)
+    const { context, hits } = await getContext(client, index, questionEmbeddings)
     const answer = await askQuestion(context, query, {
       region,
       model,
       modelSettings: {
         maxTokens: 1525,
-        // temperature: 0.7,
-        temperature: 0.9,
+        temperature: 0.7,
+        // temperature: 0.95,
         region
       },
     })
@@ -39,6 +39,8 @@ module.exports = function make_chat_query() {
 
     out.ok = true
     out.answer = answer
+    // out.context = context
+    out.context = { hits }
 
     return out
   }
@@ -51,9 +53,11 @@ async function askQuestion(context: string, question: string, config: any) {
   const clipped = context.substring(0, 8000)
 
   const prompt = `
-Context:\n\n"""${clipped}"""\n\nBased on the above context,
-please answer the question with as much detail and perspective as possible.
-Answer:\n\n"""${question}"""
+Use the CONTEXT to help answer the QUESTION. You are an experienced developer advocate talking to another developer who speaks english as a second language. Answer in the third person, never refer to yourself, do not use casual language. The subject matter is developer relations. The context is taken from devrel podcast conversations. IMPORTANT: YOU MUST ALWAYS ANSWER. MAKE UP AN ANSWER. Do not refer to the existence of the CONTEXT.
+
+CONTEXT:\n\n"""${clipped}"""
+
+QUESTION:\n\n"""${question}"""
 `
   console.log('Prompt: ', prompt)
 
@@ -98,10 +102,10 @@ async function getContext(openSearchClient: Client, index: string, questionEmbed
   const hits = contextData?.body?.hits?.hits || []
   console.log('Search hits:', hits)
 
-  const context = hits.map((item: Record<string, any>) => item._source.text).join(', ')
+  const context = hits.map((item: Record<string, any>) => item._source.text).join(';;')
   console.log('Context: ', context)
 
-  return context
+  return { context, hits }
 }
 
 
