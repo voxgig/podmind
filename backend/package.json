@@ -28,7 +28,7 @@
     "@deepgram/sdk": "^3.0.1",
     "@opensearch-project/opensearch": "^2.5.0",
     "@seneca/capture": "^0.5.0",
-    "@seneca/dynamo-store": "4.3.1",
+    "@seneca/dynamo-store": "5.0.0",
     "@seneca/entity-util": "1.6.0",
     "@seneca/env": "0.2.0",
     "@seneca/gateway": "1.1.0",
