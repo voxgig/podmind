@@ -21,6 +21,6 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@voxgig/model": "^1.1.0"
+    "@voxgig/model": "^1.2.0"
   }
 }
