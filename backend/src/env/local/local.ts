@@ -4,6 +4,7 @@ const CookieParser = require('cookie-parser')
 
 const Seneca = require('seneca')
 const { Local, /* Concern */ } = require('@voxgig/system')
+import { dive, get, pinify } from '@voxgig/model'
 
 import { basic, base } from '../shared/basic'
 
@@ -103,15 +104,24 @@ async function runSeneca(info: any) {
     // NOTE: load after store plugins
     .use('entity-util', base.options.entity_util)
 
-    // .use(Concern, {
-    //   folder: __dirname + '/../../../dist/concern'
-    // })
+    .use('localque-transport')
 
+  setupLocal(seneca)
+
+  // .use(Concern, {
+  //   folder: __dirname + '/../../../dist/concern'
+  // })
+
+
+
+
+  seneca
     .use(Local, {
       srv: {
         folder: __dirname + '/../../../dist/srv'
       },
       options: {
+        ingest: { debug: true }
       }
     })
 
@@ -132,4 +142,39 @@ async function runExpress(info: any, seneca: any) {
     .listen(port.backend)
 
   return app
+}
+
+
+// TODO: @voxgig/system local should handle this
+function setupLocal(seneca: any) {
+  const model = seneca.context.model
+
+  Object.entries(model.main.srv).map((entry: any[]) => {
+    const name = entry[0]
+
+    dive(model.main.msg.aim[name], 128).map((entry: any) => {
+      let path = ['aim', name, ...entry[0]]
+      let msgMeta = entry[1]
+      let pin = pinify(path)
+      if (msgMeta.transport?.queue?.active) {
+        seneca.listen({ type: 'localque', pin })
+        console.log('LISTEN localque', pin)
+      }
+    })
+
+    dive(model.main.srv[name].out, 128).map((entry: any) => {
+      let path = entry[0]
+      let msgMetaMaybe = get(model.main.msg, path)
+      if (msgMetaMaybe?.$) {
+        let msgMeta = msgMetaMaybe.$
+        let pin = pinify(path)
+
+        if (msgMeta.transport?.queue?.active) {
+          seneca.client({ type: 'localque', pin })
+          console.log('CLIENT localque', pin)
+        }
+      }
+    })
+
+  })
 }

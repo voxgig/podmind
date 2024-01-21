@@ -1,16 +1,33 @@
 import RssParser from 'rss-parser'
 
 
-const parser = new RssParser()
+const Parser = new RssParser()
 
+type RSS = {
+  items: {
+    guid: string
+    title: string
+    link: string
+    pubDate: string
+    content: string
+    enclosure: { url: string }
+  }[]
+}
 
 module.exports = function make_ingest_podcast() {
-  return async function ingest_podcast(this: any, msg: any) {
+  return async function ingest_podcast(this: any, msg: any, meta: any) {
     const seneca = this
+    const debug = seneca.shared.debug(meta.action)
 
     let out: any = { ok: false, why: '' }
 
     let podcast_id = msg.podcast_id
+    let mark = msg.mark || seneca.util.Nid()
+    let doUpdate = true === msg.doUpdate // save episode details to db
+    let doIngest = true === msg.doIngest // trigger download and embedding
+    let doAudio = false !== msg.doAudio // download by default
+    let episodeStart = msg.episodeStart || 0
+    let episodeEnd = msg.episodeEnd || -1 // -1 => all
 
     let podcastEnt = await seneca.entity('pdm/podcast').load$(podcast_id)
 
@@ -21,43 +38,57 @@ module.exports = function make_ingest_podcast() {
     }
 
     let feed = podcastEnt.feed
-    let rss = await parser.parseURL(feed)
+    let rssRes = await getRSS(debug, feed, podcast_id, mark)
+
+    if (!rssRes.ok) {
+      out.why = 'rss'
+      out.details = { podcast_id, errmsg: rssRes.err.message }
+      return out
+    }
+
+    let rss = rssRes.rss as RSS
     let feedname = encodeURIComponent(feed.toLowerCase().replace(/^https?:\/\//, ''))
 
     await seneca.entity('pdm/rss').save$({
       id: 'folder01/rss01/' + feedname + '/' +
-        podcastEnt.id + '~' + humanify(Date.now()) + '.rss',
+        podcastEnt.id + '~' + seneca.shared.humanify(Date.now()) + '.rss',
       rss
     })
 
-    let episodes = rss.items // .slice(0, 1)
-    console.log('EPISODES', podcastEnt.id, feed, episodes.length)
+    let episodes = rss.items
+    debug && debug('EPISODES', mark, podcastEnt.id, feed, episodes.length)
 
     out.episodes = episodes.length
+    episodeEnd = 0 <= episodeEnd ? episodeEnd : episodes.length
 
-    for (let epI = 0; epI < episodes.length; epI++) {
-      let episode = episodes[epI]
-      let episodeEnt = await seneca.entity('pdm/episode').load$({
-        guid: episode.guid
-      })
+    if (doUpdate) {
+      for (let epI = episodeStart; epI < episodeEnd; epI++) {
+        let episode = episodes[epI]
+        let episodeEnt = await seneca.entity('pdm/episode').load$({
+          guid: episode.guid
+        })
 
-      console.log('EP', epI, episode, episodeEnt)
+        if (null == episodeEnt) {
+          episodeEnt = seneca.entity('pdm/episode')
+        }
 
-      // TODO: update existing
-      if (null == episodeEnt) {
-        episodeEnt = await seneca.entity('pdm/episode').save$({
+        await episodeEnt.save$({
           podcast_id: podcastEnt.id,
           guid: episode.guid,
-          title: episode.guid,
+          title: episode.title,
           link: episode.link,
           pubDate: episode.pubDate,
           content: episode.content,
           url: episode.enclosure?.url
         })
-      }
 
-      // console.log('EPISODE', episodeEnt)
-      // seneca.act('aim:ingest,handle:episode', { episode_id: episodeEnt.id })
+        if (doIngest) {
+          seneca.act('aim:ingest,handle:episode',
+            { episode_id: episodeEnt.id, podcast_id, doAudio, mark })
+        }
+
+        debug && debug('EPISODE-SAVE', mark, podcastEnt.id, epI, doIngest, episode.guid)
+      }
     }
 
     out.ok = true
@@ -67,8 +98,14 @@ module.exports = function make_ingest_podcast() {
 }
 
 
-
-function humanify(when: number) {
-  const d = new Date(when)
-  return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''))
+async function getRSS(debug: any, feed: string, podcast_id: string, mark: string) {
+  try {
+    return { ok: true, rss: await Parser.parseURL(feed) }
+  }
+  catch (err: any) {
+    debug && debug('getRSS', mark, podcast_id, feed, err)
+    return { ok: false, err }
+  }
 }
+
+
