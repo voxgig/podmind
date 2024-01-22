@@ -2,27 +2,38 @@ import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedroc
 
 
 
-
-
 module.exports = function make_embed_chunk() {
-  return async function embed_chunk(this: any, msg: any) {
+  return async function embed_chunk(this: any, msg: any, meta: any) {
     const seneca = this
+    const debug = seneca.shared.debug(meta.action)
 
     const region = seneca.context.model.main.conf.cloud.aws.region
-    // const node = seneca.context.model.main.conf.cloud.opensearch.url
-    // const index = seneca.context.model.main.conf.cloud.opensearch.index
 
     let out: any = { ok: false, why: '' }
 
     let chunk = msg.chunk
-    let podcast_id = msg.podcast_id
-    let episode_id = msg.episode_id
+    let podcast_id = out.podcast_id = msg.podcast_id
+    let episode_id = out.episode_id = msg.episode_id
+    let doStore = out.doStore = false !== msg.doStore
+    let mark = msg.mark || seneca.util.Nid()
 
+    debug && debug('EMBED', mark, podcast_id, episode_id, doStore)
 
     let embedding = await getEmbeddings(chunk, { region })
 
+    if (doStore) {
+      seneca.act('aim:ingest,store:embed', {
+        mark,
+        chunk,
+        embedding,
+        podcast_id,
+        episode_id,
+      })
+    }
+
     out.ok = true
-    out.embedding = embedding
+    out.chunk = chunk.length
+    out.embedding = embedding.length
     out.podcast_id = podcast_id
     out.episode_id = episode_id
 

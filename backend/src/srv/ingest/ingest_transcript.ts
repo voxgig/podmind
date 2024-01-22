@@ -1,24 +1,32 @@
 
 
 module.exports = function make_ingest_transcript() {
-  return async function ingest_transcript(this: any, msg: any) {
+  return async function ingest_transcript(this: any, msg: any, meta: any) {
     const seneca = this
-
+    const debug = seneca.shared.debug(meta.action)
 
     let out: any = { ok: false, why: '' }
 
-    let filepath = msg.filepath
-    let podcast_id = msg.podcast_id
-    let episode_id = msg.episode_id
+    let path = out.path = msg.path
+    let podcast_id = out.podcast_id = msg.podcast_id
+    let episode_id = out.episode_id = msg.episode_id
+    let doEmbed = out.doEmbed = false !== msg.doEmbed
+    let doStore = out.doStore = false !== msg.doStore
+    let chunkEnd = out.chunkEnd = msg.chunkEnd
+    let mark = msg.mark || seneca.util.Nid()
+
+    debug && debug('INGEST', mark, path, podcast_id, episode_id, doEmbed, doStore)
 
     let transcript_id = 'folder01/transcript01/' + podcast_id + '/' +
       episode_id + '-dg01'
 
     const transcriptEnt = await seneca.entity('pdm/transcript')
       .load$(transcript_id)
+
     if (null == transcriptEnt) {
       out.why = 'transcript-not-found'
-      out.details = { filepath, transcript_id, podcast_id, episode_id }
+      out.details = { path, transcript_id, podcast_id, episode_id }
+      debug && debug('INGEST-FAIL', mark, path, podcast_id, episode_id, doEmbed, doStore, out)
       return out
     }
 
@@ -66,52 +74,31 @@ module.exports = function make_ingest_transcript() {
 
     chunks = chunks.filter((c: string) => 0 < c.length)
 
-    console.log('CHUNKS', chunks.length)
+    debug && debug('INGEST-CHUNKS',
+      mark, path, podcast_id, episode_id, doEmbed, doStore, chunks.length)
 
-    let chunksOK = 0
+    let embeds = 0
+    chunkEnd = 0 <= chunkEnd ? chunkEnd : chunks.length
     for (let chunkI = 0; chunkI < chunks.length; chunkI++) {
       let chunk = chunks[chunkI]
 
-      try {
-
-        let embedRes = await seneca.post('aim:ingest,embed:chunk', {
+      if (doEmbed) {
+        seneca.act('aim:ingest,embed:chunk', {
+          mark,
           chunk,
           podcast_id,
           episode_id,
+          doStore,
         })
-
-        if (!embedRes.ok) {
-          console.log('ingest_transcript embed fail', embedRes)
-          continue
-        }
-
-        chunksOK++
-        let embedding = embedRes.embedding
-
-        let storeRes = await seneca.post('aim:ingest,store:embed', {
-          chunk,
-          embedding,
-          podcast_id,
-          episode_id,
-        })
-
-        if (!storeRes.ok) {
-          console.log('ingest_transcript store fail', storeRes)
-          continue
-        }
-      }
-      catch (e: any) {
-        console.log('ingest_transcript', podcast_id, episode_id, e)
+        embeds++
       }
     }
 
-
-    out.ok = chunksOK === chunks.length
+    out.ok = true
     out.chunks = chunks.length
-    out.chunksOK = chunksOK
+    out.embeds = embeds
     out.podcast_id = podcast_id
     out.episode_id = episode_id
-
 
     return out
   }

@@ -17,6 +17,36 @@ function basic(seneca: any, options?: any) {
   return seneca
 }
 
+// After store plugins
+function setup(seneca: any, options?: any) {
+  options = options || {}
+  const deep = seneca.util.deep
+
+  seneca
+    .use('entity-util', deep(base.options.entity_util, options.entity_util))
+    .use('env', {
+      file: [__dirname + '/../local/local-env.js;?'],
+      var: {
+        DEEPGRAM_APIKEY: String,
+      }
+    })
+    .use('provider', {
+      provider: {
+        deepgram: {
+          keys: {
+            apikey: { value: '$DEEPGRAM_APIKEY' },
+          }
+        },
+      }
+    })
+
+
+
+  return seneca
+}
+
+
+
 
 const base = {
   seneca: {
@@ -63,5 +93,6 @@ const base = {
 
 export {
   basic,
+  setup,
   base,
 }

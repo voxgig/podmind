@@ -118,3 +118,6 @@ devassets
 *.off
 
 folder01/
+
+local-env.ts
+local-env.js

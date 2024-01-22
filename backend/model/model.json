@@ -80,7 +80,15 @@
             "podcast": {}
           },
           "transcribe": {
-            "episode": {}
+            "episode": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true
+                  }
+                }
+              }
+            }
           },
           "embed": {
             "chunk": {
@@ -512,6 +520,9 @@
         "out": {
           "aim": {
             "ingest": {
+              "transcribe": {
+                "episode": {}
+              },
               "embed": {
                 "chunk": {}
               },
@@ -530,7 +541,16 @@
                 "bucket": "podmind01-backend01-transcript01-${self:provider.stage}",
                 "event": "s3:ObjectCreated:*",
                 "rules": {
-                  "prefix": "folder01"
+                  "prefix": "folder01/audio01"
+                },
+                "msg": "aim:ingest,transcribe:episode"
+              },
+              {
+                "source": "s3",
+                "bucket": "podmind01-backend01-transcript01-${self:provider.stage}",
+                "event": "s3:ObjectCreated:*",
+                "rules": {
+                  "prefix": "folder01/transcript01"
                 },
                 "msg": "aim:ingest,handle:transcript"
               }

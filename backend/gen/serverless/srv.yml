@@ -85,7 +85,13 @@ ingest:
         event: s3:ObjectCreated:*
         existing: true
         rules:
-          - prefix: folder01
+          - prefix: folder01/audio01
+    - s3:
+        bucket: podmind01-backend01-transcript01-${self:provider.stage}
+        event: s3:ObjectCreated:*
+        existing: true
+        rules:
+          - prefix: folder01/transcript01
     - http:
         path: "/api/undefinedingestundefined"
         method: POST

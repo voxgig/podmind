@@ -1,0 +1,12 @@
+default_env: &default_env
+  STAGE: ${self:provider.stage}
+
+dev:
+  <<: *default_env
+
+stg:
+  <<: *default_env
+
+prd:
+  <<: *default_env
+

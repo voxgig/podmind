@@ -6,3 +6,9 @@ sys: &: stage: active: true
 pdm: &: stage: active: true
 
 
+# TODO: @voxgig/system|build|model to support below:
+
+# pdm: rss: kind: storage
+# pdm: transcript: kind: storage
+# pdm: audio: kind: storage
+

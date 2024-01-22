@@ -1,0 +1,18 @@
+service: pdm01-backend01
+frameworkVersion: '3'
+
+custom:
+  
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  environment: ${file(serverless-env.yml):${self:provider.stage}}
+
+
+functions: ${file(./gen/serverless/srv.yml)}
+
+resources:
+  Resources: ${file(./gen/serverless/res.yml)}
+

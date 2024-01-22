@@ -2,11 +2,11 @@
 import Express from 'express'
 const CookieParser = require('cookie-parser')
 
-const Seneca = require('seneca')
-const { Local, /* Concern */ } = require('@voxgig/system')
+import Seneca from 'seneca'
+import { Local, /* Concern */ } from '@voxgig/system'
 import { dive, get, pinify } from '@voxgig/model'
 
-import { basic, base } from '../shared/basic'
+import { basic, setup, base } from '../shared/basic'
 
 import Pkg from '../../../package.json'
 import Model from '../../../model/model.json'
@@ -101,10 +101,9 @@ async function runSeneca(info: any) {
     })
 
 
-    // NOTE: load after store plugins
-    .use('entity-util', base.options.entity_util)
 
-    .use('localque-transport')
+  setup(seneca)
+
 
   setupLocal(seneca)
 
@@ -148,6 +147,10 @@ async function runExpress(info: any, seneca: any) {
 // TODO: @voxgig/system local should handle this
 function setupLocal(seneca: any) {
   const model = seneca.context.model
+
+  seneca
+    .use('localque-transport')
+
 
   Object.entries(model.main.srv).map((entry: any[]) => {
     const name = entry[0]

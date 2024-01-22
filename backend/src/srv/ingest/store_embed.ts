@@ -3,10 +3,10 @@ import { Client } from '@opensearch-project/opensearch'
 import { defaultProvider } from '@aws-sdk/credential-provider-node'
 
 
-
 module.exports = function make_store_embed() {
-  return async function store_embed(this: any, msg: any) {
+  return async function store_embed(this: any, msg: any, meta: any) {
     const seneca = this
+    const debug = seneca.shared.debug(meta.action)
 
     const region = seneca.context.model.main.conf.cloud.aws.region
     const node = seneca.context.model.main.conf.cloud.opensearch.url
@@ -18,16 +18,17 @@ module.exports = function make_store_embed() {
     let embedding = msg.embedding
     let podcast_id = msg.podcast_id
     let episode_id = msg.episode_id
+    let mark = msg.mark || seneca.util.Nid()
 
-    const client = getOpenSearchClient(region, node)
+    debug && debug('STORE', mark, podcast_id, episode_id)
 
-    let storeRes = await store(client, index, chunk, embedding)
-    console.log('STORE', storeRes.statusCode)
+    const OpenSearchClient = getOpenSearchClient(region, node)
+
+    let storeRes = await store(OpenSearchClient, index, chunk, embedding)
 
     out.ok = 201 === storeRes.statusCode
     out.podcast_id = podcast_id
     out.episode_id = episode_id
-
 
     return out
   }

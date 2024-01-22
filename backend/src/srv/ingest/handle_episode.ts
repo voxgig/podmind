@@ -45,6 +45,14 @@ module.exports = function make_handle_episode() {
         debug && debug('AUDIO', mark, podcast_id, episode_id, url, res?.status, size)
       }
       else {
+
+        // Assume audio already present, trigger transcription viq queue.
+        seneca.act('aim:ingest,transcribe:episode', {
+          episode_id,
+          mark,
+          doAudio,
+        })
+
         out.ok = true
       }
     }

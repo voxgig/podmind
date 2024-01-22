@@ -11,5 +11,12 @@ module.exports = function make_prepare_ingest() {
       const d = new Date(when)
       return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''))
     }
+
+
+    seneca.shared.listPaths = (event: any) => {
+      const paths = event?.Records?.map((r: any) =>
+        decodeURIComponent(r.s3.object.key).replace(/\+/g, ' '))
+      return paths
+    }
   }
 }
