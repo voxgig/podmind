@@ -1,3 +1,14 @@
+
+
+FileBucket01:
+  Type: AWS::S3::Bucket
+  DeletionPolicy: Retain
+  Properties:
+    OwnershipControls:
+      Rules:
+        - ObjectOwnership: ObjectWriter
+    BucketName: podmind01-backend01-file01-${self:provider.stage}
+    
 TableSysUser:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
