@@ -28,6 +28,7 @@ module.exports = function make_ingest_podcast() {
     let doAudio = false !== msg.doAudio // download by default
     let episodeStart = msg.episodeStart || 0
     let episodeEnd = msg.episodeEnd || -1 // -1 => all
+    let episodeGuid = msg.episodeGuid
 
     let podcastEnt = await seneca.entity('pdm/podcast').load$(podcast_id)
 
@@ -61,33 +62,51 @@ module.exports = function make_ingest_podcast() {
     out.episodes = episodes.length
     episodeEnd = 0 <= episodeEnd ? episodeEnd : episodes.length
 
+
+    async function handleEpisode(episode: any, epI: number) {
+      let episodeEnt = await seneca.entity('pdm/episode').load$({
+        guid: episode.guid
+      })
+
+      if (null == episodeEnt) {
+        episodeEnt = seneca.entity('pdm/episode')
+      }
+
+      await episodeEnt.save$({
+        podcast_id: podcastEnt.id,
+        guid: episode.guid,
+        title: episode.title,
+        link: episode.link,
+        pubDate: episode.pubDate,
+        content: episode.content,
+        url: episode.enclosure?.url
+      })
+
+      if (doIngest) {
+        seneca.act('aim:ingest,handle:episode',
+          { episode_id: episodeEnt.id, podcast_id, doAudio, mark })
+      }
+
+      debug && debug('EPISODE-SAVE', mark, podcastEnt.id, epI, doIngest, episode.guid)
+
+    }
+
     if (doUpdate) {
-      for (let epI = episodeStart; epI < episodeEnd; epI++) {
-        let episode = episodes[epI]
-        let episodeEnt = await seneca.entity('pdm/episode').load$({
-          guid: episode.guid
-        })
-
-        if (null == episodeEnt) {
-          episodeEnt = seneca.entity('pdm/episode')
+      if (episodeGuid) {
+        let episode = episodes.find((episode: any) => episodeGuid === episode.guid)
+        if (episode) {
+          await handleEpisode(episode, -1)
         }
-
-        await episodeEnt.save$({
-          podcast_id: podcastEnt.id,
-          guid: episode.guid,
-          title: episode.title,
-          link: episode.link,
-          pubDate: episode.pubDate,
-          content: episode.content,
-          url: episode.enclosure?.url
-        })
-
-        if (doIngest) {
-          seneca.act('aim:ingest,handle:episode',
-            { episode_id: episodeEnt.id, podcast_id, doAudio, mark })
+        else {
+          out.why = 'episode-not-found'
+          return out
         }
-
-        debug && debug('EPISODE-SAVE', mark, podcastEnt.id, epI, doIngest, episode.guid)
+      }
+      else {
+        for (let epI = episodeStart; epI < episodeEnd; epI++) {
+          let episode = episodes[epI]
+          await handleEpisode(episode, epI)
+        }
       }
     }
 

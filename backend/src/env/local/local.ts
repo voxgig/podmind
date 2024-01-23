@@ -111,9 +111,6 @@ async function runSeneca(info: any) {
   //   folder: __dirname + '/../../../dist/concern'
   // })
 
-
-
-
   seneca
     .use(Local, {
       srv: {
@@ -145,7 +142,7 @@ async function runExpress(info: any, seneca: any) {
 
 
 // TODO: @voxgig/system local should handle this
-function setupLocal(seneca: any) {
+async function setupLocal(seneca: any) {
   const model = seneca.context.model
 
   seneca

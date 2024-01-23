@@ -145,11 +145,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
     setup(seneca)
 
-    if ('monitor' === srvname) {
-      seneca.use('repl', { listen: false })
-      await seneca.ready()
-      await seneca.post('sys:repl,use:repl,id:invoke')
-    }
+    setupLambda(seneca)
 
     seneca.use(Live, {
       srv: {
@@ -167,6 +163,19 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
   }
 
   return seneca
+}
+
+
+async function setupLambda(seneca: any) {
+  seneca
+    .use('sqs-transport')
+
+  if ('monitor' === seneca.context.srvname) {
+    seneca.use('repl', { listen: false })
+    await seneca.ready()
+    await seneca.post('sys:repl,use:repl,id:invoke')
+  }
+
 }
 
 
