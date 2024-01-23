@@ -10,7 +10,11 @@ provider:
   stage: ${opt:stage, 'dev'}
   environment: ${file(serverless-env.yml):${self:provider.stage}}
 
-
+package:
+  patterns:
+    - '!data/**'
+    - '!coverage/**'
+  
 functions: ${file(./gen/serverless/srv.yml)}
 
 resources:
