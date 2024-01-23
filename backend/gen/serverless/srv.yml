@@ -81,13 +81,13 @@ ingest:
   timeout: 30
   events:
     - s3:
-        bucket: podmind01-backend01-transcript01-${self:provider.stage}
+        bucket: podmind01-backend01-file01-${self:provider.stage}
         event: s3:ObjectCreated:*
         existing: true
         rules:
           - prefix: folder01/audio01
     - s3:
-        bucket: podmind01-backend01-transcript01-${self:provider.stage}
+        bucket: podmind01-backend01-file01-${self:provider.stage}
         event: s3:ObjectCreated:*
         existing: true
         rules:

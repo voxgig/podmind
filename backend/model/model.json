@@ -538,7 +538,7 @@
             "events": [
               {
                 "source": "s3",
-                "bucket": "podmind01-backend01-transcript01-${self:provider.stage}",
+                "bucket": "podmind01-backend01-file01-${self:provider.stage}",
                 "event": "s3:ObjectCreated:*",
                 "rules": {
                   "prefix": "folder01/audio01"
@@ -547,7 +547,7 @@
               },
               {
                 "source": "s3",
-                "bucket": "podmind01-backend01-transcript01-${self:provider.stage}",
+                "bucket": "podmind01-backend01-file01-${self:provider.stage}",
                 "event": "s3:ObjectCreated:*",
                 "rules": {
                   "prefix": "folder01/transcript01"
