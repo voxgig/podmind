@@ -70,24 +70,6 @@ TablePdmEpisode:
 
 
 
-TablePdmTranscript:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'PdmTranscript.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
-
-
-
 TablePdmWidget:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
