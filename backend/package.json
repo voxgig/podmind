@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -32,8 +32,8 @@
     "@deepgram/sdk": "^3.0.1",
     "@opensearch-project/opensearch": "^2.5.0",
     "@seneca/capture": "^0.5.0",
-    "@seneca/dynamo-store": "5.1.0",
-    "@seneca/entity-util": "1.6.0",
+    "@seneca/dynamo-store": "5.2.0",
+    "@seneca/entity-util": "2.0.0",
     "@seneca/env": "0.2.0",
     "@seneca/gateway": "1.1.0",
     "@seneca/gateway-auth": "1.0.2",
