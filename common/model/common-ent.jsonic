@@ -41,22 +41,6 @@ pdm: episode: {
 }
 
 
-pdm: transcript: {
-  # title: 'Transcript'
-  field: {
-    id: {
-      label: 'ID'
-    }
-    podcast_id: {
-      label: Podcast
-    }
-    owner_id: {
-      label: Owner
-    }
-  }
-}
-
-
 pdm: widget: {
   # title: 'Widget'
   field: {
