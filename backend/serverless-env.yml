@@ -1,5 +1,5 @@
 default_env: &default_env
-  STAGE: ${self:provider.stage}
+  PODCASTIC_STAGE: ${self:provider.stage}
 
 dev:
   <<: *default_env
