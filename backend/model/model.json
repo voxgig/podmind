@@ -258,8 +258,7 @@
             "monitor": {}
           }
         },
-        "deps": {},
-        "dep": {
+        "deps": {
           "auth": {},
           "user": {},
           "entity": {},

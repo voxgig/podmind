@@ -9,7 +9,7 @@ monitor: {
   api: req: { active: false }
   env: lambda: active: true
 
-  dep: {
+  deps: {
     auth: {}
     user: {}
     entity: {}
