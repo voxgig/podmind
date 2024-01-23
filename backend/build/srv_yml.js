@@ -1,4 +1,4 @@
-// Copyright (c) Nodezoo Ltd. USED UNDER LICENSE.
+// Copyright 2024 (c) Voxgig Ltd.
 
 const Path = require('path')
 

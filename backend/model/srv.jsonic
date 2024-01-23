@@ -8,6 +8,14 @@ monitor: {
   }
   api: req: { active: false }
   env: lambda: active: true
+
+  dep: {
+    auth: {}
+    user: {}
+    entity: {}
+    chat: {}
+    ingest: {}
+  }
 }
 
 

@@ -258,7 +258,14 @@
             "monitor": {}
           }
         },
-        "deps": {}
+        "deps": {},
+        "dep": {
+          "auth": {},
+          "user": {},
+          "entity": {},
+          "chat": {},
+          "ingest": {}
+        }
       },
       "auth": {
         "env": {
@@ -568,6 +575,7 @@
       "cloud": {
         "aws": {
           "region": "us-east-1",
+          "accountid": "975049884289",
           "bedrock": {
             "model": "ai21.j2-ultra-v1"
           }
