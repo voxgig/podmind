@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "@deepgram/sdk": "^3.0.1",
     "@opensearch-project/opensearch": "^2.5.0",
     "@seneca/capture": "^0.5.0",
-    "@seneca/dynamo-store": "5.0.0",
+    "@seneca/dynamo-store": "5.1.0",
     "@seneca/entity-util": "1.6.0",
     "@seneca/env": "0.2.0",
     "@seneca/gateway": "1.1.0",
@@ -62,6 +62,7 @@
   "devDependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.496.0",
     "@aws-sdk/client-dynamodb": "^3.496.0",
+    "@aws-sdk/client-lambda": "^3.496.0",
     "@aws-sdk/client-s3": "^3.496.0",
     "@aws-sdk/s3-request-presigner": "^3.496.0",
     "@aws-sdk/util-dynamodb": "^3.496.0",
