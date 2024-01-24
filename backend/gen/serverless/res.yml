@@ -33,6 +33,16 @@ BasicPodmindLambdaRole01:
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmEpisode.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmWidget.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChat.${self:provider.stage,"dev"}
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+                - s3:DeleteObject
+                - s3:ListBucket
+              Resource:
+                - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}/*
+                - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}
+
     ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 

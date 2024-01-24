@@ -136,7 +136,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         prefix: '',
         folder: 'folder01',
         shared: {
-          Bucket: `pdm01-backend01-file01-${STAGE}`
+          Bucket: `podmind01-backend01-file01-${STAGE}`
         },
         s3: {
           Region: 'us-east-1'

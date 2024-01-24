@@ -11,7 +11,7 @@ module.exports = function make_subscribe_podcast() {
 
     let out: any = { ok: false, why: '' }
 
-    let mark = msg.mark || seneca.util.Nid()
+    let mark = out.mark = msg.mark || seneca.util.Nid()
     let feed = msg.feed
     let doUpdate = msg.doUpdate
     let doIngest = msg.doIngest
