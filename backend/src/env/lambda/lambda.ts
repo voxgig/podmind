@@ -156,7 +156,8 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         name: srvname,
         folder: __dirname + '/../../srv'
       },
-      options: {}
+      options: {
+      }
     })
 
     if (complete) {
