@@ -134,7 +134,9 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         },
         suffix: '',
         prefix: '',
-        folder: 'folder01',
+
+        // TODO: bug in s3-store: local and s3 folder hanlding should the same 
+        // folder: 'folder01',
         shared: {
           Bucket: `podmind01-backend01-file01-${STAGE}`
         },
