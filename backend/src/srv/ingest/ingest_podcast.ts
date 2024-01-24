@@ -26,6 +26,7 @@ module.exports = function make_ingest_podcast() {
     let doUpdate = true === msg.doUpdate // save episode details to db
     let doIngest = true === msg.doIngest // trigger download and embedding
     let doAudio = false !== msg.doAudio // download by default
+    let doTranscribe = false !== msg.doTranscribe // transcribe by default
     let episodeStart = msg.episodeStart || 0
     let episodeEnd = msg.episodeEnd || -1 // -1 => all
     let episodeGuid = msg.episodeGuid
@@ -84,7 +85,7 @@ module.exports = function make_ingest_podcast() {
 
       if (doIngest) {
         seneca.act('aim:ingest,handle:episode',
-          { episode_id: episodeEnt.id, podcast_id, doAudio, mark })
+          { episode_id: episodeEnt.id, podcast_id, doAudio, doTranscribe, mark })
       }
 
       debug && debug('EPISODE-SAVE', mark, podcastEnt.id, epI, doIngest, episode.guid)

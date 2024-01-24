@@ -16,6 +16,7 @@ module.exports = function make_subscribe_podcast() {
     let doUpdate = msg.doUpdate
     let doIngest = msg.doIngest
     let doAudio = false !== msg.doAudio // download by default
+    let doTranscribe = false !== msg.doTranscribe // transcribe by default
 
     out.feed = feed
 
@@ -46,6 +47,7 @@ module.exports = function make_subscribe_podcast() {
           doIngest,
           mark,
           doAudio,
+          doTranscribe,
         })
       }
     }
