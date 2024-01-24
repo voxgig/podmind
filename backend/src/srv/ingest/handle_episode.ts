@@ -9,6 +9,7 @@ module.exports = function make_handle_episode() {
 
     let episode_id = msg.episode_id
     let doAudio = false !== msg.doAudio // download by default
+    let doTranscribe = false !== msg.doTranscribe // transcribe by default
     let mark = msg.mark || seneca.util.Nid()
 
     out.episode_id = episode_id
@@ -39,22 +40,21 @@ module.exports = function make_handle_episode() {
           })
 
           out.size = size = res.data.length
-          out.ok = true
         }
 
         debug && debug('AUDIO', mark, podcast_id, episode_id, url, res?.status, size)
       }
-      else {
 
+      if (doTranscribe) {
         // Assume audio already present, trigger transcription viq queue.
         seneca.act('aim:ingest,transcribe:episode', {
           episode_id,
           mark,
           doAudio,
         })
-
-        out.ok = true
       }
+
+      out.ok = true
     }
     else {
       out.why = 'not-found'

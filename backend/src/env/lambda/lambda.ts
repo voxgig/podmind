@@ -136,6 +136,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         prefix: '',
 
         // TODO: bug in s3-store: local and s3 folder hanlding should the same 
+        // TODO: empty string value is significant - make actual folder used well-defined
         folder: '',
 
         shared: {
