@@ -550,9 +550,25 @@
           }
         },
         "on": {
-          "file": {
+          "ingest": {
             "provider": "aws",
             "events": [
+              {
+                "source": "sqs",
+                "qrn": "QueueAimIngestHandleEpisode"
+              },
+              {
+                "source": "sqs",
+                "qrn": "QueueAimIngestTranscribeEpisode"
+              },
+              {
+                "source": "sqs",
+                "qrn": "QueueAimIngestEmbedChunk"
+              },
+              {
+                "source": "sqs",
+                "qrn": "QueueAimIngestStoreEmbed"
+              },
               {
                 "source": "s3",
                 "bucket": "podmind01-backend01-file01-${self:provider.stage}",
