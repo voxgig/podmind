@@ -182,9 +182,10 @@ BasicPodmindLambdaRole01:
                 - sqs:ReceiveMessage
                 - sqs:DeleteMessage
                 - sqs:GetQueueAttributes
-              Resource: arn:aws:sqs:us-east-1:975049884289:aim_ingest-transcribe_episode-${self:provider.stage,"dev"}
-              Resource: arn:aws:sqs:us-east-1:975049884289:aim_ingest-store_embed-${self:provider.stage,"dev"}
-              Resource: arn:aws:sqs:us-east-1:975049884289:aim_ingest-embed_chunk-${self:provider.stage,"dev"}
+              Resource:
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-transcribe_episode-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-store_embed-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-embed_chunk-${self:provider.stage,"dev"}
 
 
     ManagedPolicyArns:
