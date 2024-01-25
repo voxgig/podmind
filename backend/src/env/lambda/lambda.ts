@@ -175,7 +175,9 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
 async function setupLambda(seneca: any) {
   seneca
-    .use('sqs-transport')
+    .use('sqs-transport', {
+      suffix: '-' + STAGE
+    })
 
   if ('monitor' === seneca.context.srvname ||
     'ingest' === seneca.context.srvname
