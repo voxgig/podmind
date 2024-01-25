@@ -175,7 +175,9 @@ async function setupLambda(seneca: any) {
   seneca
     .use('sqs-transport')
 
-  if ('monitor' === seneca.context.srvname) {
+  if ('monitor' === seneca.context.srvname ||
+    'ingest' === seneca.context.srvname
+  ) {
     seneca.use('repl', { listen: false })
     await seneca.ready()
     await seneca.post('sys:repl,use:repl,id:invoke')
