@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "@seneca/dynamo-store": "5.2.0",
     "@seneca/entity-util": "2.0.0",
     "@seneca/env": "0.2.0",
-    "@seneca/gateway": "1.1.0",
+    "@seneca/gateway": "1.2.0",
     "@seneca/gateway-auth": "1.0.2",
     "@seneca/gateway-lambda": "1.0.0",
     "@seneca/localque-transport": "^0.1.0",
@@ -45,7 +45,7 @@
     "@seneca/reload": "0.4.1",
     "@seneca/repl": "8.1.1",
     "@seneca/s3-store": "^2.0.0",
-    "@seneca/sqs-transport": "^0.2.0",
+    "@seneca/sqs-transport": "^0.4.0",
     "@seneca/telemetry": "^0.0.2",
     "@seneca/user": "6.3.0",
     "@voxgig/model": "1.3.0",
