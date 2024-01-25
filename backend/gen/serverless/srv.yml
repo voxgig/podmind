@@ -1,6 +1,6 @@
 monitor:
   handler: dist/handler/lambda/monitor.handler
-  role: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
+  role: BasicPodmindLambdaRole
   timeout: 30
   events:
     - http:
@@ -14,7 +14,7 @@ monitor:
 
 auth:
   handler: dist/handler/lambda/auth.handler
-  role: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
+  role: BasicPodmindLambdaRole
   timeout: 30
   events:
     - http:
@@ -28,7 +28,7 @@ auth:
 
 user:
   handler: dist/handler/lambda/user.handler
-  role: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
+  role: BasicPodmindLambdaRole
   timeout: 30
   events:
     - http:
@@ -42,7 +42,7 @@ user:
 
 entity:
   handler: dist/handler/lambda/entity.handler
-  role: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
+  role: BasicPodmindLambdaRole
   timeout: 30
   events:
     - http:
@@ -56,7 +56,7 @@ entity:
 
 chat:
   handler: dist/handler/lambda/chat.handler
-  role: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
+  role: BasicPodmindLambdaRole
   timeout: 30
   events:
     - http:
@@ -70,7 +70,7 @@ chat:
 
 widget:
   handler: dist/handler/lambda/widget.handler
-  role: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
+  role: BasicPodmindLambdaRole
   timeout: 30
   events:
     - http:
@@ -84,7 +84,7 @@ widget:
 
 ingest:
   handler: dist/handler/lambda/ingest.handler
-  role: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
+  role: BasicPodmindLambdaRole
   timeout: 30
   events:
     - s3:
