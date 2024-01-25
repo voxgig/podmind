@@ -133,7 +133,7 @@ QueueAimIngestStoreEmbed:
     QueueName: 'aim_ingest-store_embed-${self:provider.stage,"dev"}'
 
 
-BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}:
+BasicPodmindLambdaRole:
   Type: AWS::IAM::Role
   Properties:
     RoleName: BasicPodmindLambdaRole${self:custom.index.BasicLambdaRole,"01"}
