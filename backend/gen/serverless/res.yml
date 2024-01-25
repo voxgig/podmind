@@ -146,7 +146,7 @@ BasicPodmindLambdaRole:
               - lambda.amazonaws.com
           Action: sts:AssumeRole
     Policies:
-      - PolicyName: LambdaDynamoDBAccess
+      - PolicyName: LambdaServiceAccess
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -182,6 +182,7 @@ BasicPodmindLambdaRole:
                 - sqs:ReceiveMessage
                 - sqs:DeleteMessage
                 - sqs:GetQueueAttributes
+                - sqs:GetQueueUrl
               Resource:
                 - arn:aws:sqs:us-east-1:975049884289:aim_ingest-transcribe_episode-${self:provider.stage,"dev"}
                 - arn:aws:sqs:us-east-1:975049884289:aim_ingest-store_embed-${self:provider.stage,"dev"}
