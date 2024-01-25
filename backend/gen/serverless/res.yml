@@ -176,6 +176,17 @@ BasicPodmindLambdaRole01:
                 - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}/*
                 - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}
 
+            - Effect: Allow
+              Action:
+                - sqs:SendMessage
+                - sqs:ReceiveMessage
+                - sqs:DeleteMessage
+                - sqs:GetQueueAttributes
+              Resource: arn:aws:sqs:us-east-1:975049884289:aim_ingest-transcribe_episode-${self:provider.stage,"dev"}
+              Resource: arn:aws:sqs:us-east-1:975049884289:aim_ingest-store_embed-${self:provider.stage,"dev"}
+              Resource: arn:aws:sqs:us-east-1:975049884289:aim_ingest-embed_chunk-${self:provider.stage,"dev"}
+
+
     ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
