@@ -8,9 +8,9 @@ module.exports = function make_handle_episode() {
     let out: any = { ok: false, why: '', paths: [], episode_id: '' }
 
     let episode_id = msg.episode_id
+    let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
     let doAudio = false !== msg.doAudio // download by default
     let doTranscribe = false !== msg.doTranscribe // transcribe by default
-    let mark = msg.mark || seneca.util.Nid()
 
     out.episode_id = episode_id
     let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
