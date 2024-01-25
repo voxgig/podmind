@@ -162,6 +162,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
     })
 
     if (complete) {
+      await seneca.ready()
       await complete(seneca)
     }
 
