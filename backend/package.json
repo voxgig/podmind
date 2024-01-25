@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: pdm-be-v$REPO_VERSION && git add -u . && git commit -m pdm-be-v$REPO_VERSION && git push && git tag pdm-be-v$REPO_VERSION && git push --tags",
     "deploy-dev": "npm run reset && npm run deploy-dev-quick",
     "deploy-dev-quick": "npm run deploy-quick && serverless deploy --stage dev",
-    "deploy-quick": "npm run check-aws-profile && echo AWS_PROFILE=$AWS_PROFILE && npm run test && npm run repo-tag"
+    "deploy-quick": "npm run check-aws-profile && echo AWS_PROFILE=$AWS_PROFILE && npm run build && npm run test && npm run repo-tag"
   },
   "author": "",
   "license": "UNLICENSED",
