@@ -45,6 +45,7 @@ async function runSeneca(info: any) {
   seneca.context.env = 'local'
   seneca.context.stage = STAGE
   seneca.context.srvname = 'all'
+  seneca.context.getGlobal = () => global
 
   info.seneca = seneca.id
 

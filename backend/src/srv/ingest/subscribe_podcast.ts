@@ -1,7 +1,5 @@
-import RssParser from 'rss-parser'
 
-
-const parser = new RssParser()
+import type { RSS } from './ingest-types'
 
 
 module.exports = function make_subscribe_podcast() {
@@ -11,19 +9,29 @@ module.exports = function make_subscribe_podcast() {
 
     let out: any = { ok: false, why: '' }
 
-    let mark = out.mark = msg.mark || seneca.util.Nid()
-    let feed = msg.feed
-    let doUpdate = msg.doUpdate
-    let doIngest = msg.doIngest
-    let doAudio = false !== msg.doAudio // download by default
-    let doTranscribe = false !== msg.doTranscribe // transcribe by default
+    let mark = out.mark = '' + msg.mark || seneca.util.Nid()
+    let feed = out.feed = '' + msg.feed
+    let doUpdate = out.doUpdate = !!msg.doUpdate
+    let doIngest = out.doIngest = !!msg.doIngest
+    let doAudio = out.doAudio = false !== msg.doAudio // download by default
+    let doTranscribe = out.doTranscribe = false !== msg.doTranscribe // transcribe by default
+    let episodeStart = out.episodeStart = parseInt(msg.episodeStart) || 0
+    let episodeEnd = out.episodeEnd = parseInt(msg.episodeEnd) || -1 // -1 => all
 
     out.feed = feed
 
     let podcastEnt = await seneca.entity('pdm/podcast').load$({ feed })
 
     if (null == podcastEnt || doUpdate) {
-      let rss = await parser.parseURL(feed)
+      let rssRes = await seneca.shared.getRSS(feed)
+
+      if (!rssRes.ok) {
+        out.why = 'rss'
+        out.details = { feed, errmsg: rssRes.err.message }
+        return out
+      }
+
+      let rss = rssRes.rss as RSS
 
       podcastEnt = podcastEnt || await seneca.entity('pdm/podcast').make$()
       podcastEnt = await podcastEnt.save$({
@@ -48,6 +56,8 @@ module.exports = function make_subscribe_podcast() {
           mark,
           doAudio,
           doTranscribe,
+          episodeStart,
+          episodeEnd,
         })
       }
     }

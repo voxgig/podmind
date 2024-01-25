@@ -1,18 +1,5 @@
-import RssParser from 'rss-parser'
 
-
-const Parser = new RssParser()
-
-type RSS = {
-  items: {
-    guid: string
-    title: string
-    link: string
-    pubDate: string
-    content: string
-    enclosure: { url: string }
-  }[]
-}
+import type { RSS } from './ingest-types'
 
 module.exports = function make_ingest_podcast() {
   return async function ingest_podcast(this: any, msg: any, meta: any) {
@@ -40,7 +27,7 @@ module.exports = function make_ingest_podcast() {
     }
 
     let feed = podcastEnt.feed
-    let rssRes = await getRSS(debug, feed, podcast_id, mark)
+    let rssRes = await seneca.options.getRSS(debug, feed, podcast_id, mark)
 
     if (!rssRes.ok) {
       out.why = 'rss'
@@ -114,17 +101,6 @@ module.exports = function make_ingest_podcast() {
     out.ok = true
 
     return out
-  }
-}
-
-
-async function getRSS(debug: any, feed: string, podcast_id: string, mark: string) {
-  try {
-    return { ok: true, rss: await Parser.parseURL(feed) }
-  }
-  catch (err: any) {
-    debug && debug('getRSS', mark, podcast_id, feed, err)
-    return { ok: false, err }
   }
 }
 

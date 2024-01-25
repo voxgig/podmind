@@ -47,6 +47,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
     seneca.context.srvname = srvname
     seneca.context.stage = STAGE
     seneca.context.where = 'lambda'
+    seneca.context.getGlobal = () => global
 
     basic(seneca, {
       reload: {
