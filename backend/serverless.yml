@@ -2,6 +2,8 @@ service: pdm01-backend01
 frameworkVersion: '3'
 
 custom:
+  index:
+    BasicLambdaRole: '02'
   
 provider:
   name: aws
