@@ -9,7 +9,7 @@ module.exports = function make_ingest_podcast() {
     let out: any = { ok: false, why: '' }
 
     let podcast_id = msg.podcast_id
-    let mark = msg.mark || seneca.util.Nid()
+    let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
     let doUpdate = true === msg.doUpdate // save episode details to db
     let doIngest = true === msg.doIngest // trigger download and embedding
     let doAudio = false !== msg.doAudio // download by default
@@ -18,20 +18,28 @@ module.exports = function make_ingest_podcast() {
     let episodeEnd = msg.episodeEnd || -1 // -1 => all
     let episodeGuid = msg.episodeGuid
 
+    debug && debug('START', mark, podcast_id)
+
     let podcastEnt = await seneca.entity('pdm/podcast').load$(podcast_id)
 
     if (null == podcastEnt) {
       out.why = 'not-found'
       out.details = { podcast_id }
+      debug && debug('FAIL-PODENT', mark, podcast_id, out)
       return out
     }
 
     let feed = podcastEnt.feed
-    let rssRes = await seneca.options.getRSS(debug, feed, podcast_id, mark)
+
+    debug && debug('GET-RSS', mark, podcastEnt)
+
+    // TODO: also accept from args to avoid double download
+    let rssRes = await seneca.shared.getRSS(debug, feed, podcast_id, mark)
 
     if (!rssRes.ok) {
       out.why = 'rss'
       out.details = { podcast_id, errmsg: rssRes.err.message }
+      debug && debug('FAIL-RSS', mark, podcast_id, out)
       return out
     }
 
@@ -45,7 +53,8 @@ module.exports = function make_ingest_podcast() {
     })
 
     let episodes = rss.items
-    debug && debug('EPISODES', mark, podcastEnt.id, feed, episodes.length)
+    debug &&
+      debug('EPISODES', mark, podcastEnt.id, feed, episodeStart, episodeEnd, episodes.length)
 
     out.episodes = episodes.length
     episodeEnd = 0 <= episodeEnd ? episodeEnd : episodes.length

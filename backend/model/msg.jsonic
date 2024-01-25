@@ -85,6 +85,7 @@ aim: req: {
 # Message Transports
 
 aim: ingest: {
+  handle: episode: '$': transport: queue: active: true
   transcribe: episode: '$': transport: queue: active: true
   embed: chunk: '$': transport: queue: active: true
   store: embed: '$': transport: queue: active: true

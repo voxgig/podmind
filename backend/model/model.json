@@ -70,7 +70,15 @@
           },
           "handle": {
             "transcript": {},
-            "episode": {}
+            "episode": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true
+                  }
+                }
+              }
+            }
           },
           "ingest": {
             "transcript": {},
@@ -526,6 +534,9 @@
         "out": {
           "aim": {
             "ingest": {
+              "handle": {
+                "episode": {}
+              },
               "transcribe": {
                 "episode": {}
               },

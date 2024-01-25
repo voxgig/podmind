@@ -80,6 +80,7 @@ ingest: {
   }
   out: {
     aim: ingest: {
+      handle: episode: {}
       transcribe: episode: {}
       embed: chunk: {}
       store: embed: {}

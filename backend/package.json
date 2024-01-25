@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -43,7 +43,7 @@
     "@seneca/owner": "^6.1.0",
     "@seneca/provider": "^2.0.1",
     "@seneca/reload": "0.4.1",
-    "@seneca/repl": "8.0.0",
+    "@seneca/repl": "8.1.1",
     "@seneca/s3-store": "^2.0.0",
     "@seneca/sqs-transport": "^0.2.0",
     "@seneca/telemetry": "^0.0.2",
