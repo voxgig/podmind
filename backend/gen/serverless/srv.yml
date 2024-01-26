@@ -2,13 +2,6 @@ monitor:
   handler: dist/handler/lambda/monitor.handler
   role: BasicPodmindLambdaRole
   timeout: 30
-  events:
-    - http:
-        path: "/api/undefinedmonitorundefined"
-        method: POST
-        cors: false
-
-
 
 
 
@@ -18,7 +11,7 @@ auth:
   timeout: 30
   events:
     - http:
-        path: "/api/undefinedauthundefined"
+        path: "/api/public/auth"
         method: POST
         cors: false
 
@@ -32,7 +25,7 @@ user:
   timeout: 30
   events:
     - http:
-        path: "/api/undefineduserundefined"
+        path: "/api/private/user"
         method: POST
         cors: false
 
@@ -46,7 +39,7 @@ entity:
   timeout: 30
   events:
     - http:
-        path: "/api/undefinedentityundefined"
+        path: "/api/private/entity"
         method: POST
         cors: false
 
@@ -60,7 +53,7 @@ chat:
   timeout: 30
   events:
     - http:
-        path: "/api/undefinedchatundefined"
+        path: "/api/public/chat"
         method: POST
         cors: false
 
@@ -74,7 +67,7 @@ widget:
   timeout: 30
   events:
     - http:
-        path: "/api/undefinedwidgetundefined"
+        path: "/api/public/widget"
         method: POST
         cors: false
 
@@ -123,9 +116,4 @@ ingest:
         existing: true
         rules:
           - prefix: folder01/transcript01
-    - http:
-        path: "/api/undefinedingestundefined"
-        method: POST
-        cors: false
-
 

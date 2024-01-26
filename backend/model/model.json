@@ -248,7 +248,7 @@
         },
         "api": {
           "web": {
-            "active": true,
+            "active": false,
             "method": "POST",
             "cors": {
               "active": false
@@ -256,9 +256,6 @@
             "path": {
               "prefix": "/api/"
             }
-          },
-          "req": {
-            "active": false
           }
         },
         "in": {
@@ -296,11 +293,7 @@
               "active": false
             },
             "path": {
-              "prefix": "/api/"
-            }
-          },
-          "req": {
-            "path": {
+              "prefix": "/api/",
               "area": "public/",
               "suffix": ""
             }
@@ -340,11 +333,7 @@
               "active": false
             },
             "path": {
-              "prefix": "/api/"
-            }
-          },
-          "req": {
-            "path": {
+              "prefix": "/api/",
               "area": "private/",
               "suffix": ""
             }
@@ -384,11 +373,7 @@
               "active": false
             },
             "path": {
-              "prefix": "/api/"
-            }
-          },
-          "req": {
-            "path": {
+              "prefix": "/api/",
               "area": "private/",
               "suffix": ""
             }
@@ -428,11 +413,7 @@
               "active": false
             },
             "path": {
-              "prefix": "/api/"
-            }
-          },
-          "req": {
-            "path": {
+              "prefix": "/api/",
               "area": "public/",
               "suffix": ""
             }
@@ -472,11 +453,7 @@
               "active": false
             },
             "path": {
-              "prefix": "/api/"
-            }
-          },
-          "req": {
-            "path": {
+              "prefix": "/api/",
               "area": "public/",
               "suffix": ""
             }
@@ -510,18 +487,13 @@
         },
         "api": {
           "web": {
-            "active": true,
+            "active": false,
             "method": "POST",
             "cors": {
               "active": false
             },
             "path": {
               "prefix": "/api/"
-            }
-          },
-          "req": {
-            "path": {
-              "active": false
             }
           }
         },

@@ -6,7 +6,7 @@ monitor: {
   in: {
     aim: monitor: {}
   }
-  api: req: { active: false }
+  api: web: { active: false }
   env: lambda: active: true
 
   deps: {
@@ -25,7 +25,7 @@ auth: {
     aim: req: on: auth: {}
   }
 
-  api: req: path: { area: 'public/', suffix: ''  }
+  api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
 
@@ -36,7 +36,7 @@ user: {
     aim: req: on: user: {}
   }
 
-  api: req: path: { area: 'private/', suffix: ''  }
+  api: web: path: { area: 'private/', suffix: ''  }
   env: lambda: active: true
 }
 
@@ -47,7 +47,7 @@ entity: {
     aim: req: on: entity: {}
   }
 
-  api: req: path: { area: 'private/', suffix: ''  }
+  api: web: path: { area: 'private/', suffix: ''  }
   env: lambda: active: true
 }
 
@@ -58,7 +58,7 @@ chat: {
     aim: req: on: chat: {}
   }
 
-  api: req: path: { area: 'public/', suffix: ''  }
+  api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
 
@@ -69,7 +69,7 @@ widget: {
     aim: req: on: widget: {}
   }
 
-  api: req: path: { area: 'public/', suffix: ''  }
+  api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
 
@@ -123,7 +123,7 @@ ingest: {
     ]
   }
 
-  api: req: path: { active: false  }
+  api: web: active: false
   env: lambda: {
     active: true
     timeout: 444
