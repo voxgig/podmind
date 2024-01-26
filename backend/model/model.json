@@ -481,7 +481,7 @@
               }
             },
             "active": true,
-            "timeout": 444,
+            "timeout": 888,
             "kind": "standard"
           }
         },

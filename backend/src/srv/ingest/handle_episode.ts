@@ -31,6 +31,8 @@ module.exports = function make_handle_episode() {
           debug && debug('AUDIO-ERROR', mark, podcast_id, episode_id, url, err)
         }
 
+        debug && debug('HANDLE-AUDIO', mark, podcast_id, episode_id, res?.status)
+
         if (200 === res?.status) {
           await seneca.entity('pdm/audio').save$({
             bin$: 'content',
@@ -59,6 +61,8 @@ module.exports = function make_handle_episode() {
     else {
       out.why = 'not-found'
     }
+
+    debug && debug('HANDLE-OUT', mark, podcast_id, episode_id, doAudio, out)
 
     return out
   }

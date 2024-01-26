@@ -126,7 +126,7 @@ ingest: {
   api: web: active: false
   env: lambda: {
     active: true
-    timeout: 444
+    timeout: 888
   }
 
 }
