@@ -87,6 +87,8 @@ ingest: {
     }
   }
 
+  timeout: 444
+  
   on: ingest: {
     provider: aws
     events: [
