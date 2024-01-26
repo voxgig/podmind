@@ -41,7 +41,6 @@ module.exports = function make_handle_episode() {
               bin$: 'content',
               id: 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
                 episodeEnt.id + '.mp3',
-              // content: res.data.slice(0, 21001000)
               content: res.data
             })
           }

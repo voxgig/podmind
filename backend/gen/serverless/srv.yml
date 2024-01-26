@@ -86,3 +86,41 @@ ingest:
   role: BasicPodmindLambdaRole
   timeout: 888
   memorySize: 2048
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimIngestHandleEpisode
+            - Arn
+        batchSize: 1
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimIngestTranscribeEpisode
+            - Arn
+        batchSize: 1
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimIngestEmbedChunk
+            - Arn
+        batchSize: 1
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimIngestStoreEmbed
+            - Arn
+        batchSize: 1
+    - s3:
+        bucket: podmind01-backend01-file01-${self:provider.stage}
+        event: s3:ObjectCreated:*
+        existing: true
+        rules:
+          - prefix: folder01/audio01
+    - s3:
+        bucket: podmind01-backend01-file01-${self:provider.stage}
+        event: s3:ObjectCreated:*
+        existing: true
+        rules:
+          - prefix: folder01/transcript01
+
