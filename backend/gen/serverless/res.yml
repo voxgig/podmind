@@ -121,22 +121,22 @@ QueueAimIngestHandleEpisode:
   Type: "AWS::SQS::Queue"
   Properties:
     QueueName: 'aim_ingest-handle_episode-${self:provider.stage,"dev"}'
-
+    VisibilityTimeout: 999
 QueueAimIngestTranscribeEpisode:
   Type: "AWS::SQS::Queue"
   Properties:
     QueueName: 'aim_ingest-transcribe_episode-${self:provider.stage,"dev"}'
-
+    VisibilityTimeout: 999
 QueueAimIngestEmbedChunk:
   Type: "AWS::SQS::Queue"
   Properties:
     QueueName: 'aim_ingest-embed_chunk-${self:provider.stage,"dev"}'
-
+    VisibilityTimeout: 999
 QueueAimIngestStoreEmbed:
   Type: "AWS::SQS::Queue"
   Properties:
     QueueName: 'aim_ingest-store_embed-${self:provider.stage,"dev"}'
-
+    VisibilityTimeout: 999
 
 BasicPodmindLambdaRole:
   Type: AWS::IAM::Role

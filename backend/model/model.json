@@ -74,7 +74,8 @@
               "$": {
                 "transport": {
                   "queue": {
-                    "active": true
+                    "active": true,
+                    "timeout": 999
                   }
                 }
               }
@@ -92,7 +93,8 @@
               "$": {
                 "transport": {
                   "queue": {
-                    "active": true
+                    "active": true,
+                    "timeout": 999
                   }
                 }
               }
@@ -103,7 +105,8 @@
               "$": {
                 "transport": {
                   "queue": {
-                    "active": true
+                    "active": true,
+                    "timeout": 999
                   }
                 }
               }
@@ -114,7 +117,8 @@
               "$": {
                 "transport": {
                   "queue": {
-                    "active": true
+                    "active": true,
+                    "timeout": 999
                   }
                 }
               }
