@@ -127,6 +127,7 @@ ingest: {
   env: lambda: {
     active: true
     timeout: 888
+    memory: 2048
   }
 
 }

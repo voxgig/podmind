@@ -450,7 +450,8 @@
             },
             "active": true,
             "timeout": 888,
-            "kind": "standard"
+            "kind": "standard",
+            "memory": 2048
           }
         },
         "api": {

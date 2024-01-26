@@ -2,6 +2,7 @@ monitor:
   handler: dist/handler/lambda/monitor.handler
   role: BasicPodmindLambdaRole
   timeout: 30
+  memorySize: 1024
 
 
 
@@ -9,6 +10,7 @@ auth:
   handler: dist/handler/lambda/auth.handler
   role: BasicPodmindLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/public/auth"
@@ -23,6 +25,7 @@ user:
   handler: dist/handler/lambda/user.handler
   role: BasicPodmindLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/private/user"
@@ -37,6 +40,7 @@ entity:
   handler: dist/handler/lambda/entity.handler
   role: BasicPodmindLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/private/entity"
@@ -51,6 +55,7 @@ chat:
   handler: dist/handler/lambda/chat.handler
   role: BasicPodmindLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/public/chat"
@@ -65,6 +70,7 @@ widget:
   handler: dist/handler/lambda/widget.handler
   role: BasicPodmindLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/public/widget"
@@ -79,3 +85,4 @@ ingest:
   handler: dist/handler/lambda/ingest.handler
   role: BasicPodmindLambdaRole
   timeout: 888
+  memorySize: 2048

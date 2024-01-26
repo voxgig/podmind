@@ -1,7 +1,9 @@
-const Axios = require('axios')
+// const Axios = require('axios')
 
 module.exports = function make_handle_episode() {
   return async function handle_episode(this: any, msg: any, meta: any) {
+    const Axios = require('axios')
+
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
 
@@ -39,13 +41,13 @@ module.exports = function make_handle_episode() {
               bin$: 'content',
               id: 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
                 episodeEnt.id + '.mp3',
+              // content: res.data.slice(0, 21001000)
               content: res.data
             })
           }
           catch (err: any) {
             debug && debug('HANDLE-AUDIO-ERROR', mark, podcast_id, episode_id, res.status, err)
           }
-
           out.size = size = res.data.length
         }
 
