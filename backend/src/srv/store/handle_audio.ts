@@ -53,14 +53,16 @@ module.exports = function make_handle_audio() {
         debug && debug('AUDIO', mark, podcast_id, episode_id, url, res?.status, size)
       }
 
+      /* For debugging, normally triggered by S3
       if (doTranscribe) {
         // Assume audio already present, trigger transcription viq queue.
-        await seneca.post('aim:store,transcribe:episode', {
+        await seneca.post('aim:ingest,transcribe:episode', {
           episode_id,
           mark,
           doAudio,
         })
       }
+      */
 
       out.ok = true
     }

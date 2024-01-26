@@ -90,12 +90,6 @@ ingest:
     - sqs:
         arn:
           Fn::GetAtt:
-            - QueueAimIngestHandleEpisode
-            - Arn
-        batchSize: 1
-    - sqs:
-        arn:
-          Fn::GetAtt:
             - QueueAimIngestTranscribeEpisode
             - Arn
         batchSize: 1

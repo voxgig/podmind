@@ -94,10 +94,6 @@ ingest: {
     events: [
       {
         source: sqs
-        qrn: QueueAimIngestHandleEpisode
-      }
-      {
-        source: sqs
         qrn: QueueAimIngestTranscribeEpisode
       }
       {
