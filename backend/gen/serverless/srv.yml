@@ -85,7 +85,7 @@ widget:
 ingest:
   handler: dist/handler/lambda/ingest.handler
   role: BasicPodmindLambdaRole
-  timeout: 30
+  timeout: 444
   events:
     - sqs:
         arn:

@@ -504,7 +504,7 @@
               }
             },
             "active": true,
-            "timeout": 30,
+            "timeout": 444,
             "kind": "standard"
           }
         },
@@ -549,7 +549,6 @@
             }
           }
         },
-        "timeout": 444,
         "on": {
           "ingest": {
             "provider": "aws",

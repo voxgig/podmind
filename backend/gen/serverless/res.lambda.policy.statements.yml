@@ -1,0 +1,22 @@
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+                - s3:DeleteObject
+                - s3:ListBucket
+              Resource:
+                - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}/*
+                - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}
+
+            - Effect: Allow
+              Action:
+                - sqs:SendMessage
+                - sqs:ReceiveMessage
+                - sqs:DeleteMessage
+                - sqs:GetQueueAttributes
+                - sqs:GetQueueUrl
+              Resource:
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-transcribe_episode-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-store_embed-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-embed_chunk-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-handle_episode-${self:provider.stage,"dev"}

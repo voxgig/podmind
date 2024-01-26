@@ -87,8 +87,6 @@ ingest: {
     }
   }
 
-  timeout: 444
-  
   on: ingest: {
     provider: aws
     events: [
@@ -126,7 +124,11 @@ ingest: {
   }
 
   api: req: path: { active: false  }
-  env: lambda: active: true
+  env: lambda: {
+    active: true
+    timeout: 444
+  }
+
 }
 
 
