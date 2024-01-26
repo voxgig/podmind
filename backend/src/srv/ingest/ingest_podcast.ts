@@ -80,7 +80,7 @@ module.exports = function make_ingest_podcast() {
       })
 
       if (doIngest) {
-        seneca.act('aim:ingest,handle:episode',
+        await seneca.post('aim:ingest,handle:episode',
           { episode_id: episodeEnt.id, podcast_id, doAudio, doTranscribe, mark })
       }
 
