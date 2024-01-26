@@ -79,8 +79,10 @@ ingest: {
     aim: ingest: {}
   }
   out: {
+    aim: store: {
+      handle: audio: {}
+    }
     aim: ingest: {
-      handle: episode: {}
       transcribe: episode: {}
       embed: chunk: {}
       store: embed: {}
@@ -119,6 +121,32 @@ ingest: {
         event: 's3:ObjectCreated:*'
         rules: prefix: 'folder01/transcript01'
         msg: 'aim:ingest,handle:transcript'
+      }
+    ]
+  }
+
+  api: web: active: false
+  env: lambda: {
+    active: true
+    timeout: 888
+    memory: 2048
+  }
+
+}
+
+
+
+store: {
+  in: {
+    aim: store: {}
+  }
+
+  on: ingest: {
+    provider: aws
+    events: [
+      {
+        source: sqs
+        qrn: QueueAimStoreHandleAudio
       }
     ]
   }

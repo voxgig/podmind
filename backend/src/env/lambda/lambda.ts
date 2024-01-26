@@ -179,8 +179,10 @@ async function setupLambda(seneca: any) {
       suffix: '-' + STAGE
     })
 
+  // TODO: move to model
   if ('monitor' === seneca.context.srvname ||
-    'ingest' === seneca.context.srvname
+    'ingest' === seneca.context.srvname ||
+    'audio' === seneca.context.srvname
   ) {
     seneca.use('repl', { listen: false })
     await seneca.ready()

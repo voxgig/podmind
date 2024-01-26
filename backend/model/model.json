@@ -70,16 +70,7 @@
           },
           "handle": {
             "transcript": {},
-            "episode": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true,
-                    "timeout": 999
-                  }
-                }
-              }
-            }
+            "episode": {}
           },
           "ingest": {
             "transcript": {},
@@ -114,6 +105,23 @@
           },
           "store": {
             "embed": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true,
+                    "timeout": 999
+                  }
+                }
+              }
+            }
+          }
+        },
+        "store": {
+          "get": {
+            "info": {}
+          },
+          "handle": {
+            "audio": {
               "$": {
                 "transport": {
                   "queue": {
@@ -510,10 +518,12 @@
         "deps": {},
         "out": {
           "aim": {
-            "ingest": {
+            "store": {
               "handle": {
-                "episode": {}
-              },
+                "audio": {}
+              }
+            },
+            "ingest": {
               "transcribe": {
                 "episode": {}
               },
@@ -563,6 +573,51 @@
                   "prefix": "folder01/transcript01"
                 },
                 "msg": "aim:ingest,handle:transcript"
+              }
+            ]
+          }
+        }
+      },
+      "store": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 888,
+            "kind": "standard",
+            "memory": 2048
+          }
+        },
+        "api": {
+          "web": {
+            "active": false,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "store": {}
+          }
+        },
+        "deps": {},
+        "on": {
+          "ingest": {
+            "provider": "aws",
+            "events": [
+              {
+                "source": "sqs",
+                "qrn": "QueueAimStoreHandleAudio"
               }
             ]
           }

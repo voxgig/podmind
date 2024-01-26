@@ -44,6 +44,12 @@ aim: ingest: {
 }
 
 
+aim: store: {
+  get: info: {}
+  handle: audio: {}
+}
+
+
 aim: widget: {
   get: info: {}
   create: widget: {}
@@ -84,8 +90,11 @@ aim: req: {
 
 # Message Transports
 
+aim: store: {
+  handle: audio: '$': transport: queue: { active: true, timeout: 999 }
+}
+
 aim: ingest: {
-  handle: episode: '$': transport: queue: { active: true, timeout: 999 }
   transcribe: episode: '$': transport: queue: { active: true, timeout: 999 }
   embed: chunk: '$': transport: queue: { active: true, timeout: 999 }
   store: embed: '$': transport: queue: { active: true, timeout: 999 }

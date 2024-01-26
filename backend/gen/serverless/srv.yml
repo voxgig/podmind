@@ -124,3 +124,19 @@ ingest:
         rules:
           - prefix: folder01/transcript01
 
+
+
+
+store:
+  handler: dist/handler/lambda/store.handler
+  role: BasicPodmindLambdaRole
+  timeout: 888
+  memorySize: 2048
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimStoreHandleAudio
+            - Arn
+        batchSize: 1
+

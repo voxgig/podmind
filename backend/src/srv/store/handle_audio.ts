@@ -1,11 +1,11 @@
 // const Axios = require('axios')
 
-module.exports = function make_handle_episode() {
-  return async function handle_episode(this: any, msg: any, meta: any) {
-    const Axios = require('axios')
+module.exports = function make_handle_audio() {
+  return async function handle_audio(this: any, msg: any, meta: any) {
 
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
+    const Axios = seneca.shared.Axios
 
     let out: any = { ok: false, why: '', paths: [], episode_id: '' }
 
@@ -55,7 +55,7 @@ module.exports = function make_handle_episode() {
 
       if (doTranscribe) {
         // Assume audio already present, trigger transcription viq queue.
-        seneca.act('aim:ingest,transcribe:episode', {
+        await seneca.post('aim:store,transcribe:episode', {
           episode_id,
           mark,
           doAudio,
