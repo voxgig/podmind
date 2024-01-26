@@ -34,12 +34,17 @@ module.exports = function make_handle_episode() {
         debug && debug('HANDLE-AUDIO', mark, podcast_id, episode_id, res?.status)
 
         if (200 === res?.status) {
-          await seneca.entity('pdm/audio').save$({
-            bin$: 'content',
-            id: 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
-              episodeEnt.id + '.mp3',
-            content: res.data
-          })
+          try {
+            await seneca.entity('pdm/audio').save$({
+              bin$: 'content',
+              id: 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
+                episodeEnt.id + '.mp3',
+              content: res.data
+            })
+          }
+          catch (err: any) {
+            debug && debug('HANDLE-AUDIO-ERROR', mark, podcast_id, episode_id, res.status, err)
+          }
 
           out.size = size = res.data.length
         }

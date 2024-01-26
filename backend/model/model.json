@@ -70,15 +70,7 @@
           },
           "handle": {
             "transcript": {},
-            "episode": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true
-                  }
-                }
-              }
-            }
+            "episode": {}
           },
           "ingest": {
             "transcript": {},
@@ -88,37 +80,13 @@
             "podcast": {}
           },
           "transcribe": {
-            "episode": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true
-                  }
-                }
-              }
-            }
+            "episode": {}
           },
           "embed": {
-            "chunk": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true
-                  }
-                }
-              }
-            }
+            "chunk": {}
           },
           "store": {
-            "embed": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true
-                  }
-                }
-              }
-            }
+            "embed": {}
           }
         },
         "widget": {
