@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {

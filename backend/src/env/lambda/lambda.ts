@@ -59,6 +59,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
     let authNeeded = !(
       'monitor' === srvname ||
       'ingest' === srvname ||
+      'store' === srvname ||
       (srv.api.web &&
         srv.api.web.path &&
         srv.api.web.path.area &&
@@ -74,7 +75,9 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
             ? undefined
             : 'ingest' === srvname
               ? undefined
-              : { ['aim:req,on:' + srvname]: true }
+              : 'store' === srvname
+                ? undefined
+                : { ['aim:req,on:' + srvname]: true }
       })
       .use('gateway-lambda', {
         auth: {

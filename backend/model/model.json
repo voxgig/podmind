@@ -280,7 +280,8 @@
           "user": {},
           "entity": {},
           "chat": {},
-          "ingest": {}
+          "ingest": {},
+          "store": {}
         }
       },
       "auth": {
@@ -539,38 +540,7 @@
         "on": {
           "ingest": {
             "provider": "aws",
-            "events": [
-              {
-                "source": "sqs",
-                "qrn": "QueueAimIngestTranscribeEpisode"
-              },
-              {
-                "source": "sqs",
-                "qrn": "QueueAimIngestEmbedChunk"
-              },
-              {
-                "source": "sqs",
-                "qrn": "QueueAimIngestStoreEmbed"
-              },
-              {
-                "source": "s3",
-                "bucket": "podmind01-backend01-file01-${self:provider.stage}",
-                "event": "s3:ObjectCreated:*",
-                "rules": {
-                  "prefix": "folder01/audio01"
-                },
-                "msg": "aim:ingest,transcribe:episode"
-              },
-              {
-                "source": "s3",
-                "bucket": "podmind01-backend01-file01-${self:provider.stage}",
-                "event": "s3:ObjectCreated:*",
-                "rules": {
-                  "prefix": "folder01/transcript01"
-                },
-                "msg": "aim:ingest,handle:transcript"
-              }
-            ]
+            "events": []
           }
         }
       },

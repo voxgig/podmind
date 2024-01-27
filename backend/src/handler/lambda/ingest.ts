@@ -8,14 +8,6 @@ function complete(seneca: any) {
   seneca.client({type:'sqs',pin:'aim:ingest,transcribe:episode'})
   seneca.client({type:'sqs',pin:'aim:ingest,embed:chunk'})
   seneca.client({type:'sqs',pin:'aim:ingest,store:embed'})
-
-  const makeGatewayHandler = seneca.export('s3-store/makeGatewayHandler')
-  seneca
-    .act('sys:gateway,kind:lambda,add:hook,hook:handler', {
-       handler: makeGatewayHandler('aim:ingest,transcribe:episode') })
-  seneca
-    .act('sys:gateway,kind:lambda,add:hook,hook:handler', {
-       handler: makeGatewayHandler('aim:ingest,handle:transcript') })
 }
 
 exports.handler = async (
