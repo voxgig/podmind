@@ -59,6 +59,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
     })
 
     // TODO: move to model
+    /*
     let authNeeded = !(
       'monitor' === srvname ||
       'ingest' === srvname ||
@@ -68,6 +69,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         srv.api.web.path.area &&
         'public/' === srv.api.web.path.area)
     )
+    */
 
     seneca
       .use('gateway', {
@@ -110,7 +112,8 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
             user: {
               auth: true,
-              require: authNeeded
+              // require: authNeeded
+              require: srv.user?.required ?? true
             }
           }
         }

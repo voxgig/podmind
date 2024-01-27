@@ -285,6 +285,9 @@
         },
         "repl": {
           "active": true
+        },
+        "user": {
+          "required": false
         }
       },
       "auth": {
@@ -325,7 +328,10 @@
             }
           }
         },
-        "deps": {}
+        "deps": {},
+        "user": {
+          "required": true
+        }
       },
       "user": {
         "env": {
@@ -365,7 +371,10 @@
             }
           }
         },
-        "deps": {}
+        "deps": {},
+        "user": {
+          "required": true
+        }
       },
       "entity": {
         "env": {
@@ -405,7 +414,10 @@
             }
           }
         },
-        "deps": {}
+        "deps": {},
+        "user": {
+          "required": true
+        }
       },
       "chat": {
         "env": {
@@ -445,7 +457,10 @@
             }
           }
         },
-        "deps": {}
+        "deps": {},
+        "user": {
+          "required": true
+        }
       },
       "widget": {
         "env": {
@@ -485,7 +500,10 @@
             }
           }
         },
-        "deps": {}
+        "deps": {},
+        "user": {
+          "required": false
+        }
       },
       "ingest": {
         "env": {
@@ -546,6 +564,9 @@
             "events": []
           }
         },
+        "user": {
+          "required": false
+        },
         "repl": {
           "active": true
         }
@@ -593,6 +614,9 @@
               }
             ]
           }
+        },
+        "user": {
+          "required": false
         },
         "repl": {
           "active": true

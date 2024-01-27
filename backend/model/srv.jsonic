@@ -9,6 +9,7 @@ monitor: {
   api: web: { active: false }
   env: lambda: active: true
   repl: active: true
+  user: required: false
   
   deps: {
     auth: {}
@@ -26,7 +27,7 @@ auth: {
     aim: auth: {}
     aim: req: on: auth: {}
   }
-
+  user: required: true
   api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
@@ -37,7 +38,7 @@ user: {
     aim: user: {}
     aim: req: on: user: {}
   }
-
+  user: required: true
   api: web: path: { area: 'private/', suffix: ''  }
   env: lambda: active: true
 }
@@ -48,7 +49,7 @@ entity: {
     aim: entity: {}
     aim: req: on: entity: {}
   }
-
+  user: required: true
   api: web: path: { area: 'private/', suffix: ''  }
   env: lambda: active: true
 }
@@ -59,7 +60,7 @@ chat: {
     aim: chat: {}
     aim: req: on: chat: {}
   }
-
+  user: required: true
   api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
@@ -70,7 +71,7 @@ widget: {
     aim: widget: {}
     aim: req: on: widget: {}
   }
-
+  user: required: false
   api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
@@ -123,6 +124,7 @@ ingest: {
     ]
   }
 
+  user: required: false
   repl: active: true
   api: web: active: false
   env: lambda: {
@@ -150,6 +152,7 @@ store: {
     ]
   }
 
+  user: required: false
   repl: active: true
   api: web: active: false
   env: lambda: {

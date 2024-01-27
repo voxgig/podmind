@@ -16,6 +16,9 @@ export type Srv = {
   repl?: {
     active: boolean
   }
+  user?: {
+    required: boolean
+  }
 }
 
 
