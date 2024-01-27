@@ -282,6 +282,9 @@
           "chat": {},
           "ingest": {},
           "store": {}
+        },
+        "repl": {
+          "active": true
         }
       },
       "auth": {
@@ -542,6 +545,9 @@
             "provider": "aws",
             "events": []
           }
+        },
+        "repl": {
+          "active": true
         }
       },
       "store": {
@@ -587,6 +593,9 @@
               }
             ]
           }
+        },
+        "repl": {
+          "active": true
         }
       }
     },

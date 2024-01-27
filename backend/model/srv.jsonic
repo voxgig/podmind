@@ -8,7 +8,8 @@ monitor: {
   }
   api: web: { active: false }
   env: lambda: active: true
-
+  repl: active: true
+  
   deps: {
     auth: {}
     user: {}
@@ -122,6 +123,7 @@ ingest: {
     ]
   }
 
+  repl: active: true
   api: web: active: false
   env: lambda: {
     active: true
@@ -148,6 +150,7 @@ store: {
     ]
   }
 
+  repl: active: true
   api: web: active: false
   env: lambda: {
     active: true

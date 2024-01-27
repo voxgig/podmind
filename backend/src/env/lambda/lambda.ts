@@ -8,6 +8,9 @@ import { basic, setup, base } from '../shared/basic'
 import Pkg from '../../../package.json'
 import Model from '../../../model/model.json'
 
+
+import type { Srv } from '../shared/basic'
+
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const STAGE = process.env.PODCASTIC_STAGE || 'local'
 
@@ -32,7 +35,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
   const Main = Model.main as any
 
   if (null == seneca) {
-    let srv = Main.srv[srvname]
+    let srv: Srv = Main.srv[srvname]
 
     let baseOptions = {
       tag: srvname + '-pdm01-' + STAGE + '@' + Pkg.version,
@@ -153,7 +156,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
     setup(seneca)
 
-    setupLambda(seneca)
+    setupLambda(seneca, srv)
 
     seneca.use(Live, {
       srv: {
@@ -176,17 +179,13 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 }
 
 
-async function setupLambda(seneca: any) {
+async function setupLambda(seneca: any, srv: Srv) {
   seneca
     .use('sqs-transport', {
       suffix: '-' + STAGE
     })
 
-  // TODO: move to model
-  if ('monitor' === seneca.context.srvname ||
-    'ingest' === seneca.context.srvname ||
-    'store' === seneca.context.srvname
-  ) {
+  if (srv.repl?.active) {
     seneca.use('repl', { listen: false })
     await seneca.ready()
     await seneca.post('sys:repl,use:repl,id:invoke')

@@ -1,5 +1,25 @@
 
 
+export type Srv = {
+  env: {
+    lambda: {
+      timeout: number
+    }
+  }
+  api: {
+    web?: {
+      path?: {
+        area: string
+      }
+    }
+  }
+  repl?: {
+    active: boolean
+  }
+}
+
+
+
 function basic(seneca: any, options?: any) {
   options = options || {}
   const deep = seneca.util.deep
