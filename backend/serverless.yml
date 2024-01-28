@@ -11,11 +11,22 @@ provider:
   region: ${opt:region, 'us-east-1'}
   stage: ${opt:stage, 'dev'}
   environment: ${file(serverless-env.yml):${self:provider.stage}}
+  versionFunctions: false
 
 package:
   patterns:
     - '!data/**'
     - '!coverage/**'
+    - '!test'
+    - '!**/yarn.lock'
+    - '!**/package-lock.json'
+    - '!node_modules/**/LICENSE'
+    - '!node_modules/**/*.map'
+    - '!node_modules/**/*.html'
+    - '!node_modules/**/*.ts'
+    - '!node_modules/**/*.md'
+    - '!node_modules/**/coverage'
+    - '!node_modules/.yarn-integrity'
   
 functions: ${file(./gen/serverless/srv.yml)}
 

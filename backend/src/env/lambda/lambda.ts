@@ -71,17 +71,20 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
     )
     */
 
+    const gateway_allow = srv.api.web?.active ?
+      dive(srv.in, 128, (path: any, meta: any) => [
+        pinify(path),
+        !!meta.allow
+      ]).reduce((a: any, n: any) => ((n[1] ? a[n[0]] = true : false), a), {}) :
+      undefined
+
+    console.log('GATEWAY-ALLOW', srvname, gateway_allow)
 
     seneca
       .use('gateway', {
         // TODO move to model
         // NOTE: monitor is private and does not expose a HTTP end point
-        allow: srv.api.web?.active ?
-          dive(srv.in, 128, (path: any, meta: any) => [
-            pinify(path),
-            !!meta.allow
-          ]).reduce((a: any, n: any) => ((n[1] ? a[n[0]] = true : false), a), {}) :
-          undefined
+        allow: gateway_allow
         /*
           'monitor' === srvname
             ? undefined
