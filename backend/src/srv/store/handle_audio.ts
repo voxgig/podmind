@@ -40,7 +40,7 @@ module.exports = function make_handle_audio() {
             await seneca.entity('pdm/audio').save$({
               bin$: 'content',
               id: 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
-                episodeEnt.id + humanify(Date.now()) + '.mp3',
+                episodeEnt.id + '-' + humanify(Date.now()) + '.mp3',
               content: res.data
             })
           }
