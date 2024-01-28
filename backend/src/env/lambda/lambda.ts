@@ -73,7 +73,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
     const gateway_allow = srv.api.web?.active ?
       dive(srv.in, 128, (path: any, meta: any) => [
-        pinify(path),
+        meta.allow ? pinify(path) : null,
         !!meta.allow
       ]).reduce((a: any, n: any) => ((n[1] ? a[n[0]] = true : false), a), {}) :
       undefined
