@@ -110,6 +110,10 @@ aim: monitor: calc: sum: '$': params: {
 }
 
 
+aim: ingest: subscribe: podcast: '$': params: {
+  feed: String
+}
+
 
 
 

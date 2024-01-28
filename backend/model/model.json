@@ -77,7 +77,13 @@
             "podcast": {}
           },
           "subscribe": {
-            "podcast": {}
+            "podcast": {
+              "$": {
+                "params": {
+                  "feed": "String"
+                }
+              }
+            }
           },
           "transcribe": {
             "episode": {
@@ -740,6 +746,27 @@
           }
         },
         "login": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
+          }
+        },
+        "capture": {
           "id": {
             "field": "id"
           },
