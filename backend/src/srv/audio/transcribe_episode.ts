@@ -6,7 +6,7 @@ module.exports = function make_transcribe_episode() {
   return async function transcribe_episode(this: any, msg: any, meta: any) {
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
-    const { humanify } = seneca.export('PodmindUtility/getUtils')()
+    const { humanify, listPaths } = seneca.export('PodmindUtility/getUtils')()
     const Deepgram = seneca.shared.Deepgram
 
     let out: any = { ok: false, why: '', episode_id: '' }
@@ -24,7 +24,7 @@ module.exports = function make_transcribe_episode() {
     if (null == path) {
       debug && debug('RECORDS', mark, path, msg.event?.Records)
 
-      const paths = seneca.shared.listPaths(msg.event)
+      const paths = listPaths(msg.event)
 
       if (paths && 0 < paths.length) {
         out.ok = true

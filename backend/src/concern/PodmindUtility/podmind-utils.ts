@@ -6,6 +6,7 @@ module.exports = function make_podmind_utils() {
   return function getUtils() {
     return {
       humanify,
+      listPaths,
     }
   }
 }
@@ -14,4 +15,11 @@ module.exports = function make_podmind_utils() {
 function humanify(when: number) {
   const d = new Date(when)
   return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''))
+}
+
+
+function listPaths(event: any) {
+  const paths = event?.Records?.map((r: any) =>
+    decodeURIComponent(r.s3.object.key).replace(/\+/g, ' '))
+  return paths
 }
