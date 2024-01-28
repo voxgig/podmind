@@ -6,13 +6,13 @@ module.exports = function make_handle_audio() {
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
     const Axios = seneca.shared.Axios
+    const { humanify } = seneca.export('PodmindUtility/getUtils')()
 
     let out: any = { ok: false, why: '', paths: [], episode_id: '' }
 
     let episode_id = msg.episode_id
     let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
     let doAudio = false !== msg.doAudio // download by default
-    let doTranscribe = false !== msg.doTranscribe // transcribe by default
 
     out.episode_id = episode_id
     let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
@@ -40,7 +40,7 @@ module.exports = function make_handle_audio() {
             await seneca.entity('pdm/audio').save$({
               bin$: 'content',
               id: 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
-                episodeEnt.id + '.mp3',
+                episodeEnt.id + humanify(Date.now()) + '.mp3',
               content: res.data
             })
           }
@@ -52,17 +52,6 @@ module.exports = function make_handle_audio() {
 
         debug && debug('AUDIO', mark, podcast_id, episode_id, url, res?.status, size)
       }
-
-      /* For debugging, normally triggered by S3
-      if (doTranscribe) {
-        // Assume audio already present, trigger transcription viq queue.
-        await seneca.post('aim:ingest,transcribe:episode', {
-          episode_id,
-          mark,
-          doAudio,
-        })
-      }
-      */
 
       out.ok = true
     }

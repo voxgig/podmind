@@ -37,8 +37,6 @@ aim: ingest: {
   ingest: transcript: {}
   subscribe: podcast: {}
   ingest: podcast: {}
-  handle: episode: {}
-  transcribe: episode: {}
   embed: chunk: {}
   store: embed: {}
 }
@@ -47,6 +45,12 @@ aim: ingest: {
 aim: store: {
   get: info: {}
   handle: audio: {}
+}
+
+
+aim: audio: {
+  get: info: {}
+  transcribe: episode: {}
 }
 
 
@@ -95,7 +99,7 @@ aim: store: {
 }
 
 aim: ingest: {
-  transcribe: episode: '$': transport: queue: { active: true, timeout: 999 }
+  # transcribe: episode: '$': transport: queue: { active: true, timeout: 999 }
   embed: chunk: '$': transport: queue: { active: true, timeout: 999 }
   store: embed: '$': transport: queue: { active: true, timeout: 999 }
 }

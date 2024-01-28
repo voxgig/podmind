@@ -111,13 +111,6 @@ ingest: {
       #   source: s3
       #   bucket: 'podmind01-backend01-file01-${self:provider.stage}'
       #   event: 's3:ObjectCreated:*'
-      #   rules: prefix: 'folder01/audio01'
-      #   msg: 'aim:ingest,transcribe:episode'
-      # }
-      # {
-      #   source: s3
-      #   bucket: 'podmind01-backend01-file01-${self:provider.stage}'
-      #   event: 's3:ObjectCreated:*'
       #   rules: prefix: 'folder01/transcript01'
       #   msg: 'aim:ingest,handle:transcript'
       # }
@@ -161,6 +154,35 @@ store: {
     memory: 2048
   }
 
+}
+
+
+audio: {
+  in: {
+    aim: audio: {}
+  }
+
+  on: file: {
+    provider: aws
+    events: [
+      {
+        source: s3
+        bucket: 'podmind01-backend01-file01-${self:provider.stage}'
+        event: 's3:ObjectCreated:*'
+        rules: prefix: 'folder01/audio01'
+        msg: 'aim:audio,transcribe:episode'
+      }
+    ]
+  }
+
+  user: required: false
+  repl: active: true
+  api: web: active: false
+  env: lambda: {
+    active: true
+    timeout: 888
+    memory: 2048
+  }
 }
 
 

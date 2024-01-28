@@ -102,3 +102,19 @@ store:
             - Arn
         batchSize: 1
 
+
+
+
+audio:
+  handler: dist/handler/lambda/audio.handler
+  role: BasicPodmindLambdaRole
+  timeout: 888
+  memorySize: 2048
+  events:
+    - s3:
+        bucket: podmind01-backend01-file01-${self:provider.stage}
+        event: s3:ObjectCreated:*
+        existing: true
+        rules:
+          - prefix: folder01/audio01
+

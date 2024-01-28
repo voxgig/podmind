@@ -69,8 +69,7 @@
             "info": {}
           },
           "handle": {
-            "transcript": {},
-            "episode": {}
+            "transcript": {}
           },
           "ingest": {
             "transcript": {},
@@ -81,18 +80,6 @@
               "$": {
                 "params": {
                   "feed": "String"
-                }
-              }
-            }
-          },
-          "transcribe": {
-            "episode": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true,
-                    "timeout": 999
-                  }
                 }
               }
             }
@@ -137,6 +124,14 @@
                 }
               }
             }
+          }
+        },
+        "audio": {
+          "get": {
+            "info": {}
+          },
+          "transcribe": {
+            "episode": {}
           }
         },
         "widget": {
@@ -637,6 +632,62 @@
               {
                 "source": "sqs",
                 "qrn": "QueueAimStoreHandleAudio"
+              }
+            ]
+          }
+        },
+        "user": {
+          "required": false
+        },
+        "repl": {
+          "active": true
+        }
+      },
+      "audio": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 888,
+            "kind": "standard",
+            "memory": 2048
+          }
+        },
+        "api": {
+          "web": {
+            "active": false,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "audio": {}
+          }
+        },
+        "deps": {},
+        "on": {
+          "file": {
+            "provider": "aws",
+            "events": [
+              {
+                "source": "s3",
+                "bucket": "podmind01-backend01-file01-${self:provider.stage}",
+                "event": "s3:ObjectCreated:*",
+                "rules": {
+                  "prefix": "folder01/audio01"
+                },
+                "msg": "aim:audio,transcribe:episode"
               }
             ]
           }

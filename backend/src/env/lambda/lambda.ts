@@ -4,6 +4,7 @@ import { Live } from '@voxgig/system'
 import { dive, camelify, pinify } from '@voxgig/model'
 
 import { basic, setup, base } from '../shared/basic'
+import PodmindUtility from '../../concern/PodmindUtility/PodmindUtility'
 
 import Pkg from '../../../package.json'
 import Model from '../../../model/model.json'
@@ -58,19 +59,6 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
       }
     })
 
-    // TODO: move to model
-    /*
-    let authNeeded = !(
-      'monitor' === srvname ||
-      'ingest' === srvname ||
-      'store' === srvname ||
-      (srv.api.web &&
-        srv.api.web.path &&
-        srv.api.web.path.area &&
-        'public/' === srv.api.web.path.area)
-    )
-    */
-
     const gateway_allow = srv.api.web?.active ?
       dive(srv.in, 128, (path: any, meta: any) => [
         meta.allow ? pinify(path) : null,
@@ -82,18 +70,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
     seneca
       .use('gateway', {
-        // TODO move to model
-        // NOTE: monitor is private and does not expose a HTTP end point
         allow: gateway_allow
-        /*
-          'monitor' === srvname
-            ? undefined
-            : 'ingest' === srvname
-              ? undefined
-              : 'store' === srvname
-                ? undefined
-                : { ['aim:req,on:' + srvname]: true }
-                */
       })
       .use('gateway-lambda', {
         auth: {
@@ -156,7 +133,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         suffix: '',
         prefix: '',
 
-        // TODO: bug in s3-store: local and s3 folder hanlding should the same 
+        // TODO: bug in s3-store: local and s3 folder handling should the same 
         // TODO: empty string value is significant - make actual folder used well-defined
         folder: '',
 
@@ -171,6 +148,11 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
     setup(seneca)
 
     setupLambda(seneca, srv)
+
+    // TODO: load as Concern
+    seneca.use(PodmindUtility)
+
+    // Load Concerns
 
     seneca.use(Live, {
       srv: {

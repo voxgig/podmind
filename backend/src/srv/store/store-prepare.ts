@@ -7,17 +7,13 @@ module.exports = function make_prepare_store() {
     let seneca = this
 
     // TODO: implement conf, also for deps
+    // TODO: move to PodmindUtility
     seneca.shared.debug =
       // seneca.plugin.options.debug ?
       (mark: string) => (...args: any[]) => console.log('##', mark, ...args)
     // : (_mark: string) => null
 
     seneca.shared.Axios = Axios
-
-    seneca.shared.humanify = (when: number) => {
-      const d = new Date(when)
-      return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''))
-    }
 
   }
 }

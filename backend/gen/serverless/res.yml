@@ -135,11 +135,6 @@ TablePdmChat:
         KeyType: HASH
 
 
-QueueAimIngestTranscribeEpisode:
-  Type: "AWS::SQS::Queue"
-  Properties:
-    QueueName: 'aim_ingest-transcribe_episode-${self:provider.stage,"dev"}'
-    VisibilityTimeout: 999
 QueueAimIngestEmbedChunk:
   Type: "AWS::SQS::Queue"
   Properties:
