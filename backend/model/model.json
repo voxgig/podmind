@@ -282,7 +282,8 @@
           "entity": {},
           "chat": {},
           "ingest": {},
-          "store": {}
+          "store": {},
+          "audio": {}
         },
         "repl": {
           "active": true
@@ -567,9 +568,6 @@
               }
             },
             "ingest": {
-              "transcribe": {
-                "episode": {}
-              },
               "embed": {
                 "chunk": {}
               },

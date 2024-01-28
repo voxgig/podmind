@@ -18,6 +18,7 @@ monitor: {
     chat: {}
     ingest: {}
     store: {}
+    audio: {}
   }
 }
 
@@ -86,7 +87,6 @@ ingest: {
       handle: audio: {}
     }
     aim: ingest: {
-      transcribe: episode: {}
       embed: chunk: {}
       store: embed: {}
     }
