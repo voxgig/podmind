@@ -1,7 +1,7 @@
 
 import Seneca from 'seneca'
 import { Live } from '@voxgig/system'
-import { dive, camelify } from '@voxgig/model'
+import { dive, camelify, pinify } from '@voxgig/model'
 
 import { basic, setup, base } from '../shared/basic'
 
@@ -71,11 +71,18 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
     )
     */
 
+
     seneca
       .use('gateway', {
         // TODO move to model
         // NOTE: monitor is private and does not expose a HTTP end point
-        allow:
+        allow: srv.api.web?.active ?
+          dive(srv.in, 128, (path: any, meta: any) => [
+            pinify(path),
+            !!meta.allow
+          ]).reduce((a: any, n: any) => ((n[1] ? a[n[0]] = true : false), a), {}) :
+          undefined
+        /*
           'monitor' === srvname
             ? undefined
             : 'ingest' === srvname
@@ -83,6 +90,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
               : 'store' === srvname
                 ? undefined
                 : { ['aim:req,on:' + srvname]: true }
+                */
       })
       .use('gateway-lambda', {
         auth: {

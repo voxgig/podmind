@@ -1,6 +1,8 @@
 
 
 export type Srv = {
+  in?: Record<string, any>
+  out?: Record<string, any>
   env: {
     lambda: {
       timeout: number
@@ -8,6 +10,7 @@ export type Srv = {
   }
   api: {
     web?: {
+      active: boolean
       path?: {
         area: string
       }

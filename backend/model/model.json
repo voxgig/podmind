@@ -329,14 +329,18 @@
             "auth": {},
             "req": {
               "on": {
-                "auth": {}
+                "auth": {
+                  "$": {
+                    "allow": true
+                  }
+                }
               }
             }
           }
         },
         "deps": {},
         "user": {
-          "required": true
+          "required": false
         }
       },
       "user": {
@@ -372,7 +376,11 @@
             "user": {},
             "req": {
               "on": {
-                "user": {}
+                "user": {
+                  "$": {
+                    "allow": true
+                  }
+                }
               }
             }
           }
@@ -415,7 +423,11 @@
             "entity": {},
             "req": {
               "on": {
-                "entity": {}
+                "entity": {
+                  "$": {
+                    "allow": true
+                  }
+                }
               }
             }
           }
@@ -458,7 +470,11 @@
             "chat": {},
             "req": {
               "on": {
-                "chat": {}
+                "chat": {
+                  "$": {
+                    "allow": true
+                  }
+                }
               }
             }
           }
@@ -501,7 +517,11 @@
             "widget": {},
             "req": {
               "on": {
-                "widget": {}
+                "widget": {
+                  "$": {
+                    "allow": true
+                  }
+                }
               }
             }
           }

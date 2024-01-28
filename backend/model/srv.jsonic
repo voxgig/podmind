@@ -25,9 +25,9 @@ monitor: {
 auth: {
   in: {
     aim: auth: {}
-    aim: req: on: auth: {}
+    aim: req: on: auth: '$': allow: true
   }
-  user: required: true
+  user: required: false
   api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
@@ -36,7 +36,7 @@ auth: {
 user: {
   in: {
     aim: user: {}
-    aim: req: on: user: {}
+    aim: req: on: user: '$': allow: true
   }
   user: required: true
   api: web: path: { area: 'private/', suffix: ''  }
@@ -47,7 +47,7 @@ user: {
 entity: {
   in: {
     aim: entity: {}
-    aim: req: on: entity: {}
+    aim: req: on: entity: '$': allow: true
   }
   user: required: true
   api: web: path: { area: 'private/', suffix: ''  }
@@ -58,7 +58,7 @@ entity: {
 chat: {
   in: {
     aim: chat: {}
-    aim: req: on: chat: {}
+    aim: req: on: chat: '$': allow: true
   }
   user: required: true
   api: web: path: { area: 'public/', suffix: ''  }
@@ -69,7 +69,7 @@ chat: {
 widget: {
   in: {
     aim: widget: {}
-    aim: req: on: widget: {}
+    aim: req: on: widget: '$': allow: true
   }
   user: required: false
   api: web: path: { area: 'public/', suffix: ''  }
