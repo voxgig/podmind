@@ -10,129 +10,129 @@ FileBucket01:
         - ObjectOwnership: ObjectWriter
     BucketName: podmind01-backend01-file01-${self:provider.stage}
     
-TableSysUser:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'SysUser.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
+# TableSysUser:
+#   Type: AWS::DynamoDB::Table
+#   DeletionPolicy: Retain
+#   Properties:
+#     TableName: 'SysUser.${self:provider.stage,"dev"}'
+#     BillingMode: "PAY_PER_REQUEST"
+#     PointInTimeRecoverySpecification:
+#       PointInTimeRecoveryEnabled: "true"
+#     DeletionProtectionEnabled: true
+#     AttributeDefinitions:
+#       - AttributeName: "id"
+#         AttributeType: "S"
+#     KeySchema:
+#       - AttributeName: "id"
+#         KeyType: HASH
 
 
 
-TableSysLogin:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'SysLogin.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
+# TableSysLogin:
+#   Type: AWS::DynamoDB::Table
+#   DeletionPolicy: Retain
+#   Properties:
+#     TableName: 'SysLogin.${self:provider.stage,"dev"}'
+#     BillingMode: "PAY_PER_REQUEST"
+#     PointInTimeRecoverySpecification:
+#       PointInTimeRecoveryEnabled: "true"
+#     DeletionProtectionEnabled: true
+#     AttributeDefinitions:
+#       - AttributeName: "id"
+#         AttributeType: "S"
+#     KeySchema:
+#       - AttributeName: "id"
+#         KeyType: HASH
 
 
 
-TableSysCapture:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'SysCapture.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
+# TableSysCapture:
+#   Type: AWS::DynamoDB::Table
+#   DeletionPolicy: Retain
+#   Properties:
+#     TableName: 'SysCapture.${self:provider.stage,"dev"}'
+#     BillingMode: "PAY_PER_REQUEST"
+#     PointInTimeRecoverySpecification:
+#       PointInTimeRecoveryEnabled: "true"
+#     DeletionProtectionEnabled: true
+#     AttributeDefinitions:
+#       - AttributeName: "id"
+#         AttributeType: "S"
+#     KeySchema:
+#       - AttributeName: "id"
+#         KeyType: HASH
 
 
 
-TablePdmPodcast:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'PdmPodcast.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
+# TablePdmPodcast:
+#   Type: AWS::DynamoDB::Table
+#   DeletionPolicy: Retain
+#   Properties:
+#     TableName: 'PdmPodcast.${self:provider.stage,"dev"}'
+#     BillingMode: "PAY_PER_REQUEST"
+#     PointInTimeRecoverySpecification:
+#       PointInTimeRecoveryEnabled: "true"
+#     DeletionProtectionEnabled: true
+#     AttributeDefinitions:
+#       - AttributeName: "id"
+#         AttributeType: "S"
+#     KeySchema:
+#       - AttributeName: "id"
+#         KeyType: HASH
 
 
 
-TablePdmEpisode:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'PdmEpisode.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
+# TablePdmEpisode:
+#   Type: AWS::DynamoDB::Table
+#   DeletionPolicy: Retain
+#   Properties:
+#     TableName: 'PdmEpisode.${self:provider.stage,"dev"}'
+#     BillingMode: "PAY_PER_REQUEST"
+#     PointInTimeRecoverySpecification:
+#       PointInTimeRecoveryEnabled: "true"
+#     DeletionProtectionEnabled: true
+#     AttributeDefinitions:
+#       - AttributeName: "id"
+#         AttributeType: "S"
+#     KeySchema:
+#       - AttributeName: "id"
+#         KeyType: HASH
 
 
 
-TablePdmWidget:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'PdmWidget.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
+# TablePdmWidget:
+#   Type: AWS::DynamoDB::Table
+#   DeletionPolicy: Retain
+#   Properties:
+#     TableName: 'PdmWidget.${self:provider.stage,"dev"}'
+#     BillingMode: "PAY_PER_REQUEST"
+#     PointInTimeRecoverySpecification:
+#       PointInTimeRecoveryEnabled: "true"
+#     DeletionProtectionEnabled: true
+#     AttributeDefinitions:
+#       - AttributeName: "id"
+#         AttributeType: "S"
+#     KeySchema:
+#       - AttributeName: "id"
+#         KeyType: HASH
 
 
 
-TablePdmChat:
-  Type: AWS::DynamoDB::Table
-  DeletionPolicy: Retain
-  Properties:
-    TableName: 'PdmChat.${self:provider.stage,"dev"}'
-    BillingMode: "PAY_PER_REQUEST"
-    PointInTimeRecoverySpecification:
-      PointInTimeRecoveryEnabled: "true"
-    DeletionProtectionEnabled: true
-    AttributeDefinitions:
-      - AttributeName: "id"
-        AttributeType: "S"
-    KeySchema:
-      - AttributeName: "id"
-        KeyType: HASH
+# TablePdmChat:
+#   Type: AWS::DynamoDB::Table
+#   DeletionPolicy: Retain
+#   Properties:
+#     TableName: 'PdmChat.${self:provider.stage,"dev"}'
+#     BillingMode: "PAY_PER_REQUEST"
+#     PointInTimeRecoverySpecification:
+#       PointInTimeRecoveryEnabled: "true"
+#     DeletionProtectionEnabled: true
+#     AttributeDefinitions:
+#       - AttributeName: "id"
+#         AttributeType: "S"
+#     KeySchema:
+#       - AttributeName: "id"
+#         KeyType: HASH
 
 
 QueueAimIngestTranscribeEpisode:

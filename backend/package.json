@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "model": "voxgig-model model/model.jsonic",
     "model-build": "voxgig-model model/model.jsonic --once",
     "watch": "tsc --build src -w",
-    "build": "npm run model-build && tsc --build src",
+    "buildx": "npm run model-build && tsc --build src",
+    "build": "tsc --build src",
     "clean": "rm -rf dist node_modules yarn.lock package-lock.json",
     "reset": "npm run clean && npm install && npm run build && npm test",
     "prep-dev": "npm link @voxgig/podmind-common",
