@@ -69,7 +69,7 @@ module.exports = function make_ingest_podcast() {
         episodeEnt = seneca.entity('pdm/episode')
       }
 
-      await episodeEnt.save$({
+      episodeEnt = await episodeEnt.save$({
         podcast_id: podcastEnt.id,
         guid: episode.guid,
         title: episode.title,
