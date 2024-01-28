@@ -9,6 +9,11 @@ sys: login: {
   field: {}
 }
 
+sys: capture: {
+  field: {}
+}
+
+
 pdm: podcast: {
   # title: 'Podcast'
   field: {
