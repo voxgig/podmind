@@ -28,6 +28,7 @@ module.exports = function make_transcribe_episode() {
 
       if (paths && 0 < paths.length) {
         out.ok = true
+        out.paths = []
 
         for (path of paths) {
           let pathres = await seneca.post('aim:audio,transcribe:episode', {
