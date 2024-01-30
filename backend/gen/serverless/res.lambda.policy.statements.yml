@@ -19,3 +19,18 @@
                 - arn:aws:sqs:us-east-1:975049884289:aim_store-download_audio-${self:provider.stage,"dev"}
                 - arn:aws:sqs:us-east-1:975049884289:aim_embed-handle_chunk-${self:provider.stage,"dev"}
 
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource:
+                - "*"
+
+            - Effect: Allow
+              Action:
+                - "es:*"
+              Resource:
+                - "*"
+                
+                
+
+                
