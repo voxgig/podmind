@@ -4,10 +4,10 @@ import { defaultProvider } from '@aws-sdk/credential-provider-node'
 
 
 module.exports = function make_store_embed() {
-  return async function store_embed(this: any, msg: any, _meta: any) {
+  return async function store_embed(this: any, msg: any, meta: any) {
 
     const seneca = this
-    const debug = seneca.shared.debug
+    const debug = seneca.shared.debug(meta.action)
 
     const region = seneca.context.model.main.conf.cloud.aws.region
     const node = seneca.context.model.main.conf.cloud.opensearch.url
@@ -21,7 +21,7 @@ module.exports = function make_store_embed() {
     let episode_id = msg.episode_id
     let mark = msg.mark || seneca.util.Nid()
 
-    debug && debug('STORE', mark, podcast_id, episode_id)
+    debug('STORE', mark, podcast_id, episode_id)
 
     const OpenSearchClient = getOpenSearchClient(region, node)
 

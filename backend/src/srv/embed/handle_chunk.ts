@@ -2,10 +2,10 @@ import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedroc
 
 
 module.exports = function make_handle_chunk() {
-  return async function handle_chunk(this: any, msg: any, _meta: any) {
+  return async function handle_chunk(this: any, msg: any, meta: any) {
 
     const seneca = this
-    const debug = seneca.shared.debug
+    const debug = seneca.shared.debug(meta.action)
 
     const region = seneca.context.model.main.conf.cloud.aws.region
 

@@ -145,6 +145,11 @@ QueueAimEmbedHandleChunk:
   Properties:
     QueueName: 'aim_embed-handle_chunk-${self:provider.stage,"dev"}'
     VisibilityTimeout: 999
+QueueAimEmbedStoreEmbed:
+  Type: "AWS::SQS::Queue"
+  Properties:
+    QueueName: 'aim_embed-store_embed-${self:provider.stage,"dev"}'
+    VisibilityTimeout: 999
 
 BasicPodmindLambdaRole:
   Type: AWS::IAM::Role

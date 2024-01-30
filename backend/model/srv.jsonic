@@ -191,6 +191,9 @@ embed: {
   in: {
     aim: embed: {}
   }
+  out: {
+    aim: embed: store: embed: {}
+  }
 
   on: file: {
     provider: aws
@@ -198,6 +201,10 @@ embed: {
       {
         source: sqs
         qrn: QueueAimEmbedHandleChunk
+      }
+      {
+        source: sqs
+        qrn: QueueAimEmbedStoreEmbed
       }
     ]
   }

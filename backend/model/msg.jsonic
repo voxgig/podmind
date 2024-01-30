@@ -113,6 +113,7 @@ aim: store: {
 
 aim: embed: {
   handle: chunk: '$': transport: queue: { active: true, timeout: 999 }
+  store: embed: '$': transport: queue: { active: true, timeout: 999 }
 }
 
 

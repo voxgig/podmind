@@ -124,7 +124,16 @@
             }
           },
           "store": {
-            "embed": {}
+            "embed": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true,
+                    "timeout": 999
+                  }
+                }
+              }
+            }
           }
         },
         "widget": {
@@ -804,6 +813,15 @@
           }
         },
         "deps": {},
+        "out": {
+          "aim": {
+            "embed": {
+              "store": {
+                "embed": {}
+              }
+            }
+          }
+        },
         "on": {
           "file": {
             "provider": "aws",
@@ -811,6 +829,10 @@
               {
                 "source": "sqs",
                 "qrn": "QueueAimEmbedHandleChunk"
+              },
+              {
+                "source": "sqs",
+                "qrn": "QueueAimEmbedStoreEmbed"
               }
             ]
           }

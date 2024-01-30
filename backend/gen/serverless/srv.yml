@@ -149,4 +149,10 @@ embed:
             - QueueAimEmbedHandleChunk
             - Arn
         batchSize: 1
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimEmbedStoreEmbed
+            - Arn
+        batchSize: 1
 
