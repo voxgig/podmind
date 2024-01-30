@@ -17,7 +17,7 @@ module.exports = function make_handle_chunk() {
     let doStore = out.doStore = false !== msg.doStore
     let mark = msg.mark || seneca.util.Nid()
 
-    debug && debug('EMBED', mark, podcast_id, episode_id, doStore)
+    debug('EMBED', mark, podcast_id, episode_id, doStore)
 
     let embedding = await getEmbeddings(chunk, { region })
 
@@ -36,6 +36,8 @@ module.exports = function make_handle_chunk() {
     out.embedding = embedding.length
     out.podcast_id = podcast_id
     out.episode_id = episode_id
+
+    debug('EMBED-OUT', mark, podcast_id, episode_id, doStore, out)
 
     return out
   }

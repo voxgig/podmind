@@ -84,7 +84,7 @@ module.exports = function make_chunk_transcript() {
       let chunk = chunks[chunkI]
 
       if (doEmbed) {
-        seneca.act('aim:chunk,embed:chunk', {
+        await seneca.post('aim:embed,handle:chunk', {
           mark,
           chunk,
           podcast_id,
