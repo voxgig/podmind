@@ -10,16 +10,6 @@
         "monitor": {
           "get": {
             "info": {}
-          },
-          "calc": {
-            "sum": {
-              "$": {
-                "params": {
-                  "lhs": "Number",
-                  "rhs": "Number"
-                }
-              }
-            }
           }
         },
         "auth": {
@@ -68,13 +58,6 @@
           "get": {
             "info": {}
           },
-          "handle": {
-            "transcript": {}
-          },
-          "ingest": {
-            "transcript": {},
-            "podcast": {}
-          },
           "subscribe": {
             "podcast": {
               "$": {
@@ -84,36 +67,15 @@
               }
             }
           },
-          "embed": {
-            "chunk": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true,
-                    "timeout": 999
-                  }
-                }
-              }
-            }
-          },
-          "store": {
-            "embed": {
-              "$": {
-                "transport": {
-                  "queue": {
-                    "active": true,
-                    "timeout": 999
-                  }
-                }
-              }
-            }
+          "ingest": {
+            "podcast": {}
           }
         },
         "store": {
           "get": {
             "info": {}
           },
-          "handle": {
+          "download": {
             "audio": {
               "$": {
                 "transport": {
@@ -132,6 +94,34 @@
           },
           "transcribe": {
             "episode": {}
+          }
+        },
+        "chunk": {
+          "get": {
+            "info": {}
+          },
+          "chunk": {
+            "transcript": {}
+          }
+        },
+        "embed": {
+          "get": {
+            "info": {}
+          },
+          "handle": {
+            "chunk": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true,
+                    "timeout": 999
+                  }
+                }
+              }
+            }
+          },
+          "store": {
+            "embed": {}
           }
         },
         "widget": {
@@ -290,6 +280,9 @@
         },
         "user": {
           "required": false
+        },
+        "options": {
+          "debug": true
         }
       },
       "auth": {
@@ -337,6 +330,9 @@
         "deps": {},
         "user": {
           "required": false
+        },
+        "options": {
+          "debug": true
         }
       },
       "user": {
@@ -384,6 +380,9 @@
         "deps": {},
         "user": {
           "required": true
+        },
+        "options": {
+          "debug": true
         }
       },
       "entity": {
@@ -431,6 +430,9 @@
         "deps": {},
         "user": {
           "required": true
+        },
+        "options": {
+          "debug": true
         }
       },
       "chat": {
@@ -478,6 +480,9 @@
         "deps": {},
         "user": {
           "required": true
+        },
+        "options": {
+          "debug": true
         }
       },
       "widget": {
@@ -525,6 +530,9 @@
         "deps": {},
         "user": {
           "required": false
+        },
+        "options": {
+          "debug": true
         }
       },
       "ingest": {
@@ -563,24 +571,10 @@
         "out": {
           "aim": {
             "store": {
-              "handle": {
+              "download": {
                 "audio": {}
               }
-            },
-            "ingest": {
-              "embed": {
-                "chunk": {}
-              },
-              "store": {
-                "embed": {}
-              }
             }
-          }
-        },
-        "on": {
-          "ingest": {
-            "provider": "aws",
-            "events": []
           }
         },
         "user": {
@@ -588,6 +582,9 @@
         },
         "repl": {
           "active": true
+        },
+        "options": {
+          "debug": true
         }
       },
       "store": {
@@ -629,7 +626,7 @@
             "events": [
               {
                 "source": "sqs",
-                "qrn": "QueueAimStoreHandleAudio"
+                "qrn": "QueueAimStoreDownloadAudio"
               }
             ]
           }
@@ -639,6 +636,9 @@
         },
         "repl": {
           "active": true
+        },
+        "options": {
+          "debug": true
         }
       },
       "audio": {
@@ -695,6 +695,131 @@
         },
         "repl": {
           "active": true
+        },
+        "options": {
+          "debug": true
+        }
+      },
+      "chunk": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 888,
+            "kind": "standard",
+            "memory": 2048
+          }
+        },
+        "api": {
+          "web": {
+            "active": false,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "chunk": {}
+          }
+        },
+        "deps": {},
+        "out": {
+          "aim": {
+            "embed": {
+              "handle": {
+                "chunk": {}
+              }
+            }
+          }
+        },
+        "on": {
+          "file": {
+            "provider": "aws",
+            "events": [
+              {
+                "source": "s3",
+                "bucket": "podmind01-backend01-file01-${self:provider.stage}",
+                "event": "s3:ObjectCreated:*",
+                "rules": {
+                  "prefix": "folder01/transcript01"
+                },
+                "msg": "aim:embed,handle:transcript"
+              }
+            ]
+          }
+        },
+        "user": {
+          "required": false
+        },
+        "repl": {
+          "active": true
+        },
+        "options": {
+          "debug": true
+        }
+      },
+      "embed": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 888,
+            "kind": "standard",
+            "memory": 2048
+          }
+        },
+        "api": {
+          "web": {
+            "active": false,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "embed": {}
+          }
+        },
+        "deps": {},
+        "on": {
+          "file": {
+            "provider": "aws",
+            "events": [
+              {
+                "source": "sqs",
+                "qrn": "QueueAimEmbedHandleChunk"
+              }
+            ]
+          }
+        },
+        "user": {
+          "required": false
+        },
+        "repl": {
+          "active": true
+        },
+        "options": {
+          "debug": true
         }
       }
     },

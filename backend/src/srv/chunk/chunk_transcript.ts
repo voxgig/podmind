@@ -1,7 +1,7 @@
 
 
-module.exports = function make_ingest_transcript() {
-  return async function ingest_transcript(this: any, msg: any, meta: any) {
+module.exports = function make_chunk_transcript() {
+  return async function chunk_transcript(this: any, msg: any, meta: any) {
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
 
@@ -15,7 +15,7 @@ module.exports = function make_ingest_transcript() {
     let chunkEnd = out.chunkEnd = msg.chunkEnd
     let mark = msg.mark || seneca.util.Nid()
 
-    debug && debug('INGEST', mark, path, podcast_id, episode_id, doEmbed, doStore)
+    debug && debug('CHUNK', mark, path, podcast_id, episode_id, doEmbed, doStore)
 
     let transcript_id = 'folder01/transcript01/' + podcast_id + '/' +
       episode_id + '-dg01'
@@ -26,7 +26,7 @@ module.exports = function make_ingest_transcript() {
     if (null == transcriptEnt) {
       out.why = 'transcript-not-found'
       out.details = { path, transcript_id, podcast_id, episode_id }
-      debug && debug('INGEST-FAIL', mark, path, podcast_id, episode_id, doEmbed, doStore, out)
+      debug && debug('CHUNK-FAIL', mark, path, podcast_id, episode_id, doEmbed, doStore, out)
       return out
     }
 
@@ -74,7 +74,7 @@ module.exports = function make_ingest_transcript() {
 
     chunks = chunks.filter((c: string) => 0 < c.length)
 
-    debug && debug('INGEST-CHUNKS',
+    debug && debug('CHUNK-CHUNKS',
       mark, path, podcast_id, episode_id, doEmbed, doStore, chunks.length)
 
     let embeds = 0
@@ -83,7 +83,7 @@ module.exports = function make_ingest_transcript() {
       let chunk = chunks[chunkI]
 
       if (doEmbed) {
-        seneca.act('aim:ingest,embed:chunk', {
+        seneca.act('aim:chunk,embed:chunk', {
           mark,
           chunk,
           podcast_id,

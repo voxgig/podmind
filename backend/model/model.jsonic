@@ -8,3 +8,10 @@ main: srv: @"srv.jsonic"       # Services
 main: conf: @"conf.jsonic"     # Configuration
 main: ent: @"ent.jsonic"       # Entities
 
+
+
+
+
+main: srv: &: options: {
+  debug: true
+}

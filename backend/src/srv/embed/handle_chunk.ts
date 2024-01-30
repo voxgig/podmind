@@ -1,11 +1,11 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime'
 
 
+module.exports = function make_handle_chunk() {
+  return async function handle_chunk(this: any, msg: any, _meta: any) {
 
-module.exports = function make_embed_chunk() {
-  return async function embed_chunk(this: any, msg: any, meta: any) {
     const seneca = this
-    const debug = seneca.shared.debug(meta.action)
+    const debug = seneca.shared.debug
 
     const region = seneca.context.model.main.conf.cloud.aws.region
 
@@ -22,7 +22,7 @@ module.exports = function make_embed_chunk() {
     let embedding = await getEmbeddings(chunk, { region })
 
     if (doStore) {
-      seneca.act('aim:ingest,store:embed', {
+      await seneca.post('aim:embed,store:embed', {
         mark,
         chunk,
         embedding,

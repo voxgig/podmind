@@ -108,10 +108,10 @@ module.exports = function make_transcribe_episode() {
         out.deepgram = res.result.metadata
 
         const transcript_id = 'folder01/transcript01/' + episodeEnt.podcast_id + '/' +
-          episodeEnt.id + '-dg01-' + humanify(Date.now())
+          episodeEnt.id + '-dg01-' + humanify(Date.now()) + '.json'
 
         await seneca.entity('pdm/transcript').save$({
-          id: transcript_id,
+          id$: transcript_id,
           deepgram: res.result,
           audioLoadedDur: out.audioLoadedDur,
           deepgramDur: out.deepgramDur,

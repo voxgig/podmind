@@ -1,3 +1,5 @@
+
+
 module.exports = function make_handle_transcript() {
   return async function handle_transcript(this: any, msg: any, meta: any) {
     const seneca = this
@@ -11,11 +13,11 @@ module.exports = function make_handle_transcript() {
     let doStore = out.doStore = false !== msg.doStore
     let mark = msg.mark || seneca.util.Nid()
 
-    debug && debug('TRANSCRIPT', mark, path, episode_id, doEmbed, doStore)
+    debug('TRANSCRIPT', mark, path, episode_id, doEmbed, doStore)
 
     // AWS S3 event
     if (null == path && null == episode_id) {
-      debug && debug('RECORDS', mark, path, episode_id, msg.event?.Records)
+      debug('RECORDS', mark, path, episode_id, msg.event?.Records)
 
       const paths = seneca.shared.listPaths(msg.event)
 
@@ -23,7 +25,7 @@ module.exports = function make_handle_transcript() {
         out.ok = true
 
         for (path of paths) {
-          let pathres = await seneca.post('aim:ingest,handle:transcript', {
+          let pathres = await seneca.post('aim:chunk,handle:transcript', {
             path
           })
 
@@ -38,7 +40,7 @@ module.exports = function make_handle_transcript() {
       return out
     }
 
-    debug && debug('TRANSCRIPT-SINGLE', mark, path, episode_id, doEmbed, doStore)
+    debug('TRANSCRIPT-SINGLE', mark, path, episode_id, doEmbed, doStore)
 
     if (null == episode_id) {
       let m = path.match(/folder01\/transcript01\/([^-]+)\/([^-]+)/)
@@ -53,7 +55,7 @@ module.exports = function make_handle_transcript() {
     let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
     if (null === episodeEnt) {
       out.why = 'episode-not-found'
-      debug && debug('TRANSCRIPT-SINGLE-FAIL', mark, path, episode_id, doEmbed, doStore, out)
+      debug('TRANSCRIPT-SINGLE-FAIL', mark, path, episode_id, doEmbed, doStore, out)
       return out
     }
 
@@ -63,9 +65,9 @@ module.exports = function make_handle_transcript() {
       path = `folder01\/transcript01/${podcast_id}/${episode_id}-dg01.json`
     }
 
-    debug && debug('TRANSCRIPT-INGEST', mark, path, podcast_id, episode_id, doEmbed, doStore)
+    debug('TRANSCRIPT-CHUNK', mark, path, podcast_id, episode_id, doEmbed, doStore)
 
-    out = await seneca.post('aim:ingest,whence:upload,ingest:transcript', {
+    out = await seneca.post('aim:chunk,whence:upload,chunk:transcript', {
       path,
       podcast_id,
       episode_id,
@@ -76,3 +78,5 @@ module.exports = function make_handle_transcript() {
     return out
   }
 }
+
+

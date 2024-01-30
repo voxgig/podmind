@@ -1,10 +1,10 @@
 // const Axios = require('axios')
 
-module.exports = function make_handle_audio() {
-  return async function handle_audio(this: any, msg: any, meta: any) {
+module.exports = function make_download_audio() {
+  return async function download_audio(this: any, msg: any, _meta: any) {
 
     const seneca = this
-    const debug = seneca.shared.debug(meta.action)
+    const debug = seneca.shared.debug
     const Axios = seneca.shared.Axios
     const { humanify } = seneca.export('PodmindUtility/getUtils')()
 
@@ -17,7 +17,7 @@ module.exports = function make_handle_audio() {
     out.episode_id = episode_id
     let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
     let podcast_id = episodeEnt?.podcast_id
-    debug && debug('HANDLE', mark, podcast_id, episode_id, doAudio)
+    debug('HANDLE', mark, podcast_id, episode_id, doAudio)
 
     if (episodeEnt) {
       let url = episodeEnt.url
@@ -30,10 +30,10 @@ module.exports = function make_handle_audio() {
           res = await Axios.get(url, { responseType: "arraybuffer" })
         }
         catch (err: any) {
-          debug && debug('AUDIO-ERROR', mark, podcast_id, episode_id, url, err)
+          debug('AUDIO-ERROR', mark, podcast_id, episode_id, url, err)
         }
 
-        debug && debug('HANDLE-AUDIO', mark, podcast_id, episode_id, res?.status)
+        debug('HANDLE-AUDIO', mark, podcast_id, episode_id, res?.status)
 
         if (200 === res?.status) {
           try {
@@ -45,12 +45,12 @@ module.exports = function make_handle_audio() {
             })
           }
           catch (err: any) {
-            debug && debug('HANDLE-AUDIO-ERROR', mark, podcast_id, episode_id, res.status, err)
+            debug('HANDLE-AUDIO-ERROR', mark, podcast_id, episode_id, res.status, err)
           }
           out.size = size = res.data.length
         }
 
-        debug && debug('AUDIO', mark, podcast_id, episode_id, url, res?.status, size)
+        debug('AUDIO', mark, podcast_id, episode_id, url, res?.status, size)
       }
 
       out.ok = true
@@ -59,7 +59,7 @@ module.exports = function make_handle_audio() {
       out.why = 'not-found'
     }
 
-    debug && debug('HANDLE-OUT', mark, podcast_id, episode_id, doAudio, out)
+    debug('HANDLE-OUT', mark, podcast_id, episode_id, doAudio, out)
 
     return out
   }

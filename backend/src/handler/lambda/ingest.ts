@@ -1,11 +1,7 @@
 import { getSeneca } from '../../env/lambda/lambda'
 
 function complete(seneca: any) {
-  seneca.listen({type:'sqs',pin:'aim:ingest,embed:chunk'})
-  seneca.listen({type:'sqs',pin:'aim:ingest,store:embed'})
-  seneca.client({type:'sqs',pin:'aim:store,handle:audio'})
-  seneca.client({type:'sqs',pin:'aim:ingest,embed:chunk'})
-  seneca.client({type:'sqs',pin:'aim:ingest,store:embed'})
+  seneca.client({type:'sqs',pin:'aim:store,download:audio'})
 }
 
 exports.handler = async (

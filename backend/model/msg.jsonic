@@ -3,7 +3,6 @@
 
 aim: monitor: {
   get: info: {}
-  calc: sum: {}
 }
 
 
@@ -33,24 +32,37 @@ aim: entity: {
 
 aim: ingest: {
   get: info: {}
-  handle: transcript: {}
-  ingest: transcript: {}
+  #handle: transcript: {}
+  #ingest: transcript: {}
   subscribe: podcast: {}
   ingest: podcast: {}
-  embed: chunk: {}
-  store: embed: {}
+  #embed: chunk: {}
+  #store: embed: {}
 }
 
 
 aim: store: {
   get: info: {}
-  handle: audio: {}
+  download: audio: {}
 }
 
 
 aim: audio: {
   get: info: {}
   transcribe: episode: {}
+}
+
+
+aim: chunk: {
+  get: info: {}
+  chunk: transcript: {}
+}
+
+
+aim: embed: {
+  get: info: {}
+  handle: chunk: {}
+  store: embed: {}
 }
 
 
@@ -95,24 +107,16 @@ aim: req: {
 # Message Transports
 
 aim: store: {
-  handle: audio: '$': transport: queue: { active: true, timeout: 999 }
+  download: audio: '$': transport: queue: { active: true, timeout: 999 }
 }
 
-aim: ingest: {
-  # transcribe: episode: '$': transport: queue: { active: true, timeout: 999 }
-  embed: chunk: '$': transport: queue: { active: true, timeout: 999 }
-  store: embed: '$': transport: queue: { active: true, timeout: 999 }
+aim: embed: {
+  handle: chunk: '$': transport: queue: { active: true, timeout: 999 }
 }
 
 
 
 # Message Parameters
-
-aim: monitor: calc: sum: '$': params: {
-  lhs: Number
-  rhs: Number
-}
-
 
 aim: ingest: subscribe: podcast: '$': params: {
   feed: String

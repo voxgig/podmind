@@ -13,6 +13,11 @@ cloud: opensearch: url: 'https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.c
 cloud: opensearch: index: 'transcription01b'
 
 
+
+
+
+
+
 shared: plugin: gateway_express: {
   auth: token: name: $.main.conf.core.token
 }

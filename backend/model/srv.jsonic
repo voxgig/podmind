@@ -83,38 +83,7 @@ ingest: {
     aim: ingest: {}
   }
   out: {
-    aim: store: {
-      handle: audio: {}
-    }
-    aim: ingest: {
-      embed: chunk: {}
-      store: embed: {}
-    }
-  }
-
-  on: ingest: {
-    provider: aws
-    events: [
-      # {
-      #   source: sqs
-      #   qrn: QueueAimIngestTranscribeEpisode
-      # }
-      # {
-      #   source: sqs
-      #   qrn: QueueAimIngestEmbedChunk
-      # }
-      # {
-      #   source: sqs
-      #   qrn: QueueAimIngestStoreEmbed
-      # }
-      # {
-      #   source: s3
-      #   bucket: 'podmind01-backend01-file01-${self:provider.stage}'
-      #   event: 's3:ObjectCreated:*'
-      #   rules: prefix: 'folder01/transcript01'
-      #   msg: 'aim:ingest,handle:transcript'
-      # }
-    ]
+    aim: store: download: audio: {}
   }
 
   user: required: false
@@ -140,7 +109,7 @@ store: {
     events: [
       {
         source: sqs
-        qrn: QueueAimStoreHandleAudio
+        qrn: QueueAimStoreDownloadAudio
       }
     ]
   }
@@ -171,6 +140,64 @@ audio: {
         event: 's3:ObjectCreated:*'
         rules: prefix: 'folder01/audio01'
         msg: 'aim:audio,transcribe:episode'
+      }
+    ]
+  }
+
+  user: required: false
+  repl: active: true
+  api: web: active: false
+  env: lambda: {
+    active: true
+    timeout: 888
+    memory: 2048
+  }
+}
+
+
+chunk: {
+  in: {
+    aim: chunk: {}
+  }
+  out: {
+    aim: embed: handle: chunk: {}
+  }
+
+  on: file: {
+    provider: aws
+    events: [
+      {
+        source: s3
+        bucket: 'podmind01-backend01-file01-${self:provider.stage}'
+        event: 's3:ObjectCreated:*'
+        rules: prefix: 'folder01/transcript01'
+        msg: 'aim:embed,handle:transcript'
+      }
+    ]
+  }
+
+  user: required: false
+  repl: active: true
+  api: web: active: false
+  env: lambda: {
+    active: true
+    timeout: 888
+    memory: 2048
+  }
+}
+
+
+embed: {
+  in: {
+    aim: embed: {}
+  }
+
+  on: file: {
+    provider: aws
+    events: [
+      {
+        source: sqs
+        qrn: QueueAimEmbedHandleChunk
       }
     ]
   }

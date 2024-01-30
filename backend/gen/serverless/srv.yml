@@ -98,7 +98,7 @@ store:
     - sqs:
         arn:
           Fn::GetAtt:
-            - QueueAimStoreHandleAudio
+            - QueueAimStoreDownloadAudio
             - Arn
         batchSize: 1
 
@@ -117,4 +117,36 @@ audio:
         existing: true
         rules:
           - prefix: folder01/audio01
+
+
+
+
+chunk:
+  handler: dist/handler/lambda/chunk.handler
+  role: BasicPodmindLambdaRole
+  timeout: 888
+  memorySize: 2048
+  events:
+    - s3:
+        bucket: podmind01-backend01-file01-${self:provider.stage}
+        event: s3:ObjectCreated:*
+        existing: true
+        rules:
+          - prefix: folder01/transcript01
+
+
+
+
+embed:
+  handler: dist/handler/lambda/embed.handler
+  role: BasicPodmindLambdaRole
+  timeout: 888
+  memorySize: 2048
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimEmbedHandleChunk
+            - Arn
+        batchSize: 1
 

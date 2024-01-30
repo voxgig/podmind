@@ -135,20 +135,15 @@ TablePdmChat:
         KeyType: HASH
 
 
-QueueAimIngestEmbedChunk:
+QueueAimStoreDownloadAudio:
   Type: "AWS::SQS::Queue"
   Properties:
-    QueueName: 'aim_ingest-embed_chunk-${self:provider.stage,"dev"}'
+    QueueName: 'aim_store-download_audio-${self:provider.stage,"dev"}'
     VisibilityTimeout: 999
-QueueAimIngestStoreEmbed:
+QueueAimEmbedHandleChunk:
   Type: "AWS::SQS::Queue"
   Properties:
-    QueueName: 'aim_ingest-store_embed-${self:provider.stage,"dev"}'
-    VisibilityTimeout: 999
-QueueAimStoreHandleAudio:
-  Type: "AWS::SQS::Queue"
-  Properties:
-    QueueName: 'aim_store-handle_audio-${self:provider.stage,"dev"}'
+    QueueName: 'aim_embed-handle_chunk-${self:provider.stage,"dev"}'
     VisibilityTimeout: 999
 
 BasicPodmindLambdaRole:
@@ -203,11 +198,9 @@ BasicPodmindLambdaRole:
                 - sqs:GetQueueAttributes
                 - sqs:GetQueueUrl
               Resource:
-                - arn:aws:sqs:us-east-1:975049884289:aim_store-handle_audio-${self:provider.stage,"dev"}
-                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-transcribe_episode-${self:provider.stage,"dev"}
-                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-store_embed-${self:provider.stage,"dev"}
-                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-embed_chunk-${self:provider.stage,"dev"}
-                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-handle_episode-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_store-download_audio-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_embed-handle_chunk-${self:provider.stage,"dev"}
+
 
     ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole

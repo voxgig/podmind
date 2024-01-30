@@ -4,15 +4,13 @@ const Parser = new RssParser()
 
 
 module.exports = function make_prepare_ingest() {
-  return async function prepare_ingest(this: any) {
+  return async function prepare_ingest(this: any, _msg: any, meta: any) {
     let seneca = this
 
-    // TODO: implement conf, also for deps
-    seneca.shared.debug =
-      // seneca.plugin.options.debug ?
-      (mark: string) => (...args: any[]) => console.log('##', mark, ...args)
-    // : (_mark: string) => null
+    const { makeDebug } = seneca.export('PodmindUtility/getUtils')()
 
+    makeDebug(seneca)
+    const debug = seneca.shared.debug(meta.action)
 
     seneca.shared.humanify = (when: number) => {
       const d = new Date(when)
@@ -37,5 +35,7 @@ module.exports = function make_prepare_ingest() {
           return { ok: false, err }
         }
       }
+
+    debug('done')
   }
 }
