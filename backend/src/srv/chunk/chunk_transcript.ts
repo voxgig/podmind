@@ -18,7 +18,7 @@ module.exports = function make_chunk_transcript() {
     debug && debug('CHUNK', mark, path, podcast_id, episode_id, doEmbed, doStore)
 
     let transcript_id = 'folder01/transcript01/' + podcast_id + '/' +
-      episode_id + '-dg01'
+      episode_id + '-dg01.json'
 
     const transcriptEnt = await seneca.entity('pdm/transcript')
       .load$(transcript_id)
