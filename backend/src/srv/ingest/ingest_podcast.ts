@@ -5,6 +5,7 @@ module.exports = function make_ingest_podcast() {
   return async function ingest_podcast(this: any, msg: any, meta: any) {
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
+    const { humanify } = seneca.export('PodmindUtility/getUtils')()
 
     let out: any = { ok: false, why: '' }
 
@@ -48,7 +49,7 @@ module.exports = function make_ingest_podcast() {
 
     await seneca.entity('pdm/rss').save$({
       id: 'folder01/rss01/' + feedname + '/' +
-        podcastEnt.id + '~' + seneca.shared.humanify(Date.now()) + '.rss',
+        podcastEnt.id + '~' + humanify(Date.now()) + '.rss',
       rss
     })
 

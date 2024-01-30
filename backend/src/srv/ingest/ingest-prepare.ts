@@ -12,6 +12,8 @@ module.exports = function make_prepare_ingest() {
     makeDebug(seneca)
     const debug = seneca.shared.debug('prepare_ingest')
 
+
+    /*
     seneca.shared.humanify = (when: number) => {
       const d = new Date(when)
       return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''))
@@ -23,6 +25,7 @@ module.exports = function make_prepare_ingest() {
         decodeURIComponent(r.s3.object.key).replace(/\+/g, ' '))
       return paths
     }
+    */
 
 
     seneca.shared.getRSS =

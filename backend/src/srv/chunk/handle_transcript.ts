@@ -4,6 +4,7 @@ module.exports = function make_handle_transcript() {
   return async function handle_transcript(this: any, msg: any, meta: any) {
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
+    const { listPaths } = seneca.export('PodmindUtility/getUtils')()
 
     let out: any = { ok: false, why: '', path: '', paths: [], episode_id: null }
 
@@ -19,7 +20,7 @@ module.exports = function make_handle_transcript() {
     if (null == path && null == episode_id) {
       debug('RECORDS', mark, path, episode_id, msg.event?.Records)
 
-      const paths = seneca.shared.listPaths(msg.event)
+      const paths = listPaths(msg.event)
 
       if (paths && 0 < paths.length) {
         out.ok = true
