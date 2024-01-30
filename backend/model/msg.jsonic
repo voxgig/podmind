@@ -55,6 +55,7 @@ aim: audio: {
 
 aim: chunk: {
   get: info: {}
+  handle: transcript: {}
   chunk: transcript: {}
 }
 

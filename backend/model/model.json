@@ -100,6 +100,9 @@
           "get": {
             "info": {}
           },
+          "handle": {
+            "transcript": {}
+          },
           "chunk": {
             "transcript": {}
           }
@@ -753,7 +756,7 @@
                 "rules": {
                   "prefix": "folder01/transcript01"
                 },
-                "msg": "aim:chunk,chunk:transcript"
+                "msg": "aim:chunk,handle:transcript"
               }
             ]
           }
