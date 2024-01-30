@@ -3,8 +3,8 @@ import { Client } from '@opensearch-project/opensearch'
 import { defaultProvider } from '@aws-sdk/credential-provider-node'
 
 
-module.exports = function make_handle_chunk() {
-  return async function handle_chunk(this: any, msg: any, _meta: any) {
+module.exports = function make_store_embed() {
+  return async function store_embed(this: any, msg: any, _meta: any) {
 
     const seneca = this
     const debug = seneca.shared.debug

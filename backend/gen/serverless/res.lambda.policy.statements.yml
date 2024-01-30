@@ -30,7 +30,13 @@
                 - "es:*"
               Resource:
                 - "*"
-                
+
+            - Effect: Allow
+              Action:
+                - "aoss:*"
+              Resource:
+                - "*"
+
                 
 
                 
