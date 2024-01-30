@@ -1,10 +1,10 @@
 // const Axios = require('axios')
 
 module.exports = function make_download_audio() {
-  return async function download_audio(this: any, msg: any, _meta: any) {
+  return async function download_audio(this: any, msg: any, meta: any) {
 
     const seneca = this
-    const debug = seneca.shared.debug
+    const debug = seneca.shared.debug(meta.action)
     const Axios = seneca.shared.Axios
     const { humanify } = seneca.export('PodmindUtility/getUtils')()
 

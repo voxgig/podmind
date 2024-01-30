@@ -171,7 +171,7 @@ chunk: {
         bucket: 'podmind01-backend01-file01-${self:provider.stage}'
         event: 's3:ObjectCreated:*'
         rules: prefix: 'folder01/transcript01'
-        msg: 'aim:embed,handle:transcript'
+        msg: 'aim:chunk,chunk:transcript'
       }
     ]
   }

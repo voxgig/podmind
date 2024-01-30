@@ -753,7 +753,7 @@
                 "rules": {
                   "prefix": "folder01/transcript01"
                 },
-                "msg": "aim:embed,handle:transcript"
+                "msg": "aim:chunk,chunk:transcript"
               }
             ]
           }

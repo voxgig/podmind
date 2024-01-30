@@ -6,7 +6,7 @@ function complete(seneca: any) {
   const makeGatewayHandler = seneca.export('s3-store/makeGatewayHandler')
   seneca
     .act('sys:gateway,kind:lambda,add:hook,hook:handler', {
-       handler: makeGatewayHandler('aim:embed,handle:transcript') })
+       handler: makeGatewayHandler('aim:chunk,chunk:transcript') })
 }
 
 exports.handler = async (
