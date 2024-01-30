@@ -80,8 +80,7 @@ module.exports = function make_chunk_transcript() {
 
     let embeds = 0
     chunkEnd = 0 <= chunkEnd ? chunkEnd : chunks.length
-    // for (let chunkI = 0; chunkI < chunks.length; chunkI++) {
-    for (let chunkI = 0; chunkI < 1; chunkI++) {
+    for (let chunkI = 0; chunkI < chunks.length; chunkI++) {
       let chunk = chunks[chunkI]
 
       if (doEmbed) {
