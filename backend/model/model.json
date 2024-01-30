@@ -557,7 +557,7 @@
               }
             },
             "active": true,
-            "timeout": 888,
+            "timeout": 222,
             "kind": "standard",
             "memory": 2048
           }
@@ -609,7 +609,7 @@
               }
             },
             "active": true,
-            "timeout": 888,
+            "timeout": 222,
             "kind": "standard",
             "memory": 2048
           }
@@ -663,7 +663,7 @@
               }
             },
             "active": true,
-            "timeout": 888,
+            "timeout": 222,
             "kind": "standard",
             "memory": 2048
           }
@@ -722,7 +722,7 @@
               }
             },
             "active": true,
-            "timeout": 888,
+            "timeout": 222,
             "kind": "standard",
             "memory": 2048
           }
@@ -790,7 +790,7 @@
               }
             },
             "active": true,
-            "timeout": 888,
+            "timeout": 222,
             "kind": "standard",
             "memory": 2048
           }

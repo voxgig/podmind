@@ -26,6 +26,9 @@ module.exports = function make_download_audio() {
       if (doAudio) {
         let res
 
+
+        debug('HANDLE-AUDIO-START', mark, podcast_id, episode_id, url)
+
         try {
           res = await Axios.get(url, { responseType: "arraybuffer" })
         }
@@ -33,7 +36,7 @@ module.exports = function make_download_audio() {
           debug('AUDIO-ERROR', mark, podcast_id, episode_id, url, err)
         }
 
-        debug('HANDLE-AUDIO', mark, podcast_id, episode_id, res?.status)
+        debug('HANDLE-AUDIO-DOWN', mark, podcast_id, episode_id, url, res?.status, res?.data?.length)
 
         if (200 === res?.status) {
           try {
@@ -48,9 +51,9 @@ module.exports = function make_download_audio() {
             debug('HANDLE-AUDIO-ERROR', mark, podcast_id, episode_id, res.status, err)
           }
           out.size = size = res.data.length
-        }
 
-        debug('AUDIO', mark, podcast_id, episode_id, url, res?.status, size)
+          debug('AUDIO-SAVED', mark, podcast_id, episode_id, url, res?.status, size)
+        }
       }
 
       out.ok = true
