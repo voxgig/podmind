@@ -24,7 +24,7 @@ module.exports = function make_download_audio() {
       let size = out.size = -1
 
       if (doAudio) {
-        let res
+        let res: any
 
 
         debug('HANDLE-AUDIO-START', mark, podcast_id, episode_id, url)
@@ -39,12 +39,13 @@ module.exports = function make_download_audio() {
         debug('HANDLE-AUDIO-DOWN', mark, podcast_id, episode_id, url, res?.status, res?.data?.length)
 
         if (200 === res?.status) {
+          const s3id = 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
+            episodeEnt.id + '-' + humanify(Date.now()) + '.mp3'
           try {
             await seneca.entity('pdm/audio').save$({
               bin$: 'content',
-              id: 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
-                episodeEnt.id + '-' + humanify(Date.now()) + '.mp3',
-              content: res.data
+              id: s3id,
+              content: () => res.data
             })
           }
           catch (err: any) {
