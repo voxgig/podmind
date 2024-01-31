@@ -37,6 +37,17 @@ module.exports = function make_handle_chunk() {
     out.podcast_id = podcast_id
     out.episode_id = episode_id
 
+    await seneca.entity('pdm/chunk').save$({
+      mark,
+      chunklen: chunk.length,
+      embedlen: embedding.length,
+      podcast_id,
+      episode_id,
+      chunk: chunk,
+      embed: embedding,
+    })
+
+
     debug('EMBED-OUT', mark, podcast_id, episode_id, doStore, out)
 
     return out

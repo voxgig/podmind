@@ -40,11 +40,19 @@ module.exports = function make_download_audio() {
 
         if (200 === res?.status) {
           const s3id = 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
+            episodeEnt.id + '.mp3'
+          const s3id_dated = 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
             episodeEnt.id + '-' + humanify(Date.now()) + '.mp3'
+
           try {
             await seneca.entity('pdm/audio').save$({
               bin$: 'content',
               id: s3id,
+              content: () => res.data
+            })
+            await seneca.entity('pdm/audio').save$({
+              bin$: 'content',
+              id: s3id_dated,
               content: () => res.data
             })
           }

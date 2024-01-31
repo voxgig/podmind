@@ -100,6 +100,24 @@ TablePdmEpisode:
 
 
 
+TablePdmChunk:
+  Type: AWS::DynamoDB::Table
+  DeletionPolicy: Retain
+  Properties:
+    TableName: 'PdmChunk.${self:provider.stage,"dev"}'
+    BillingMode: "PAY_PER_REQUEST"
+    PointInTimeRecoverySpecification:
+      PointInTimeRecoveryEnabled: "true"
+    DeletionProtectionEnabled: true
+    AttributeDefinitions:
+      - AttributeName: "id"
+        AttributeType: "S"
+    KeySchema:
+      - AttributeName: "id"
+        KeyType: HASH
+
+
+
 TablePdmWidget:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
@@ -183,6 +201,7 @@ BasicPodmindLambdaRole:
                 - arn:aws:dynamodb:us-east-1:975049884289:table/SysCapture.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmPodcast.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmEpisode.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChunk.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmWidget.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChat.${self:provider.stage,"dev"}
             - Effect: Allow

@@ -689,7 +689,17 @@
         "on": {
           "file": {
             "provider": "aws",
-            "events": []
+            "events": [
+              {
+                "source": "s3",
+                "bucket": "podmind01-backend01-file01-${self:provider.stage}",
+                "event": "s3:ObjectCreated:*",
+                "rules": {
+                  "prefix": "folder01/audio01"
+                },
+                "msg": "aim:audio,transcribe:episode"
+              }
+            ]
           }
         },
         "user": {
@@ -1063,6 +1073,64 @@
             },
             "owner_id": {
               "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
+          }
+        },
+        "chunk": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "name": {
+              "label": "Name",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "episode_id": {
+              "label": "Episode",
               "kind": "String",
               "inputType": "text",
               "displayType": "text",
