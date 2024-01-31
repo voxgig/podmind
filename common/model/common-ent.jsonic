@@ -46,6 +46,28 @@ pdm: episode: {
 }
 
 
+pdm: chunk: {
+  # title: 'Episode'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    name: {
+      label: 'Name'
+    }
+    owner_id: {
+      label: Owner
+    }
+    podcast_id: {
+      label: Podcast
+    }
+    episode_id: {
+      label: Episode
+    }
+  }
+}
+
+
 pdm: widget: {
   # title: 'Widget'
   field: {
