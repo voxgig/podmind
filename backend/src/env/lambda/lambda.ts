@@ -3,7 +3,7 @@ import Seneca from 'seneca'
 import { Live } from '@voxgig/system'
 import { dive, camelify, pinify } from '@voxgig/model'
 
-import { basic, setup, base } from '../shared/basic'
+import { basic, setup, base, finalSetup } from '../shared/basic'
 import PodmindUtility from '../../concern/PodmindUtility/PodmindUtility'
 
 import Pkg from '../../../package.json'
@@ -162,6 +162,8 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
       options: {
       }
     })
+
+    finalSetup(seneca)
 
     if (complete) {
       await seneca.ready()

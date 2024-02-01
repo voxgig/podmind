@@ -1,4 +1,6 @@
 
+import { RateLimiterMemory, BurstyRateLimiter, RateLimiterQueue } from 'rate-limiter-flexible'
+
 
 export type Srv = {
   in?: Record<string, any>
@@ -43,6 +45,7 @@ function basic(seneca: any, options?: any) {
   return seneca
 }
 
+
 // After store plugins
 function setup(seneca: any, options?: any) {
   options = options || {}
@@ -72,6 +75,32 @@ function setup(seneca: any, options?: any) {
 }
 
 
+
+// After services loaded
+function finalSetup(seneca: any) {
+
+  const chatLimiter = new RateLimiterQueue(new BurstyRateLimiter(
+    new RateLimiterMemory({
+      points: 1,
+      duration: 1,
+    }),
+    new RateLimiterMemory({
+      keyPrefix: 'burst',
+      points: 3,
+      duration: 1,
+    })
+  ), {
+    maxQueueSize: 111
+  })
+
+  seneca.message('aim:chat,chat:query', async function(this: any, msg: any) {
+    let start = Date.now()
+    await chatLimiter.removeTokens(1)
+    console.log('CHAT WAIT', Date.now() - start)
+    return this.prior(msg)
+  })
+
+}
 
 
 const base = {
@@ -119,6 +148,7 @@ const base = {
 
 export {
   basic,
-  setup,
   base,
+  setup,
+  finalSetup,
 }

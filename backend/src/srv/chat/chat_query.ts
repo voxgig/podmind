@@ -59,10 +59,10 @@ CONTEXT:\n\n"""${clipped}"""
 
 QUESTION:\n\n"""${question}"""
 `
-  console.log('Prompt: ', prompt)
+  // console.log('Prompt: ', prompt)
 
   const answer = await invokeBedrock(prompt, config)
-  console.log('Answer:', JSON.stringify(answer))
+  // console.log('Answer:', JSON.stringify(answer))
 
   return answer
 }
@@ -97,13 +97,13 @@ async function invokeBedrock(prompt: string, config: any) {
 async function getContext(openSearchClient: Client, index: string, questionEmbeddings: number[][]) {
   const contextData = await openSearchClient
     .search(createSearchQuery(index, questionEmbeddings))
-  console.log('Full context response:', JSON.stringify(contextData))
+  // console.log('Full context response:', JSON.stringify(contextData))
 
   const hits = contextData?.body?.hits?.hits || []
-  console.log('Search hits:', hits)
+  // console.log('Search hits:', hits)
 
   const context = hits.map((item: Record<string, any>) => item._source.text).join(';;')
-  console.log('Context: ', context)
+  // console.log('Context: ', context)
 
   return { context, hits }
 }

@@ -6,7 +6,7 @@ import Seneca from 'seneca'
 import { Local, /* Concern */ } from '@voxgig/system'
 import { dive, get, pinify } from '@voxgig/model'
 
-import { basic, setup, base } from '../shared/basic'
+import { basic, setup, base, finalSetup } from '../shared/basic'
 import PodmindUtility from '../../concern/PodmindUtility/PodmindUtility'
 
 import Pkg from '../../../package.json'
@@ -125,6 +125,8 @@ async function runSeneca(info: any) {
     })
 
   await seneca.ready()
+
+  finalSetup(seneca)
 
   return seneca
 }

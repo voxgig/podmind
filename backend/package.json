@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.1.43",
+  "version": "0.1.44",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -56,6 +56,7 @@
     "argparse": "2.0.1",
     "axios": "^1.6.7",
     "llm-chunk": "^0.0.1",
+    "rate-limiter-flexible": "^4.0.1",
     "rss-parser": "^3.13.0",
     "seneca": "3.34.1",
     "seneca-entity": "25.1.3",
