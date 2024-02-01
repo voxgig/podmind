@@ -24,7 +24,7 @@ function getMain() {
 
   let endpoint = (msg: any) => {
     let suffix =
-      '/api/web' + ('auth' === msg.on ? '/public/auth' : '/private/' + msg.on)
+      '/api' + ('auth' === msg.on ? '/public/auth' : '/private/' + msg.on)
     let url = document.location.origin + suffix
 
     return url
