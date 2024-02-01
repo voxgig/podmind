@@ -15,7 +15,7 @@ import { useWebComponentEvents } from './hooks/useWebComponentEvents'
 const islandName = 'voxgig-podmind-ask-island'
 
 const ENDPOINT = VOXGIG_PODMIND_ENDPOINT ||
-  'https://podmind.voxgig.com/api/web/public/widget'
+  'https://podmind-dev.voxgig.com/api/public/widget'
 console.log('VOXGIG_PODMIND_ENDPOINT', VOXGIG_PODMIND_ENDPOINT, ENDPOINT)
 
 
