@@ -69,7 +69,7 @@ aim: embed: {
 
 aim: widget: {
   get: info: {}
-  create: widget: {}
+  # create: widget: {}
 }
 
 

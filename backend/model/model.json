@@ -139,9 +139,6 @@
         "widget": {
           "get": {
             "info": {}
-          },
-          "create": {
-            "widget": {}
           }
         },
         "chat": {
