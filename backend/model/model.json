@@ -224,13 +224,6 @@
               }
             },
             "widget": {
-              "start": {
-                "widget": {
-                  "$": {
-                    "file": "./web_start_widget"
-                  }
-                }
-              },
               "chat": {
                 "query": {
                   "$": {

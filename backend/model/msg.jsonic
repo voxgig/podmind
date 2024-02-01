@@ -99,7 +99,7 @@ aim: req: {
     remove: entity: { '$': { file: './web_remove_entity' }} 
   }
   on: widget: {
-    start: widget: { '$': { file: './web_start_widget' }}
+    # start: widget: { '$': { file: './web_start_widget' }}
     chat: query: { '$': { file: './web_chat_query' }}
   }
 }
