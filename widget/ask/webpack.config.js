@@ -273,6 +273,7 @@ module.exports = ({ dev, prod }) => {
        */
       new DefinePlugin({
         ISLAND_API_URL: JSON.stringify(process.env.ISLAND_API_URL),
+        VOXGIG_PODMIND_ENDPOINT: JSON.stringify(process.env.VOXGIG_PODMIND_ENDPOINT),
       }),
       
       ...(isProd ? [new FileSizePlugin()] : []),

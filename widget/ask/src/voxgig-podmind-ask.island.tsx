@@ -1,58 +1,3 @@
-/*
-import './reset.css'
-
-import { createIslandWebComponent } from 'preact-island'
-import { useState } from 'preact/hooks'
-import { useWebComponentEvents } from './hooks/useWebComponentEvents'
-
-const islandName = 'voxgig-podmind-ask'
-
-console.log(islandName, 'LOAD1')
-
-export const VoxgigPodmindAsk = () => {
-  useWebComponentEvents(islandName)
-  /*
-
-  let [answer, setAnswer] = useState('')
-  
-  const submitQuery = async (event:any) => {
-    event.preventDefault()
-    const data = new FormData(event.target)
-    const query = data.get('query')
-    let res = await fetch('http://localhost:50401/api/web/public/widget',{
-      method: 'POST',
-      body: JSON.stringify({"aim":"req","on":"widget","chat":"query","query":query}),
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    // console.log('RES', res)
-    let json:any = await res.json()
-    console.log(islandName, 'json',json)
-    setAnswer(json.answer)
-  }
-
-  console.log(islandName, 'RENDER')
-  
-  return (
-    <div>
-      <h3>Question:</h3>
-
-      <form onSubmit={submitQuery}>
-        <input name="query" />
-        <button>submit</button>
-      </form>
-      
-      <p>{answer}</p>
-    </div>
-  )
-}
-
-createIslandWebComponent(islandName, VoxgigPodmindAsk).render({
-  selector: islandName,
-  initialProps: {},
-})
-*/
 
 
 import './reset.css'
@@ -68,6 +13,11 @@ import { useState } from 'preact/hooks'
 import { useWebComponentEvents } from './hooks/useWebComponentEvents'
 
 const islandName = 'voxgig-podmind-ask-island'
+
+const ENDPOINT = VOXGIG_PODMIND_ENDPOINT ||
+  'https://podmind.voxgig.com/api/web/public/widget'
+console.log('VOXGIG_PODMIND_ENDPOINT', VOXGIG_PODMIND_ENDPOINT, ENDPOINT)
+
 
 export const Pokemon = () => {
   useWebComponentEvents(islandName)

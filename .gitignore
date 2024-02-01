@@ -121,3 +121,5 @@ folder01/
 
 local-env.ts
 local-env.js
+
+.env.local
