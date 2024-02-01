@@ -16,7 +16,7 @@
     "prep-vxg": "npm link @voxgig/podmind-common @voxgig/model @voxgig/model-react @seneca/redux @seneca/browser-store",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: pdm-fe-v$REPO_VERSION && git add -u . && git commit -m pdm-fe-v$REPO_VERSION && git push && git tag pdm-fe-v$REPO_VERSION && git push --tags",
     "check-aws-profile": "node -e \"process.env.AWS_PROFILE.includes('podmind') || process.exit(1)\"",
-    "invcf-dev": "npm run check-aws-profile && aws cloudfront create-invalidation --distribution-id AAA --paths \"/*\"",
+    "invcf-dev": "npm run check-aws-profile && aws cloudfront create-invalidation --distribution-id E13ASBZ7GUSTLJ --paths \"/*\"",
     "invcf-stg": "npm run check-aws-profile && aws cloudfront create-invalidation --distribution-id AAA --paths \"/*\"",
     "invcf-prd": "npm run check-aws-profile && aws cloudfront create-invalidation --distribution-id AAA --paths \"/*\"",
     "deploy-dev": "npm run repo-tag && sls deploy --stage dev",
