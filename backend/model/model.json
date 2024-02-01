@@ -529,7 +529,9 @@
             }
           }
         },
-        "deps": {},
+        "deps": {
+          "chat": {}
+        },
         "user": {
           "required": false
         },

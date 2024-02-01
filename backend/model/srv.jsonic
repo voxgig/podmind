@@ -75,6 +75,10 @@ widget: {
   user: required: false
   api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
+
+  deps: {
+    chat: {}
+  }
 }
 
 
