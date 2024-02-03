@@ -39,7 +39,7 @@ export const Pokemon = () => {
     
       setThinking(true)
       formElem.querySelector('input').classList.add('thinking')
-      let res = await fetch('http://localhost:50401/api/web/public/widget',{
+      let res = await fetch(ENDPOINT,{
         method: 'POST',
         body: JSON.stringify({"aim":"req","on":"widget","chat":"query","query":query}),
         headers: {

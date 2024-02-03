@@ -9,7 +9,7 @@
     "build": "NODE_ENV=production webpack --env prod",
     "codegen": "npx playwright codegen",
     "dev": "webpack serve --env dev",
-    "copy-to-frontend": "cp dist/islands/voxgig-podmind-ask.island.umd.js ../../frontend/public/widget/voxgig-podmind-ask-0.0.1.js",
+    "copy-to-frontend": "cp dist/islands/voxgig-podmind-ask.island.umd.js ../../frontend/public/widget/voxgig-podmind-ask-0.0.2.js",
     "test": "npx playwright test",
     "test-headed": "npx playwright test --headed",
     "test-headed-slow": "SLOW=true npx playwright test --headed",
