@@ -1,0 +1,113 @@
+service: vxgpdm01-frontend01
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+
+custom:
+  client:
+    bucketName: vxgpdm01-frontend01-web01-${self:provider.stage}
+    distributionFolder: dist
+  subdomain:
+    dev: "podmind-dev"
+    # stg: "podmind-stg"
+    # prd: "podmind"
+  cert:
+    dev: arn:aws:acm:us-east-1:975049884289:certificate/a21d5a86-b5af-4513-86d7-cf4d0a119a96
+    # stg: arn:aws:acm:us-east-1:975049884289:certificate/a21d5a86-b5af-4513-86d7-cf4d0a119a96
+    # prd: arn:aws:acm:us-east-1:975049884289:certificate/a21d5a86-b5af-4513-86d7-cf4d0a119a96
+  apidomain:
+    dev: m8bf2doa6e.execute-api.us-east-1.amazonaws.com
+    # stg: m8bf2doa6e.execute-api.us-east-1.amazonaws.com
+    # prd: m8bf2doa6e.execute-api.us-east-1.amazonaws.com
+  
+resources:
+  Resources:
+    
+    StaticWebsiteBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
+        BucketName: ${self:custom.client.bucketName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+          
+    StaticSiteS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: StaticWebsiteBucket
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+              - s3:GetObject
+              Resource:
+                Fn::Join: [
+                  "", [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "StaticWebsiteBucket"
+                    },
+                    "/*"
+                  ]
+                ]
+
+    CloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          PriceClass: PriceClass_100
+          HttpVersion: http2and3
+          Origins:
+            - Id: S3Origin
+              DomainName: ${self:custom.client.bucketName}.s3.${self:provider.region}.amazonaws.com
+              S3OriginConfig:
+                OriginAccessIdentity: ''
+            - Id: ApiGatewayOrigin
+              DomainName: ${self:custom.apidomain.${self:provider.stage}}
+              OriginPath: /${self:provider.stage}
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+          DefaultRootObject: index.html
+          Enabled: true
+          DefaultCacheBehavior:
+            TargetOriginId: S3Origin
+            ViewerProtocolPolicy: redirect-to-https
+            DefaultTTL: 300
+            ForwardedValues:
+              QueryString: true
+          ViewerCertificate:
+            AcmCertificateArn: ${self:custom.cert.${self:provider.stage}}
+            SslSupportMethod: sni-only
+            MinimumProtocolVersion: TLSv1.2_2021
+          CacheBehaviors:
+            - PathPattern: /api/*
+              AllowedMethods: [POST, HEAD, PATCH, DELETE, PUT, GET, OPTIONS]
+              TargetOriginId: ApiGatewayOrigin
+              ForwardedValues:
+                QueryString: true
+                Cookies:
+                  Forward: all # Forward all cookies to the API Gateway
+              ViewerProtocolPolicy: allow-all
+          Aliases:
+            - ${self:custom.subdomain.${self:provider.stage}}.voxgig.com
+
+
+
+plugins:
+  - serverless-finch
+  
+
