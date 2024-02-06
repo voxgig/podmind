@@ -14,11 +14,11 @@ module.exports = function make_handle_transcript() {
     let doStore = out.doStore = false !== msg.doStore
     let mark = msg.mark || seneca.util.Nid()
 
-    debug('TRANSCRIPT', mark, path, episode_id, doEmbed, doStore)
+    debug('TRANSCRIPT', 'no-batch', mark, path, episode_id, doEmbed, doStore)
 
     // AWS S3 event
     if (null == path && null == episode_id) {
-      debug('RECORDS', mark, path, episode_id, msg.event?.Records)
+      debug('RECORDS', 'no-batch', mark, path, episode_id, msg.event?.Records)
 
       const paths = listPaths(msg.event)
 
@@ -41,32 +41,35 @@ module.exports = function make_handle_transcript() {
       return out
     }
 
-    debug('TRANSCRIPT-SINGLE', mark, path, episode_id, doEmbed, doStore)
+    debug('TRANSCRIPT-SINGLE', 'no-batch', mark, path, episode_id, doEmbed, doStore)
+
+    let batch = null
 
     if (null == episode_id) {
-      let m = path.match(/folder01\/transcript01\/([^-]+)\/([^-]+)/)
+      let m = path.match(/folder01\/transcript01\/([^-]+)\/([^-]+)-([^-.]+)/)
 
       if (null == m) {
         out.why = 'filename-mismatch'
         return out
       }
       episode_id = m[2]
+      batch = m[3]
     }
 
     let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
     if (null === episodeEnt) {
       out.why = 'episode-not-found'
-      debug('TRANSCRIPT-SINGLE-FAIL', mark, path, episode_id, doEmbed, doStore, out)
+      debug('TRANSCRIPT-SINGLE-FAIL', batch, mark, path, episode_id, doEmbed, doStore, out)
       return out
     }
 
     let podcast_id = episodeEnt.podcast_id
 
     if (null == path) {
-      path = `folder01\/transcript01/${podcast_id}/${episode_id}-dg01.json`
+      path = `folder01\/transcript01/${podcast_id}/${episode_id}-${batch}-dg01.json`
     }
 
-    debug('TRANSCRIPT-CHUNK', mark, path, podcast_id, episode_id, doEmbed, doStore)
+    debug('TRANSCRIPT-CHUNK', batch, mark, path, podcast_id, episode_id, doEmbed, doStore)
 
     out = await seneca.post('aim:chunk,whence:upload,chunk:transcript', {
       path,
@@ -79,5 +82,6 @@ module.exports = function make_handle_transcript() {
     return out
   }
 }
+
 
 

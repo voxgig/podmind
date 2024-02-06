@@ -52,6 +52,28 @@ function setup(seneca: any, options?: any) {
   const deep = seneca.util.deep
 
   seneca
+    .use('s3-store', {
+      debug: true,
+      map: {
+        '-/pdm/transcript': '*',
+        '-/pdm/rss': '*',
+        '-/pdm/audio': '*',
+      },
+      suffix: '',
+      prefix: '',
+      folder: 'folder01',
+      shared: {
+        Bucket: `podmind01-backend01-file01-${seneca.context.stage}`
+      },
+      s3: {
+        Region: 'us-east-1'
+      },
+      local: {
+        active: 'local' === seneca.context.env,
+        folder: __dirname + '/../../../data/storage/bucket01',
+      },
+    })
+
     .use('entity-util', deep(base.options.entity_util, options.entity_util))
     .use('env', {
       file: [__dirname + '/../local/local-env.js;?'],

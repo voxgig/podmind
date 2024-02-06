@@ -13,8 +13,8 @@ module.exports = function make_podmind_utils() {
 }
 
 
-function humanify(when: number) {
-  const d = new Date(when)
+function humanify(when?: number) {
+  const d = when ? new Date(when) : new Date()
   return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''))
 }
 

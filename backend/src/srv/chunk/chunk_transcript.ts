@@ -7,29 +7,34 @@ module.exports = function make_chunk_transcript() {
 
     let out: any = { ok: false, why: '' }
 
+    const chunker = out.chunker = 'c01'
+
     let path = out.path = msg.path
     let podcast_id = out.podcast_id = msg.podcast_id
     let episode_id = out.episode_id = msg.episode_id
-    let doEmbed = out.doEmbed = false !== msg.doEmbed
-    let doStore = out.doStore = false !== msg.doStore
+    let doEmbed = out.doEmbed = false !== msg.doEmbed // default true as queue event
+    let doStore = out.doStore = false !== msg.doStore // default true as queue event
     let chunkEnd = out.chunkEnd = msg.chunkEnd
     let mark = msg.mark || seneca.util.Nid()
 
-    debug && debug('CHUNK', mark, path, podcast_id, episode_id, doEmbed, doStore)
+    debug && debug('CHUNK',
+      'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore)
 
-    let transcript_id = path
-    // 'folder01/transcript01/' + podcast_id + '/' +
-    // episode_id + '-dg01.json'
+    let transcript_id = path.replace(/^folder01\//, '')
 
+    // TODO: s3-store should auto strip folder
     const transcriptEnt = await seneca.entity('pdm/transcript')
       .load$(transcript_id)
 
     if (null == transcriptEnt) {
       out.why = 'transcript-not-found'
       out.details = { path, transcript_id, podcast_id, episode_id }
-      debug && debug('CHUNK-FAIL', mark, path, podcast_id, episode_id, doEmbed, doStore, out)
+      debug && debug('CHUNK-FAIL',
+        'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out)
       return out
     }
+
+    const batch = transcriptEnt.batch
 
     const transcriptResults =
       transcriptEnt.deepgram.results
@@ -43,6 +48,9 @@ module.exports = function make_chunk_transcript() {
 
     out.transcript = transcriptText.length
     out.paragraphs = paragraphs.length
+
+    debug && debug('CHUNK-START',
+      batch, mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out)
 
     let chunks: string[] = []
 
@@ -62,40 +70,49 @@ module.exports = function make_chunk_transcript() {
 
       // console.log('Q: ' + question)
 
+      let answered = false
       while (para && 1 === para.speaker) {
         let answer = para.sentences.map((s: any) => s.text).join('')
         let chunk = question + ' :: ' + answer
         chunks.push(chunk)
 
         para = paragraphs[++pI]
+        answered = true
       }
 
-      pI--
+      if (answered) {
+        pI--
+      }
     }
+
 
     chunks = chunks.filter((c: string) => 0 < c.length)
 
     debug && debug('CHUNK-CHUNKS',
-      mark, path, podcast_id, episode_id, doEmbed, doStore, chunks.length)
+      mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, chunks.length)
 
     let embeds = 0
-    chunkEnd = 0 <= chunkEnd ? chunkEnd : chunks.length
-    for (let chunkI = 0; chunkI < chunks.length; chunkI++) {
+    let maxChunk = 0 <= chunkEnd ? chunkEnd : chunks.length
+    for (let chunkI = 0; chunkI < maxChunk; chunkI++) {
       let chunk = chunks[chunkI]
 
       if (doEmbed) {
         await seneca.post('aim:embed,handle:chunk', {
+          chunker,
           mark,
+          batch,
           chunk,
           podcast_id,
           episode_id,
           doStore,
+          doEmbed,
         })
         embeds++
       }
     }
 
     out.ok = true
+    out.batch = batch
     out.chunks = chunks.length
     out.embeds = embeds
     out.podcast_id = podcast_id

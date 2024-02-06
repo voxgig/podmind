@@ -12,3 +12,9 @@ pdm: &: stage: active: true
 # pdm: transcript: kind: storage
 # pdm: audio: kind: storage
 
+
+# lot = a given vector index using same chunker
+
+pdm: chunk: index: lot: field: lot
+
+pdm: chat: index: lot: field: lot

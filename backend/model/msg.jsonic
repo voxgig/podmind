@@ -32,12 +32,8 @@ aim: entity: {
 
 aim: ingest: {
   get: info: {}
-  #handle: transcript: {}
-  #ingest: transcript: {}
   subscribe: podcast: {}
   ingest: podcast: {}
-  #embed: chunk: {}
-  #store: embed: {}
 }
 
 
@@ -122,6 +118,12 @@ aim: embed: {
 
 aim: ingest: subscribe: podcast: '$': params: {
   feed: String
+  doUpdate: false
+  doIngest: false
+  doAudio: false
+  doTranscribe: false
+  episodeStart: 0
+  # episodeEnd: -1 # TODO: Aontu FIX
 }
 
 

@@ -1,4 +1,4 @@
-// const Axios = require('axios')
+
 
 module.exports = function make_download_audio() {
   return async function download_audio(this: any, msg: any, meta: any) {
@@ -10,14 +10,20 @@ module.exports = function make_download_audio() {
 
     let out: any = { ok: false, why: '', paths: [], episode_id: '' }
 
-    let episode_id = msg.episode_id
-    let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
-    let doAudio = false !== msg.doAudio // download by default
+    // Associate all artifacts of a batch
+    let batch = out.batch = msg.batch || ('B' + humanify())
 
-    out.episode_id = episode_id
+    let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
+
+    let episode_id = out.episode_id = msg.episode_id
+
+    let doAudio = out.doAudio = !!msg.doAudio
+    let doTranscribe = out.doTranscribe = !!msg.doTranscribe
+
+
     let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
     let podcast_id = episodeEnt?.podcast_id
-    debug('HANDLE', mark, podcast_id, episode_id, doAudio)
+    debug('HANDLE', batch, mark, podcast_id, episode_id, doAudio, doTranscribe)
 
     if (episodeEnt) {
       let url = episodeEnt.url
@@ -26,23 +32,23 @@ module.exports = function make_download_audio() {
       if (doAudio) {
         let res: any
 
-
-        debug('HANDLE-AUDIO-START', mark, podcast_id, episode_id, url)
+        debug('HANDLE-AUDIO-START', batch, mark, podcast_id, episode_id, url)
 
         try {
           res = await Axios.get(url, { responseType: "arraybuffer" })
         }
         catch (err: any) {
-          debug('AUDIO-ERROR', mark, podcast_id, episode_id, url, err)
+          debug('AUDIO-ERROR', batch, mark, podcast_id, episode_id, url, err)
         }
 
-        debug('HANDLE-AUDIO-DOWN', mark, podcast_id, episode_id, url, res?.status, res?.data?.length)
+        debug('HANDLE-AUDIO-DOWN',
+          batch, mark, podcast_id, episode_id, url, res?.status, res?.data?.length)
 
         if (200 === res?.status) {
-          const s3id = 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
-            episodeEnt.id + '.mp3'
-          const s3id_dated = 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
-            episodeEnt.id + '-' + humanify(Date.now()) + '.mp3'
+          const s3id = 'audio01/' + episodeEnt.podcast_id + '/' +
+            episodeEnt.id + '-' + batch + '.mp3'
+          // const s3id_dated = 'folder01/audio01/' + episodeEnt.podcast_id + '/' +
+          //   episodeEnt.id + '-' + batch + '-' + humanify(Date.now()) + '.mp3'
 
           try {
             await seneca.entity('pdm/audio').save$({
@@ -50,18 +56,19 @@ module.exports = function make_download_audio() {
               id: s3id,
               content: () => res.data
             })
-            await seneca.entity('pdm/audio').save$({
-              bin$: 'content',
-              id: s3id_dated,
-              content: () => res.data
-            })
+
+            // await seneca.entity('pdm/audio').save$({
+            //   bin$: 'content',
+            //   id: s3id_dated,
+            //   content: () => res.data
+            // })
           }
           catch (err: any) {
-            debug('HANDLE-AUDIO-ERROR', mark, podcast_id, episode_id, res.status, err)
+            debug('HANDLE-AUDIO-ERROR', batch, mark, podcast_id, episode_id, res.status, err)
           }
           out.size = size = res.data.length
 
-          debug('AUDIO-SAVED', mark, podcast_id, episode_id, url, res?.status, size)
+          debug('AUDIO-SAVED', batch, mark, podcast_id, episode_id, url, res?.status, size)
         }
       }
 
@@ -71,7 +78,7 @@ module.exports = function make_download_audio() {
       out.why = 'not-found'
     }
 
-    debug('HANDLE-OUT', mark, podcast_id, episode_id, doAudio, out)
+    debug('HANDLE-OUT', batch, mark, podcast_id, episode_id, doAudio, out)
 
     return out
   }

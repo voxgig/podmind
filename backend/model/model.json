@@ -62,7 +62,12 @@
             "podcast": {
               "$": {
                 "params": {
-                  "feed": "String"
+                  "feed": "String",
+                  "doUpdate": false,
+                  "doIngest": false,
+                  "doAudio": false,
+                  "doTranscribe": false,
+                  "episodeStart": 0
                 }
               }
             }
@@ -844,7 +849,10 @@
       "core": {
         "name": "podmind",
         "short": "pdm",
-        "token": "podmind-auth"
+        "token": "podmind-auth",
+        "data": {
+          "chunker": "transcription01b"
+        }
       },
       "cloud": {
         "aws": {
@@ -1000,6 +1008,114 @@
         }
       },
       "pdm": {
+        "chunk": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "name": {
+              "label": "Name",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "episode_id": {
+              "label": "Episode",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "index": {
+            "lot": {
+              "field": "lot"
+            }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
+          }
+        },
+        "chat": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "podcast_id": {
+              "label": "Podcast",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "owner_id": {
+              "label": "Owner",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "index": {
+            "lot": {
+              "field": "lot"
+            }
+          },
+          "dynamo": {
+            "active": true
+          },
+          "stage": {
+            "active": true
+          }
+        },
         "podcast": {
           "id": {
             "field": "id"
@@ -1080,105 +1196,7 @@
             "active": true
           }
         },
-        "chunk": {
-          "id": {
-            "field": "id"
-          },
-          "field": {
-            "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "name": {
-              "label": "Name",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "owner_id": {
-              "label": "Owner",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "podcast_id": {
-              "label": "Podcast",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "episode_id": {
-              "label": "Episode",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            }
-          },
-          "dynamo": {
-            "active": true
-          },
-          "stage": {
-            "active": true
-          }
-        },
         "widget": {
-          "id": {
-            "field": "id"
-          },
-          "field": {
-            "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "podcast_id": {
-              "label": "Podcast",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "owner_id": {
-              "label": "Owner",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            }
-          },
-          "dynamo": {
-            "active": true
-          },
-          "stage": {
-            "active": true
-          }
-        },
-        "chat": {
           "id": {
             "field": "id"
           },

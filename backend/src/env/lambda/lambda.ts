@@ -124,6 +124,9 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
       .use('dynamo-store', {
         entity: dynamo_entity
       })
+
+    // TODO: unify with local
+    /*
       .use('s3-store', {
         map: {
           '-/pdm/audio': '*',
@@ -144,6 +147,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
           Region: 'us-east-1'
         },
       })
+    */
 
     setup(seneca)
 

@@ -7,29 +7,39 @@ module.exports = function make_subscribe_podcast() {
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
 
+    const { humanify } = seneca.export('PodmindUtility/getUtils')()
+
     let out: any = { ok: false, why: '' }
 
+    // Associate all artifacts of a batch
+    let batch = out.batch = msg.batch || ('B' + humanify())
+
+    // Debugging mark
     let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
+
+    // RSS URL
     let feed = out.feed = '' + msg.feed
+
+    // Processing controls
     let doUpdate = out.doUpdate = !!msg.doUpdate
     let doIngest = out.doIngest = !!msg.doIngest
-    let doAudio = out.doAudio = false !== msg.doAudio /* download by default */
-    let doTranscribe = out.doTranscribe = false !== msg.doTranscribe /* transcribe by default */
+    let doAudio = out.doAudio = !!msg.doAudio
+    let doTranscribe = out.doTranscribe = !!msg.doTranscribe
     let episodeStart = out.episodeStart = parseInt(msg.episodeStart) || 0
     let episodeEnd = out.episodeEnd = parseInt(msg.episodeEnd) || -1 /* -1 => all */
 
-    debug && debug('START', mark, feed)
+    debug && debug('START', batch, mark, feed)
 
     out.feed = feed
 
     let podcastEnt = await seneca.entity('pdm/podcast').load$({ feed })
 
     if (null == podcastEnt || doUpdate) {
-      let rssRes = await seneca.shared.getRSS(debug, feed, null, mark)
+      let rssRes = await seneca.shared.getRSS(debug, feed, null, batch, mark)
 
       if (!rssRes.ok) {
         out.why = 'rss'
-        out.details = { feed, errmsg: rssRes.err.message }
+        out.errmsg = rssRes.err?.message || 'unknown-01'
         return out
       }
 
@@ -40,11 +50,12 @@ module.exports = function make_subscribe_podcast() {
         feed,
         title: rss.title,
         desc: rss.description,
+        batch,
       })
     }
 
     if (null != podcastEnt) {
-      debug && debug('SUBSCRIBE-ENT', mark, doIngest, podcastEnt)
+      debug && debug('SUBSCRIBE-ENT', batch, mark, doIngest, podcastEnt)
 
       out.ok = true
       out.podcast = podcastEnt
@@ -56,6 +67,7 @@ module.exports = function make_subscribe_podcast() {
           doUpdate,
           doIngest,
           mark,
+          batch,
           doAudio,
           doTranscribe,
           episodeStart,

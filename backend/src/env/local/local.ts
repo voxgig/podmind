@@ -88,6 +88,8 @@ async function runSeneca(info: any) {
       })
     })
 
+  // TODO: unify with lambda
+  /*
     .use('s3-store', {
       debug: true,
       map: {
@@ -101,6 +103,7 @@ async function runSeneca(info: any) {
         folder: __dirname + '/../../../data/storage',
       },
     })
+  */
 
   setup(seneca)
 

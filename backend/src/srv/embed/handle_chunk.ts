@@ -3,52 +3,70 @@ import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedroc
 
 module.exports = function make_handle_chunk() {
   return async function handle_chunk(this: any, msg: any, meta: any) {
-
     const seneca = this
     const debug = seneca.shared.debug(meta.action)
+    const { humanify } = seneca.export('PodmindUtility/getUtils')()
 
     const region = seneca.context.model.main.conf.cloud.aws.region
 
     let out: any = { ok: false, why: '' }
 
-    let chunk = msg.chunk
+    const embeder = out.embeder = 'm01'
+
+    let batch = out.batch = msg.batch || ('B' + humanify())
+    let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
+
+    let chunk = out.chunk = msg.chunk
+    let chunker = out.chunker = msg.chunker //  chunking algo
     let podcast_id = out.podcast_id = msg.podcast_id
     let episode_id = out.episode_id = msg.episode_id
-    let doStore = out.doStore = false !== msg.doStore
-    let mark = msg.mark || seneca.util.Nid()
+    let doStore = out.doStore = !!msg.doStore
+    let doEmbed = out.doEmbed = !!msg.doEmbed
 
-    debug('EMBED', mark, podcast_id, episode_id, doStore)
+    debug('EMBED',
+      batch, mark, chunker, embeder, podcast_id, episode_id, chunk.length, doStore, doEmbed)
 
-    let embedding = await getEmbeddings(chunk, { region })
+    if (doEmbed) {
+      let embedding = await getEmbeddings(chunk, { region })
 
-    if (doStore) {
-      await seneca.post('aim:embed,store:embed', {
+      if (doStore) {
+        await seneca.post('aim:embed,store:embed', {
+          mark,
+          batch,
+          chunk,
+          chunker,
+          embeder,
+          embedding,
+          podcast_id,
+          episode_id,
+          doStore,
+        })
+      }
+
+      out.ok = true
+      out.embedding = embedding.length
+      out.podcast_id = podcast_id
+      out.episode_id = episode_id
+
+      await seneca.entity('pdm/chunk').save$({
         mark,
-        chunk,
-        embedding,
+        batch,
+        chunker,
+        embeder,
+        chunklen: chunk.length,
+        embedlen: embedding.length,
         podcast_id,
         episode_id,
+        chunk: chunk,
+        embed: embedding,
       })
     }
+    else {
+      out.ok = true
+    }
 
-    out.ok = true
-    out.chunk = chunk.length
-    out.embedding = embedding.length
-    out.podcast_id = podcast_id
-    out.episode_id = episode_id
-
-    await seneca.entity('pdm/chunk').save$({
-      mark,
-      chunklen: chunk.length,
-      embedlen: embedding.length,
-      podcast_id,
-      episode_id,
-      chunk: chunk,
-      embed: embedding,
-    })
-
-
-    debug('EMBED-OUT', mark, podcast_id, episode_id, doStore, out)
+    debug('EMBED-OUT',
+      batch, mark, chunker, embeder, podcast_id, episode_id, doEmbed, doStore, out)
 
     return out
   }
