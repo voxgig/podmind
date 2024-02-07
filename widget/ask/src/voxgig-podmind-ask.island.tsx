@@ -22,7 +22,7 @@ console.log('VOXGIG_PODMIND_ENDPOINT', VOXGIG_PODMIND_ENDPOINT, ENDPOINT)
 export const Pokemon = () => {
   useWebComponentEvents(islandName)
 
-  let [answer, setAnswer] = useState('')
+  let [answer, setAnswer] = useState([])
   let [thinking, setThinking] = useState(false)
   
   const submitQuery = async (event:any) => {
@@ -48,8 +48,10 @@ export const Pokemon = () => {
       })
       // console.log('RES', res)
       let json:any = await res.json()
-      console.log(islandName, 'json',json)
-      setAnswer(json.answer)
+      // console.log(islandName, 'json',json)
+      let answer = json.answer
+      answer = answer.split(/\n/)
+      setAnswer(answer)
     }
     finally {
       setThinking(false)
@@ -76,7 +78,9 @@ export const Pokemon = () => {
         >Ask</button>
       </form>
       
-      { answer && <p>{answer}</p> }
+      { answer && answer.map(p=>
+        <p>{p}</p>
+      ) }
     </div>
   )
 }
