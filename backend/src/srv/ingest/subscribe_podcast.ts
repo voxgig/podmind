@@ -27,6 +27,7 @@ module.exports = function make_subscribe_podcast() {
     let doTranscribe = out.doTranscribe = !!msg.doTranscribe
     let episodeStart = out.episodeStart = parseInt(msg.episodeStart) || 0
     let episodeEnd = out.episodeEnd = parseInt(msg.episodeEnd) || -1 /* -1 => all */
+    let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1 /* -1 => all */
 
     debug && debug('START', batch, mark, feed)
 
@@ -57,6 +58,11 @@ module.exports = function make_subscribe_podcast() {
     if (null != podcastEnt) {
       debug && debug('SUBSCRIBE-ENT', batch, mark, doIngest, podcastEnt)
 
+      const slog = await seneca.export('PodmindUtility/makeSharedLog')(
+        'podcast-ingest-01', podcastEnt.id)
+
+      slog('SUBSCRIBE', batch, podcastEnt.id, feed)
+
       out.ok = true
       out.podcast = podcastEnt
 
@@ -72,6 +78,7 @@ module.exports = function make_subscribe_podcast() {
           doTranscribe,
           episodeStart,
           episodeEnd,
+          chunkEnd,
         })
       }
     }

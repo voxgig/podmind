@@ -60,6 +60,11 @@ module.exports = function make_handle_chunk() {
         chunk: chunk,
         embed: embedding,
       })
+
+      const slog = await seneca.export('PodmindUtility/makeSharedLog')(
+        'podcast-ingest-01', podcast_id)
+
+      slog('EMBED', batch, podcast_id, episode_id, embedding.length, chunker, embeder)
     }
     else {
       out.ok = true

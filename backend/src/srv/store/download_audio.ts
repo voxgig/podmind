@@ -19,7 +19,7 @@ module.exports = function make_download_audio() {
 
     let doAudio = out.doAudio = !!msg.doAudio
     let doTranscribe = out.doTranscribe = !!msg.doTranscribe
-
+    let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1 /* -1 => all */
 
     let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
     let podcast_id = episodeEnt?.podcast_id
@@ -69,6 +69,19 @@ module.exports = function make_download_audio() {
           out.size = size = res.data.length
 
           debug('AUDIO-SAVED', batch, mark, podcast_id, episode_id, url, res?.status, size)
+
+          const slog = await seneca.export('PodmindUtility/makeSharedLog')(
+            'podcast-ingest-01', episodeEnt.podcast_id)
+
+          slog('AUDIO', batch, podcast_id, episode_id, size)
+
+          if ('local' === seneca.context.env) {
+            seneca.act('aim:audio,transcribe:episode', {
+              path: 'folder01/' + s3id,
+              mark,
+              chunkEnd,
+            })
+          }
         }
       }
 

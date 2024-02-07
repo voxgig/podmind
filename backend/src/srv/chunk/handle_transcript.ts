@@ -13,6 +13,8 @@ module.exports = function make_handle_transcript() {
     let doEmbed = out.doEmbed = false !== msg.doEmbed
     let doStore = out.doStore = false !== msg.doStore
     let mark = msg.mark || seneca.util.Nid()
+    let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1 /* -1 => all */
+
 
     debug('TRANSCRIPT', 'no-batch', mark, path, episode_id, doEmbed, doStore)
 
@@ -50,6 +52,7 @@ module.exports = function make_handle_transcript() {
 
       if (null == m) {
         out.why = 'filename-mismatch'
+        debug('TRANSCRIPT-match-FAIL', batch, mark, path, episode_id, doEmbed, doStore, out)
         return out
       }
       episode_id = m[2]
@@ -71,12 +74,18 @@ module.exports = function make_handle_transcript() {
 
     debug('TRANSCRIPT-CHUNK', batch, mark, path, podcast_id, episode_id, doEmbed, doStore)
 
+    const slog = await seneca.export('PodmindUtility/makeSharedLog')(
+      'podcast-ingest-01', episodeEnt.podcast_id)
+
+    slog('TRANSCRIPT', batch, episodeEnt.podcast_id, episodeEnt.id)
+
     out = await seneca.post('aim:chunk,whence:upload,chunk:transcript', {
       path,
       podcast_id,
       episode_id,
       doEmbed,
       doStore,
+      chunkEnd,
     })
 
     return out

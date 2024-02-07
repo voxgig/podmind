@@ -14,6 +14,7 @@ module.exports = function make_transcribe_episode() {
     let path = msg.path
     let doAudio = false !== msg.doAudio // upload and transcribe by default
     let mark = msg.mark || seneca.util.Nid()
+    let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1 /* -1 => all */
 
     out.doAudio = doAudio
 
@@ -56,6 +57,7 @@ module.exports = function make_transcribe_episode() {
 
     if (null == m) {
       out.why = 'filename-mismatch'
+      debug && debug('TRANSCRIBE-match-FAIL', 'no-batch', mark, path, doAudio, out)
       return out
     }
 
@@ -133,10 +135,18 @@ module.exports = function make_transcribe_episode() {
           id$: transcript_id,
         })
 
-        // await seneca.entity('pdm/transcript').save$({
-        //   id$: transcript_id_dated,
-        //   ...transcript_data,
-        // })
+        const slog = await seneca.export('PodmindUtility/makeSharedLog')(
+          'podcast-ingest-01', episodeEnt.podcast_id)
+
+        slog('TRANSCRIPT', batch, episodeEnt.podcast_id, episodeEnt.id, out.duration)
+
+        if ('local' === seneca.context.env) {
+          seneca.act('aim:chunk,handle:transcript', {
+            path: 'folder01/' + transcript_id,
+            mark,
+            chunkEnd,
+          })
+        }
 
         debug && debug('TRANSCRIBE-DONE', batch, mark, path, episode_id, out)
       }

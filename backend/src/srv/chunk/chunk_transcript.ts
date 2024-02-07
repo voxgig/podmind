@@ -97,6 +97,11 @@ module.exports = function make_chunk_transcript() {
       let chunk = chunks[chunkI]
 
       if (doEmbed) {
+        const slog = await seneca.export('PodmindUtility/makeSharedLog')(
+          'podcast-ingest-01', podcast_id)
+
+        slog('CHUNK', batch, podcast_id, episode_id, chunkI, chunk.length, chunker)
+
         await seneca.post('aim:embed,handle:chunk', {
           chunker,
           mark,

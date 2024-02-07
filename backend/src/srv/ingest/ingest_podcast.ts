@@ -21,7 +21,7 @@ module.exports = function make_ingest_podcast() {
     let episodeStart = out.episodeStart = parseInt(msg.episodeStart) || 0
     let episodeEnd = out.episodeEnd = parseInt(msg.episodeEnd) || -1 /* -1 => all */
     let episodeGuid = out.episodeGuid = msg.episodeGuid
-
+    let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1 /* -1 => all */
 
     debug && debug('START', batch, mark, podcast_id)
 
@@ -66,6 +66,11 @@ module.exports = function make_ingest_podcast() {
     out.episodes = episodes.length
     episodeEnd = 0 <= episodeEnd ? episodeEnd : episodes.length
 
+    const slog = await seneca.export('PodmindUtility/makeSharedLog')(
+      'podcast-ingest-01', podcastEnt.id)
+
+    slog('INGEST', batch, podcastEnt.id, episodes.length)
+
     if (doUpdate) {
       if (episodeGuid) {
         let episode = episodes.find((episode: any) => episodeGuid === episode.guid)
@@ -104,7 +109,10 @@ module.exports = function make_ingest_podcast() {
         content: episode.content,
         url: episode.enclosure?.url,
         batch,
+        episode,
       })
+
+      slog('EPISODE', batch, podcastEnt.id, epI, episode.guid, episode.title)
 
       if (doAudio) {
         await seneca.post('aim:store,download:audio', {
@@ -114,12 +122,12 @@ module.exports = function make_ingest_podcast() {
           doTranscribe,
           mark,
           batch,
+          chunkEnd,
         })
       }
 
       debug && debug('EPISODE-SAVE', batch, mark, podcastEnt.id, epI, doIngest, episode.guid)
     }
-
 
     out.ok = true
 
