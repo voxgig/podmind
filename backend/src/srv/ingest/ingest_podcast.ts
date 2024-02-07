@@ -109,7 +109,7 @@ module.exports = function make_ingest_podcast() {
         content: episode.content,
         url: episode.enclosure?.url,
         batch,
-        episode,
+        episode: JSON.stringify(episode),
       })
 
       slog('EPISODE', batch, podcastEnt.id, epI, episode.guid, episode.title)
