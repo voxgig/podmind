@@ -15,6 +15,6 @@ pdm: &: stage: active: true
 
 # lot = a given vector index using same chunker
 
-pdm: chunk: index: lot: field: lot
+# pdm: chunk: index: lot: field: lot
 
-pdm: chat: index: lot: field: lot
+# pdm: chat: index: lot: field: lot
