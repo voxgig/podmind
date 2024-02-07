@@ -244,6 +244,12 @@ BasicPodmindLambdaRole:
               Resource:
                 - "*"
 
+            - Effect: Allow
+              Action:
+                - "logs:DescribeLogStreams"
+              Resource:
+                - "*"
+
                 
 
                 
