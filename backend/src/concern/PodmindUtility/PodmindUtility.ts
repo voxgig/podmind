@@ -84,11 +84,22 @@ async function makeCloudWatchLog(seneca: any, logGroupName: string, logStreamNam
     (awsctx.sharedlog[logGroupName][logStreamName] || {})
 
   try {
-    const createLogGroupCommand = new CreateLogGroupCommand({ logGroupName })
-    await cloudwatchLogsClient.send(createLogGroupCommand)
+    try {
+      const createLogGroupCommand = new CreateLogGroupCommand({ logGroupName })
+      await cloudwatchLogsClient.send(createLogGroupCommand)
+    }
+    catch (e: any) {
+      console.log('CREATE LOG GROUP', logGroupName, logStreamName, e)
+    }
 
-    const createLogStreamCommand = new CreateLogStreamCommand({ logGroupName, logStreamName })
-    await cloudwatchLogsClient.send(createLogStreamCommand)
+    try {
+      const createLogStreamCommand = new CreateLogStreamCommand({ logGroupName, logStreamName })
+      await cloudwatchLogsClient.send(createLogStreamCommand)
+    }
+    catch (e: any) {
+      console.log('CREATE LOG STREAM', logGroupName, logStreamName, e)
+    }
+
 
     const command = new DescribeLogStreamsCommand({
       logGroupName,
