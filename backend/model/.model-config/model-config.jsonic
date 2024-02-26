@@ -1,5 +1,5 @@
 
-@'@voxgig/model/model/.model-config/sys.jsonic'
+@'@voxgig/model/model/.model-config/model-config.jsonic'
 
 sys: model: builders: {
   srv_yml: {

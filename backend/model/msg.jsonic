@@ -34,6 +34,7 @@ aim: ingest: {
   get: info: {}
   subscribe: podcast: {}
   ingest: podcast: {}
+  process: episode: {}
 }
 
 

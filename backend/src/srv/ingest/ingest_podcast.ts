@@ -72,6 +72,8 @@ module.exports = function make_ingest_podcast() {
     slog('INGEST', batch, podcastEnt.id, episodes.length)
 
     if (doUpdate) {
+
+      // Operate on one specific episode
       if (episodeGuid) {
         let episode = episodes.find((episode: any) => episodeGuid === episode.guid)
         if (episode) {
@@ -82,6 +84,8 @@ module.exports = function make_ingest_podcast() {
           return out
         }
       }
+
+      // Operate on all episodes.
       else {
         for (let epI = episodeStart; epI < episodeEnd; epI++) {
           let episode = episodes[epI]
@@ -92,6 +96,22 @@ module.exports = function make_ingest_podcast() {
 
 
     async function handleEpisode(episode: any, epI: number) {
+      await seneca.post('aim:ingest,process:episode', {
+        episode,
+        podcast_id,
+        doAudio,
+        doTranscribe,
+        doIngest,
+        doUpdate,
+        mark,
+        batch,
+        chunkEnd,
+      })
+
+      debug && debug('EPISODE-PROCESS', batch, mark, podcastEnt.id, epI, episode.guid,
+        doAudio, doTranscribe, doIngest, doUpdate)
+
+      /*
       let episodeEnt = await seneca.entity('pdm/episode').load$({
         guid: episode.guid
       })
@@ -127,6 +147,7 @@ module.exports = function make_ingest_podcast() {
       }
 
       debug && debug('EPISODE-SAVE', batch, mark, podcastEnt.id, epI, doIngest, episode.guid)
+      */
     }
 
     out.ok = true

@@ -74,6 +74,9 @@
           },
           "ingest": {
             "podcast": {}
+          },
+          "process": {
+            "episode": {}
           }
         },
         "store": {
@@ -273,6 +276,7 @@
             "monitor": {}
           }
         },
+        "out": {},
         "deps": {
           "auth": {},
           "user": {},
@@ -334,6 +338,7 @@
             }
           }
         },
+        "out": {},
         "deps": {},
         "user": {
           "required": false
@@ -384,6 +389,7 @@
             }
           }
         },
+        "out": {},
         "deps": {},
         "user": {
           "required": true
@@ -434,6 +440,7 @@
             }
           }
         },
+        "out": {},
         "deps": {},
         "user": {
           "required": true
@@ -484,6 +491,7 @@
             }
           }
         },
+        "out": {},
         "deps": {},
         "user": {
           "required": true
@@ -534,6 +542,7 @@
             }
           }
         },
+        "out": {},
         "deps": {
           "chat": {}
         },
@@ -576,7 +585,6 @@
             "ingest": {}
           }
         },
-        "deps": {},
         "out": {
           "aim": {
             "store": {
@@ -586,6 +594,7 @@
             }
           }
         },
+        "deps": {},
         "user": {
           "required": false
         },
@@ -628,6 +637,7 @@
             "store": {}
           }
         },
+        "out": {},
         "deps": {},
         "on": {
           "ingest": {
@@ -682,6 +692,7 @@
             "audio": {}
           }
         },
+        "out": {},
         "deps": {},
         "on": {
           "file": {
@@ -741,7 +752,6 @@
             "chunk": {}
           }
         },
-        "deps": {},
         "out": {
           "aim": {
             "embed": {
@@ -751,6 +761,7 @@
             }
           }
         },
+        "deps": {},
         "on": {
           "file": {
             "provider": "aws",
@@ -809,7 +820,6 @@
             "embed": {}
           }
         },
-        "deps": {},
         "out": {
           "aim": {
             "embed": {
@@ -819,6 +829,7 @@
             }
           }
         },
+        "deps": {},
         "on": {
           "file": {
             "provider": "aws",
@@ -1251,6 +1262,7 @@
       "srv": {
         "base": {
           "in": {},
+          "out": {},
           "deps": {},
           "api": {
             "web": {
@@ -1292,6 +1304,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_js": {
@@ -1321,6 +1334,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_ts": {
@@ -1350,7 +1364,21 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
+        }
+      },
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "Text",
+            "active": true,
+            "dx": {},
+            "ux": {}
+          }
         }
       },
       "app": {},

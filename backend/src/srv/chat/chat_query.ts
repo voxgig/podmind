@@ -4,7 +4,6 @@ import { Client } from '@opensearch-project/opensearch'
 import { defaultProvider } from '@aws-sdk/credential-provider-node'
 
 
-
 module.exports = function make_chat_query() {
   return async function chat_query(this: any, msg: any) {
     const seneca = this

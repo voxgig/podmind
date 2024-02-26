@@ -51,6 +51,10 @@ function setup(seneca: any, options?: any) {
   options = options || {}
   const deep = seneca.util.deep
 
+  const cloud = seneca.context.model.main.conf.cloud
+
+  // const model = cloud.aws.bedrock.model
+
   seneca
     .use('s3-store', {
       debug: true,
@@ -90,8 +94,17 @@ function setup(seneca: any, options?: any) {
         },
       }
     })
+    .use('bedrock-chat', {
+      /*
+      opensearch: {
+        region: cloud.aws.region,
 
-
+        // TODO: move under aws
+        node: cloud.opensearch.url,
+        index: cloud.opensearch.index
+        }
+        */
+    })
 
   return seneca
 }
