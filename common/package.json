@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-common",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Podmind Common",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,6 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@voxgig/model": "^1.3.0"
+    "@voxgig/model": "^1.4.0"
   }
 }
