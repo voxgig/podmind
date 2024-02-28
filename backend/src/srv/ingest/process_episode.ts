@@ -86,13 +86,33 @@ module.exports = function make_process_episode() {
 
       if (doIngest) {
         let description = `${episodeEnt.title}: ${episodeEnt.content}`
+
+        // To update via REPL:
+        // aim:prompt,add:prompt,name:ingest.episode.meta01,
+        //   text:<% Load("data/config/prompt/ingest.episode.meta01-v0.txt") %>
+        const promptRes =
+          await seneca.post('aim:prompt,build:prompt,name:ingest.episode.meta01', {
+            p: {
+              '<<DESCRIPTION>>': description
+            }
+          })
+
+        if (!promptRes.ok) {
+          out.why = 'prompt-failed/' + promptRes.why
+          debug && debug('FAIL-PROMPT', batch, mark, podcast_id, episodeEnt.id, out)
+          return out
+        }
+
+        const query = promptRes.full
+
+        /*
         let query = `
 Use the text below marked DESCRIPTION, which describes a podcast episode, to extract the following information about the episode: the guest's name; the topics discussed (list each topic as a complete sentence); any links in the descriptions (include the link url and short text describing the link). Respond with a JSON document using the following template: {"guest":"...","topics":["...","...",...],links:[{url;"...",text:'...'},...]}
 DESCRIPTION:"""${description}"""`
-
+*/
         // query = 'hello'
 
-        // console.log('EPISODE QUERY', query)
+        console.log('EPISODE QUERY', query)
 
         let processRes = await seneca.post('sys:chat,submit:query', {
           query

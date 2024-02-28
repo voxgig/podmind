@@ -38,6 +38,16 @@ aim: ingest: {
 }
 
 
+aim: prompt: {
+  get: info: {}
+  add: prompt: {}
+  set: prompt: {}
+  get: prompt: {}
+  list: prompt: {}
+  build: prompt: {}
+}
+
+
 aim: store: {
   get: info: {}
   download: audio: {}
@@ -129,6 +139,31 @@ aim: ingest: subscribe: podcast: '$': params: {
 
 
 
+aim: prompt: {
+  add: prompt: '$': params: {
+    name: String # unique per prompt, kind+tag DO NOT namespace 
+    # kind: String # optional
+    # tag: String # optional
+    text: String
+  }
+
+  set: prompt: '$': params: {
+    name: String
+    id: String
+  }
+
+  get: prompt: '$': params: {
+    name: String
+  }
+
+  list: prompt: '$': params: {
+    # q: Object # query ## TODO: fix
+  }
+
+  build: prompt: '$': params: {
+    # p: Object # named build params ## TODO: fix
+  }
+}  
 
 
 

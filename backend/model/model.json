@@ -79,6 +79,52 @@
             "episode": {}
           }
         },
+        "prompt": {
+          "get": {
+            "info": {},
+            "prompt": {
+              "$": {
+                "params": {
+                  "name": "String"
+                }
+              }
+            }
+          },
+          "add": {
+            "prompt": {
+              "$": {
+                "params": {
+                  "name": "String",
+                  "text": "String"
+                }
+              }
+            }
+          },
+          "set": {
+            "prompt": {
+              "$": {
+                "params": {
+                  "name": "String",
+                  "id": "String"
+                }
+              }
+            }
+          },
+          "list": {
+            "prompt": {
+              "$": {
+                "params": {}
+              }
+            }
+          },
+          "build": {
+            "prompt": {
+              "$": {
+                "params": {}
+              }
+            }
+          }
+        },
         "store": {
           "get": {
             "info": {}
@@ -278,13 +324,14 @@
         },
         "out": {},
         "deps": {
+          "audio": {},
           "auth": {},
-          "user": {},
-          "entity": {},
           "chat": {},
+          "entity": {},
           "ingest": {},
+          "prompt": {},
           "store": {},
-          "audio": {}
+          "user": {}
         },
         "repl": {
           "active": true
@@ -564,8 +611,7 @@
             },
             "active": true,
             "timeout": 222,
-            "kind": "standard",
-            "memory": 2048
+            "kind": "standard"
           }
         },
         "api": {
@@ -605,6 +651,49 @@
           "debug": true
         }
       },
+      "prompt": {
+        "env": {
+          "lambda": {
+            "handler": {
+              "path": {
+                "prefix": "dist/handler/lambda/",
+                "suffix": ".handler"
+              }
+            },
+            "active": true,
+            "timeout": 222,
+            "kind": "standard"
+          }
+        },
+        "api": {
+          "web": {
+            "active": false,
+            "method": "POST",
+            "cors": {
+              "active": false
+            },
+            "path": {
+              "prefix": "/api/"
+            }
+          }
+        },
+        "in": {
+          "aim": {
+            "prompt": {}
+          }
+        },
+        "out": {},
+        "deps": {},
+        "user": {
+          "required": false
+        },
+        "repl": {
+          "active": true
+        },
+        "options": {
+          "debug": true
+        }
+      },
       "store": {
         "env": {
           "lambda": {
@@ -616,8 +705,7 @@
             },
             "active": true,
             "timeout": 222,
-            "kind": "standard",
-            "memory": 2048
+            "kind": "standard"
           }
         },
         "api": {
@@ -671,8 +759,7 @@
             },
             "active": true,
             "timeout": 222,
-            "kind": "standard",
-            "memory": 2048
+            "kind": "standard"
           }
         },
         "api": {
@@ -731,8 +818,7 @@
             },
             "active": true,
             "timeout": 222,
-            "kind": "standard",
-            "memory": 2048
+            "kind": "standard"
           }
         },
         "api": {
@@ -799,8 +885,7 @@
             },
             "active": true,
             "timeout": 222,
-            "kind": "standard",
-            "memory": 2048
+            "kind": "standard"
           }
         },
         "api": {

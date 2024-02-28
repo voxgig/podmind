@@ -1,0 +1,12 @@
+Use the text below marked DESCRIPTION, which describes a podcast episode, to extract the following information about the episode: the guest's name; the topics discussed (list each topic as a complete sentence); any links in the descriptions (include the link url and short text describing the link). Respond with a JSON document using the following template:
+
+{
+  "guest": "...",
+  "topics": ["...","...",...],
+  "links":[
+    {"url";"...",text:'...'},...
+  ]
+}
+
+DESCRIPTION:"""<<DESCRIPTION>>"""
+

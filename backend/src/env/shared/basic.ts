@@ -38,6 +38,7 @@ function basic(seneca: any, options?: any) {
     .use('env', deep(base.options.env, options.env))
     .use('entity', deep(base.options.entity, options.entity))
     // .use('capture', deep(base.options.capture, options.capture))
+    .use('config', deep(base.options.config, options.config))
     .use('user', deep(base.options.user, options.user))
     .use('owner', deep(base.options.owner, options.owner))
     .use('reload', deep(base.options.reload, options.reload))
@@ -159,6 +160,7 @@ const base = {
     },
     entity: {},
     capture: {},
+    config: {},
     user: {
       fields: {
         standard: ['id', 'handle', 'email', 'name', 'active'],

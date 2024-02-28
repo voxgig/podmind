@@ -1,6 +1,8 @@
 
+import Fs from 'node:fs'
+
 import Express from 'express'
-const CookieParser = require('cookie-parser')
+import CookieParser from 'cookie-parser'
 
 import Seneca from 'seneca'
 import { Local, /* Concern */ } from '@voxgig/system'
@@ -129,6 +131,8 @@ async function runSeneca(info: any) {
 
   await seneca.ready()
 
+  setupServices(seneca)
+
   finalSetup(seneca)
 
   return seneca
@@ -140,7 +144,7 @@ async function runExpress(info: any, seneca: any) {
 
   app
     .use(Express.json())
-    .use(new CookieParser())
+    .use(new (CookieParser as any)())
     .post('/api/web/public/:end', seneca.export('gateway-express$public/handler'))
     .post('/api/web/private/:end', seneca.export('gateway-express$private/handler'))
     .listen(port.backend)
@@ -149,13 +153,23 @@ async function runExpress(info: any, seneca: any) {
 }
 
 
+
+async function setupServices(seneca: any) {
+  await seneca.post('aim:prompt,add:prompt,name:ingest.episode.meta01,kind:ingest,tag:v0', {
+    text: Fs.readFileSync(
+      __dirname + '/../../../data/config/prompt/ingest.episode.meta01-v0.txt').toString()
+  })
+}
+
+
+
 // TODO: @voxgig/system local should handle this
 async function setupLocal(seneca: any) {
   const model = seneca.context.model
 
+
   seneca
     .use('localque-transport')
-
 
   Object.entries(model.main.srv).map((entry: any[]) => {
     const name = entry[0]

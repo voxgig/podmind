@@ -12,13 +12,14 @@ monitor: {
   user: required: false
   
   deps: {
-    auth: {}
-    user: {}
-    entity: {}
-    chat: {}
-    ingest: {}
-    store: {}
     audio: {}
+    auth: {}
+    chat: {}
+    entity: {}
+    ingest: {}
+    prompt: {}
+    store: {}
+    user: {}
   }
 }
 
@@ -96,9 +97,22 @@ ingest: {
   env: lambda: {
     active: true
     timeout: 222
-    memory: 2048
+    # memory: 2048
   }
+}
 
+
+
+prompt: {
+  in: aim: prompt: {}
+
+  user: required: false
+  repl: active: true
+  api: web: active: false
+  env: lambda: {
+    active: true
+    timeout: 222
+  }
 }
 
 
@@ -124,7 +138,7 @@ store: {
   env: lambda: {
     active: true
     timeout: 222
-    memory: 2048
+    # memory: 2048
   }
 
 }
@@ -154,7 +168,7 @@ audio: {
   env: lambda: {
     active: true
     timeout: 222
-    memory: 2048
+    # memory: 2048
   }
 }
 
@@ -186,7 +200,7 @@ chunk: {
   env: lambda: {
     active: true
     timeout: 222
-    memory: 2048
+    # memory: 2048
   }
 }
 
@@ -219,7 +233,7 @@ embed: {
   env: lambda: {
     active: true
     timeout: 222
-    memory: 2048
+    # memory: 2048
   }
 }
 

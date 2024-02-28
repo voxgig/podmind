@@ -85,7 +85,15 @@ ingest:
   handler: dist/handler/lambda/ingest.handler
   role: BasicPodmindLambdaRole
   timeout: 222
-  memorySize: 2048
+  memorySize: 1024
+
+
+
+prompt:
+  handler: dist/handler/lambda/prompt.handler
+  role: BasicPodmindLambdaRole
+  timeout: 222
+  memorySize: 1024
 
 
 
@@ -93,7 +101,7 @@ store:
   handler: dist/handler/lambda/store.handler
   role: BasicPodmindLambdaRole
   timeout: 222
-  memorySize: 2048
+  memorySize: 1024
   events:
     - sqs:
         arn:
@@ -109,7 +117,7 @@ audio:
   handler: dist/handler/lambda/audio.handler
   role: BasicPodmindLambdaRole
   timeout: 222
-  memorySize: 2048
+  memorySize: 1024
   events:
     - s3:
         bucket: podmind01-backend01-file01-${self:provider.stage}
@@ -125,7 +133,7 @@ chunk:
   handler: dist/handler/lambda/chunk.handler
   role: BasicPodmindLambdaRole
   timeout: 222
-  memorySize: 2048
+  memorySize: 1024
   events:
     - s3:
         bucket: podmind01-backend01-file01-${self:provider.stage}
@@ -141,7 +149,7 @@ embed:
   handler: dist/handler/lambda/embed.handler
   role: BasicPodmindLambdaRole
   timeout: 222
-  memorySize: 2048
+  memorySize: 1024
   events:
     - sqs:
         arn:

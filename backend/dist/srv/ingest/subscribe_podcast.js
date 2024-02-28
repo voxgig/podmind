@@ -1,0 +1,67 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+module.exports = function make_subscribe_podcast() {
+    return async function subscribe_podcast(msg, meta) {
+        const seneca = this;
+        const debug = seneca.shared.debug(meta.action);
+        const { humanify } = seneca.export('PodmindUtility/getUtils')();
+        let out = { ok: false, why: '' };
+        // Associate all artifacts of a batch
+        let batch = out.batch = msg.batch || ('B' + humanify());
+        // Debugging mark
+        let mark = out.mark = msg.mark || ('M' + seneca.util.Nid());
+        // RSS URL
+        let feed = out.feed = '' + msg.feed;
+        // Processing controls
+        let doUpdate = out.doUpdate = !!msg.doUpdate;
+        let doIngest = out.doIngest = !!msg.doIngest;
+        let doAudio = out.doAudio = !!msg.doAudio;
+        let doTranscribe = out.doTranscribe = !!msg.doTranscribe;
+        let episodeStart = out.episodeStart = parseInt(msg.episodeStart) || 0;
+        let episodeEnd = out.episodeEnd = parseInt(msg.episodeEnd) || -1; /* -1 => all */
+        let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1; /* -1 => all */
+        debug && debug('START', batch, mark, feed);
+        out.feed = feed;
+        let podcastEnt = await seneca.entity('pdm/podcast').load$({ feed });
+        if (null == podcastEnt || doUpdate) {
+            let rssRes = await seneca.shared.getRSS(debug, feed, null, batch, mark);
+            if (!rssRes.ok) {
+                out.why = 'rss';
+                out.errmsg = rssRes.err?.message || 'unknown-01';
+                return out;
+            }
+            let rss = rssRes.rss;
+            podcastEnt = podcastEnt || await seneca.entity('pdm/podcast').make$();
+            podcastEnt = await podcastEnt.save$({
+                feed,
+                title: rss.title,
+                desc: rss.description,
+                batch,
+            });
+        }
+        if (null != podcastEnt) {
+            debug && debug('SUBSCRIBE-ENT', batch, mark, doIngest, podcastEnt);
+            const slog = await seneca.export('PodmindUtility/makeSharedLog')('podcast-ingest-01', podcastEnt.id);
+            slog('SUBSCRIBE', batch, podcastEnt.id, feed);
+            out.ok = true;
+            out.podcast = podcastEnt;
+            if (doIngest) {
+                out.doIngest = true;
+                await seneca.post('aim:ingest,ingest:podcast', {
+                    podcast_id: podcastEnt.id,
+                    doUpdate,
+                    doIngest,
+                    mark,
+                    batch,
+                    doAudio,
+                    doTranscribe,
+                    episodeStart,
+                    episodeEnd,
+                    chunkEnd,
+                });
+            }
+        }
+        return out;
+    };
+};
+//# sourceMappingURL=subscribe_podcast.js.map
