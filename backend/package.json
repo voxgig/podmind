@@ -37,7 +37,7 @@
     "@opensearch-project/opensearch": "^2.5.0",
     "@seneca/bedrock-chat": "^0.0.2",
     "@seneca/capture": "^0.5.0",
-    "@seneca/config": "^0.3.0",
+    "@seneca/config": "^0.4.0",
     "@seneca/dynamo-store": "5.2.1",
     "@seneca/entity-util": "2.0.0",
     "@seneca/env": "0.3.0",

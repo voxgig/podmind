@@ -71,22 +71,6 @@ async function runSeneca(info) {
             });
         });
     });
-    // TODO: unify with lambda
-    /*
-      .use('s3-store', {
-        debug: true,
-        map: {
-          '-/pdm/transcript': '*',
-          '-/pdm/rss': '*',
-          '-/pdm/audio': '*',
-        },
-        folder: 'transcript-bucket01',
-        local: {
-          active: true,
-          folder: __dirname + '/../../../data/storage',
-        },
-      })
-    */
     (0, basic_1.setup)(seneca);
     setupLocal(seneca);
     // TODO: load as Concern
@@ -121,6 +105,9 @@ async function runExpress(info, seneca) {
 async function setupServices(seneca) {
     await seneca.post('aim:prompt,add:prompt,name:ingest.episode.meta01,kind:ingest,tag:v0', {
         text: node_fs_1.default.readFileSync(__dirname + '/../../../data/config/prompt/ingest.episode.meta01-v0.txt').toString()
+    });
+    await seneca.post('aim:prompt,add:prompt,name:chat.query.hive01,kind:chat,tag:v0', {
+        text: node_fs_1.default.readFileSync(__dirname + '/../../../data/config/prompt/chat.query.hive01-v0.txt').toString()
     });
 }
 // TODO: @voxgig/system local should handle this

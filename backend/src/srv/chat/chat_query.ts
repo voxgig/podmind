@@ -11,7 +11,7 @@ module.exports = function make_chat_query() {
     const cloud = seneca.context.model.main.conf.cloud
 
     const region = cloud.aws.region
-    const model = cloud.aws.bedrock.model
+    // const model = cloud.aws.bedrock.model
 
     const node = cloud.opensearch.url
     const index = cloud.opensearch.index
@@ -19,77 +19,55 @@ module.exports = function make_chat_query() {
 
     const out = { ok: false, why: '', answer: '', context: {} }
 
-    const query = msg.query
+    // TODO: change msg param to `question`
+    const question = msg.query
 
     const client = getOpenSearchClient(region, node)
-    const questionEmbeddings = await getEmbeddings(query, { region })
+    const questionEmbeddings = await getEmbeddings(question, { region })
     const { context, hits } = await getContext(client, index, questionEmbeddings)
-    const answer = await askQuestion(context, query, {
-      region,
-      model,
-      modelSettings: {
-        maxTokens: 1525,
-        temperature: 0.7,
-        // temperature: 0.95,
-        region
-      },
-    })
+
+    let answer = 'Unable to answer at the moment, please try again later.'
+
+    // TOOD: move into prompt service
+    const clipped = context.substring(0, 7000)
+
+    const promptRes =
+      await seneca.post('aim:prompt,build:prompt,name:chat.query.hive01', {
+        p: {
+          '<<CONTEXT>>': clipped,
+          '<<QUESTION>>': question
+        }
+      })
+
+
+    if (promptRes.ok) {
+      const query = promptRes.full
+
+      let queryRes = await seneca.post('sys:chat,submit:query', {
+        query
+      })
+
+      if (queryRes.ok) {
+        answer = queryRes.answer
+      }
+      else {
+        console.log('PROMPT-QUERY-FAILED', queryRes)
+      }
+    }
+    else {
+      // TODO: production logging
+      console.log('PROMPT-BUILD-FAILED', promptRes)
+    }
 
 
     out.ok = true
     out.answer = answer
-    // out.context = context
     out.context = { hits }
 
     return out
   }
 }
 
-
-
-
-async function askQuestion(context: string, question: string, config: any) {
-  const clipped = context.substring(0, 8000)
-
-  const prompt = `
-Use the CONTEXT to help answer the QUESTION. You are an experienced developer advocate talking to another developer who speaks english as a second language. Answer in the third person, never refer to yourself, do not use casual language. The subject matter is developer relations. The context is taken from devrel podcast conversations. IMPORTANT: YOU MUST ALWAYS ANSWER. MAKE UP AN ANSWER. Do not refer to the existence of the CONTEXT.
-
-CONTEXT:\n\n"""${clipped}"""
-
-QUESTION:\n\n"""${question}"""
-`
-  // console.log('Prompt: ', prompt)
-
-  const answer = await invokeBedrock(prompt, config)
-  // console.log('Answer:', JSON.stringify(answer))
-
-  return answer
-}
-
-
-async function invokeBedrock(prompt: string, config: any) {
-  const { model, modelSettings, region } = config
-  const { maxTokens, temperature } = modelSettings
-
-  const client = new BedrockRuntimeClient({ region })
-
-  const response = await client.send(
-    new InvokeModelCommand({
-      modelId: model,
-      body: JSON.stringify({
-        maxTokens,
-        temperature,
-        prompt,
-        topP: 1.0
-      }),
-      accept: 'application/json',
-      contentType: 'application/json'
-    })
-  )
-
-  const result = JSON.parse(Buffer.from(response.body).toString())
-  return result.completions[0].data.text
-}
 
 
 

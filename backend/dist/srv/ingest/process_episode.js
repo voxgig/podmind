@@ -79,17 +79,9 @@ module.exports = function make_process_episode() {
                     return out;
                 }
                 const query = promptRes.full;
-                /*
-                let query = `
-        Use the text below marked DESCRIPTION, which describes a podcast episode, to extract the following information about the episode: the guest's name; the topics discussed (list each topic as a complete sentence); any links in the descriptions (include the link url and short text describing the link). Respond with a JSON document using the following template: {"guest":"...","topics":["...","...",...],links:[{url;"...",text:'...'},...]}
-        DESCRIPTION:"""${description}"""`
-        */
-                // query = 'hello'
-                console.log('EPISODE QUERY', query);
                 let processRes = await seneca.post('sys:chat,submit:query', {
                     query
                 });
-                // console.log('EPISODE RESPONSE', processRes)
                 if (!processRes.ok) {
                     out.why = 'desc-failed/' + processRes.why;
                     debug && debug('FAIL-DESC', batch, mark, podcast_id, episodeEnt.id, out);

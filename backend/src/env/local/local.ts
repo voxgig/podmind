@@ -90,23 +90,6 @@ async function runSeneca(info: any) {
       })
     })
 
-  // TODO: unify with lambda
-  /*
-    .use('s3-store', {
-      debug: true,
-      map: {
-        '-/pdm/transcript': '*',
-        '-/pdm/rss': '*',
-        '-/pdm/audio': '*',
-      },
-      folder: 'transcript-bucket01',
-      local: {
-        active: true,
-        folder: __dirname + '/../../../data/storage',
-      },
-    })
-  */
-
   setup(seneca)
 
   setupLocal(seneca)
@@ -159,6 +142,12 @@ async function setupServices(seneca: any) {
     text: Fs.readFileSync(
       __dirname + '/../../../data/config/prompt/ingest.episode.meta01-v0.txt').toString()
   })
+
+  await seneca.post('aim:prompt,add:prompt,name:chat.query.hive01,kind:chat,tag:v0', {
+    text: Fs.readFileSync(
+      __dirname + '/../../../data/config/prompt/chat.query.hive01-v0.txt').toString()
+  })
+
 }
 
 
