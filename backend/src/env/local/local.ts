@@ -75,8 +75,12 @@ async function runSeneca(info: any) {
       // allow: Object.keys(Model.main.srv)
       //   .reduce(((a,n)=>(a['aim:web,on:'+n]=true,a)),{})
     })
+    .use('gateway$integ')
+
     .use('gateway-express$public')
     .use('gateway-express$private')
+    .use('gateway-express$integ')
+
     .use('gateway-auth$public')
     .use('gateway-auth$private')
 
@@ -130,6 +134,7 @@ async function runExpress(info: any, seneca: any) {
     .use(new (CookieParser as any)())
     .post('/api/web/public/:end', seneca.export('gateway-express$public/handler'))
     .post('/api/web/private/:end', seneca.export('gateway-express$private/handler'))
+    .post('/integ', seneca.export('gateway-express$integ/handler'))
     .listen(port.backend)
 
   return app

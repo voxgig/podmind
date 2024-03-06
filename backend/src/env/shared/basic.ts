@@ -106,6 +106,18 @@ function setup(seneca: any, options?: any) {
         }
         */
     })
+    .use('opensearch-store', {
+      map: {
+        'vector/podchunk': '*'
+      },
+      index: {
+        exact: cloud.opensearch.index,
+        // exact: 'tt01'
+      },
+      opensearch: {
+        node: cloud.opensearch.url,
+      }
+    })
 
   return seneca
 }

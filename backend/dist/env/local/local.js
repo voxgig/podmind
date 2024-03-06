@@ -58,8 +58,10 @@ async function runSeneca(info) {
     // allow: Object.keys(Model.main.srv)
     //   .reduce(((a,n)=>(a['aim:web,on:'+n]=true,a)),{})
     })
+        .use('gateway$integ')
         .use('gateway-express$public')
         .use('gateway-express$private')
+        .use('gateway-express$integ')
         .use('gateway-auth$public')
         .use('gateway-auth$private')
         .use(function setup_data() {
@@ -99,6 +101,7 @@ async function runExpress(info, seneca) {
         .use(new cookie_parser_1.default())
         .post('/api/web/public/:end', seneca.export('gateway-express$public/handler'))
         .post('/api/web/private/:end', seneca.export('gateway-express$private/handler'))
+        .post('/integ', seneca.export('gateway-express$integ/handler'))
         .listen(port.backend);
     return app;
 }

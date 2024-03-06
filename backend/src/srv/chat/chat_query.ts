@@ -11,7 +11,6 @@ module.exports = function make_chat_query() {
     const cloud = seneca.context.model.main.conf.cloud
 
     const region = cloud.aws.region
-    // const model = cloud.aws.bedrock.model
 
     const node = cloud.opensearch.url
     const index = cloud.opensearch.index

@@ -21,7 +21,7 @@ module.exports = function make_handle_chunk() {
         if (doEmbed) {
             let embedding = await getEmbeddings(chunk, { region });
             if (doStore) {
-                await seneca.post('aim:embed,store:embed', {
+                const storeRes = await seneca.post('aim:embed,store:embed', {
                     mark,
                     batch,
                     chunk,
@@ -31,7 +31,9 @@ module.exports = function make_handle_chunk() {
                     podcast_id,
                     episode_id,
                     doStore,
+                    doEmbed,
                 });
+                console.log('SRV-EMBED storeRes', storeRes);
             }
             out.ok = true;
             out.embedding = embedding.length;
