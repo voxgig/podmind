@@ -102,112 +102,58 @@ module.exports = {
     },
 
     episode: {
-
-      'caed07': {
+      'm3kg85': {
         'entity$': '-/pdm/episode',
         podcast_id: 'r2d56q',
-        guid: '8a83a872-6db3-47b6-8643-ea5d33f7f6d9',
-        title: '8a83a872-6db3-47b6-8643-ea5d33f7f6d9',
+        guid: 'e2af4a39-acaf-4c72-a4fa-816d712e3465',
+        title: 'Episode 157, Liz Acosta, Developer Content Marketing Manager for Streamlit',
         link: '',
-        pubDate: 'Tue, 19 Dec 2023 08:00:00 +0000',
+        pubDate: 'Thu, 07 Mar 2024 07:00:00 +0000',
         content: '\n' +
-          "                Webre taking a deep dive into the history of Node with this episodebs guest, Charlie Robbins. Charlie isn't just a greatly experienced engineer, who now lends his advice and consultancy skills to others - he was also one of the earliest adopters of Node, and is uniquely placed to give us a lesson not just in history, but also in the unique factors that gave Node the dominance it now holds.\r\n" +
+          '                The wonderful Liz Acosta joins us on this episode of the podcast for a slightly philosophical chat on community, the different iterations of DevRel, and why we as humans will always gravitate to the things we perceive as “real”.\r\n' +
           '\r\n' +
-          'So how did Node take over the world? Well unlike movie supervillains, it wasnbt with a ray gun or a mind control serum, it was by being really good at what they did in the face of competitors asleep at the wheel, a natural selection process to which Charlie had a front row seat.\r\n' +
+          'Liz is the new Developer Content Marketing Manager for Streamlit at Snowflake, and this provides us with a wonderful opportunity to learn from someone right in the process of determining their role in an organisation! Liz talks to us about her plans for Streamlit, all of which centre connection and community heavily.\r\n' +
           '\r\n' +
-          'Charlie went into financial services in the wake of the financial crash, when most people had either been pushed or jumped off that ship, but because of his knowledge of a brand new service called Node, he ended up working with people ten years his senior to figure out this new frontier.\r\n' +
+          'As someone who has worked heavily in DevRel, Liz has no intentions of abandoning the Developer Advocates at Streamlit to fend for themselves, and her passion for connecting with people is more than clear.\r\n' +
           '\r\n' +
-          'Charlie speaks about the conflation of jobs like accountants with engineers. People tend to think engineering is purely a numbers game, but as many will tell you, engineers are often brimming with creativity, and the variable is whether or not their boss will let them express it.\r\n' +
+          'Liz tells us all about the evolution of DevRel, and why she believes increased regulation and codifying of previously informal guidelines is a good thing. Not only that, but for those of you who enjoy a good philosophical discussion, she explains that while we all appreciate things that are “real”, the not-so-real can be just as valuable. Whether that be AI generated copy, or an artist who lip-syncs their way through a concert!\r\n' +
           '\r\n' +
-          'This is a great discussion on how small actions can lead to big waves.\n' +
-          '            ',
-        url: 'https://media.resonaterecordings.com/voxgig-fireside-podcast/8a83a872-6db3-47b6-8643-ea5d33f7f6d9.mp3',
-        t_m: 1705428263214,
-        t_mh: 2024011618042321,
-        t_c: 1705428263214,
-        t_ch: 2024011618042321,
-        id: 'caed07'
-      },
-      '7x0cz4': {
-        'entity$': '-/pdm/episode',
-        podcast_id: 'r2d56q',
-        guid: '8e5e22e6-5d5f-477d-8635-c8e6a372a6b0',
-        title: '8e5e22e6-5d5f-477d-8635-c8e6a372a6b0',
-        link: '',
-        pubDate: 'Thu, 14 Dec 2023 05:00:00 +0000',
-        content: '\n' +
-          '                The practice of DevRel is something that can vary hugely amongst those who engage in it, so itbs always fascinating to see how different companies approach DevRel. In this episode, webre speaking to Liran Tal, director of developer advocacy at Snyk, about how his team makes use of DevRel.\r\n' +
-          '\r\n' +
-          'Liran is a big believer in empathy, and infuses it into every aspect of his developer advocacy work. Itbs a theme that has come up repeatedly on the podcast recently, and Liran is another proponent of empathy being at the centre of how we engage with developers.\r\n' +
-          '\r\n' +
-          'Like many people, Liran came through the engineering pipeline, and made the jump to DevRel when he started at Snyk, but he explains why this bjumpb was actually more of a step, as he had already used his engineering work to initiate community events and public speaking opportunities, so DevRel felt like a natural place to take those skills.\r\n' +
-          '\r\n' +
-          'As an engineer using JavaScript and open source, Liran began to see the immense value of a hive-like community, connecting hundreds, or thousands of people to collaborate and share information, and he knew he wanted to live in that space. And luckily, as he explains, no one needs permission to start being a DevRel. No matter what specific area you work in, you can stealthily start practising public speaking, or building communities, and then when youbre ready to officially start looking for that DevRel job, youbll already have some idea of what youbre doing.\r\n' +
-          '\r\n' +
-          'Liran speaks about the bDevRelb ladder, and the common question of how those who want to can climb it. DevRel is one of those fields with endless room to grow. You may start out knowing nothing about the technical side, and end up with a whole new set of skills that are now available to you. But for most of us, the ladder thing is secondary to doing something youbre really passionate about, and speaking to Liran has only increased that passion for us here at Voxgig.\r\n' +
-          '\r\n' +
-          'Reach out to Liran here: https://www.linkedin.com/in/talliran/\r\n' +
+          'Reach out to Liz here: https://www.linkedin.com/in/lizacostalinkedin/\r\n' +
           '\r\n' +
           'Find out more and listen to previous podcasts here: https://www.voxgig.com/podcast\r\n' +
           '\r\n' +
-          'Subscribe to our newsletter for weekly updates and information about upcoming meetups: https://voxgig.substack.com/\r\n' +
+          'Subscribe to our newsletter for weekly updates and information about upcoming meetups: \r\n' +
+          'https://voxgig.substack.com/\r\n' +
+          '\r\n' +
           'Join the Dublin DevRel Meetup group here: www.devrelmeetup.com\n' +
           '            ',
-        url: 'https://media.resonaterecordings.com/voxgig-fireside-podcast/8e5e22e6-5d5f-477d-8635-c8e6a372a6b0.mp3',
-        t_m: 1705428263225,
-        t_mh: 2024011618042322,
-        t_c: 1705428263225,
-        t_ch: 2024011618042322,
-        id: '7x0cz4'
+        url: 'https://media.resonaterecordings.com/voxgig-fireside-podcast/e2af4a39-acaf-4c72-a4fa-816d712e3465.mp3',
+        batch: 'B2024030714121283',
+        episode: '{"title":"Episode 157, Liz Acosta, Developer Content Marketing Manager for Streamlit","link":"","pubDate":"Thu, 07 Mar 2024 07:00:00 +0000","enclosure":{"url":"https://media.resonaterecordings.com/voxgig-fireside-podcast/e2af4a39-acaf-4c72-a4fa-816d712e3465.mp3","length":"66382040","type":"audio/mpeg"},"content":"\\n                The wonderful Liz Acosta joins us on this episode of the podcast for a slightly philosophical chat on community, the different iterations of DevRel, and why we as humans will always gravitate to the things we perceive as “real”.\\r\\n\\r\\nLiz is the new Developer Content Marketing Manager for Streamlit at Snowflake, and this provides us with a wonderful opportunity to learn from someone right in the process of determining their role in an organisation! Liz talks to us about her plans for Streamlit, all of which centre connection and community heavily.\\r\\n\\r\\nAs someone who has worked heavily in DevRel, Liz has no intentions of abandoning the Developer Advocates at Streamlit to fend for themselves, and her passion for connecting with people is more than clear.\\r\\n\\r\\nLiz tells us all about the evolution of DevRel, and why she believes increased regulation and codifying of previously informal guidelines is a good thing. Not only that, but for those of you who enjoy a good philosophical discussion, she explains that while we all appreciate things that are “real”, the not-so-real can be just as valuable. Whether that be AI generated copy, or an artist who lip-syncs their way through a concert!\\r\\n\\r\\nReach out to Liz here: https://www.linkedin.com/in/lizacostalinkedin/\\r\\n\\r\\nFind out more and listen to previous podcasts here: https://www.voxgig.com/podcast\\r\\n\\r\\nSubscribe to our newsletter for weekly updates and information about upcoming meetups: \\r\\nhttps://voxgig.substack.com/\\r\\n\\r\\nJoin the Dublin DevRel Meetup group here: www.devrelmeetup.com\\n            ","contentSnippet":"The wonderful Liz Acosta joins us on this episode of the podcast for a slightly philosophical chat on community, the different iterations of DevRel, and why we as humans will always gravitate to the things we perceive as “real”.\\r\\n\\r\\nLiz is the new Developer Content Marketing Manager for Streamlit at Snowflake, and this provides us with a wonderful opportunity to learn from someone right in the process of determining their role in an organisation! Liz talks to us about her plans for Streamlit, all of which centre connection and community heavily.\\r\\n\\r\\nAs someone who has worked heavily in DevRel, Liz has no intentions of abandoning the Developer Advocates at Streamlit to fend for themselves, and her passion for connecting with people is more than clear.\\r\\n\\r\\nLiz tells us all about the evolution of DevRel, and why she believes increased regulation and codifying of previously informal guidelines is a good thing. Not only that, but for those of you who enjoy a good philosophical discussion, she explains that while we all appreciate things that are “real”, the not-so-real can be just as valuable. Whether that be AI generated copy, or an artist who lip-syncs their way through a concert!\\r\\n\\r\\nReach out to Liz here: https://www.linkedin.com/in/lizacostalinkedin/\\r\\n\\r\\nFind out more and listen to previous podcasts here: https://www.voxgig.com/podcast\\r\\n\\r\\nSubscribe to our newsletter for weekly updates and information about upcoming meetups: \\r\\nhttps://voxgig.substack.com/\\r\\n\\r\\nJoin the Dublin DevRel Meetup group here: www.devrelmeetup.com","guid":"e2af4a39-acaf-4c72-a4fa-816d712e3465","isoDate":"2024-03-07T07:00:00.000Z","itunes":{"subtitle":"The wonderful Liz Acosta joins us on this episode of the podcast for a slightly philosophical chat on community, the different iterations of DevRel, and why we as humans will always gravitate to th...","explicit":"false","duration":"2055","episode":"157","season":"6","episodeType":"full"}}',
+        t_m: 1709820738493,
+        t_mh: 2024030714121849,
+        t_c: 1709819926783,
+        t_ch: 2024030713584678,
+        id: 'm3kg85',
+        guest: 'Liz Acosta',
+        topics: [
+          'community',
+          'the evolution of DevRel',
+          'the value of real vs imposters'
+        ],
+        links: [
+          {
+            url: 'https://www.linkedin.com/in/lizacostalinkedin/',
+            text: 'Liz Acosta LinkedIn'
+          },
+          { url: 'https://www.voxgig.com/podcast', text: 'VoxGig Podcast' },
+          { url: 'https://voxgig.substack.com/', text: 'VoxGig Newsletter' },
+          {
+            url: 'https://www.devrelmeetup.com/',
+            text: 'Dublin DevRel Meetup'
+          }
+        ]
       }
-
-    }
-  },
-
-  /*
-  pdm: {
-    podcast: {
-      'i9hu8e': {
-        'entity$': '-/pdm/podcast',
-        feed: 'https://feeds.resonaterecordings.com/voxgig-fireside-podcast',
-        title: 'Fireside with Voxgig',
-        desc: '\n' +
-          '            This DevRel focused podcast allows entrepreneur, author and coder Richard Rodger introduce you to interesting leaders and experienced professionals in the tech community. Richard and his guests chat not just about their current work or latest trend, but also about their experiences, good and bad, throughout their career. DevRel requires so many different skills and you can come to it from so many routes, that this podcast has featured conference creators, entrepreneurs, open source maintainers, developer advocates and community managers. Join us to learn about just how varied DevRel can be and get ideas to expand your work, impact and community.\n' +
-          '        ',
-        t_m: 1704887323228,
-        t_mh: 2024011011484322,
-        t_c: 1704887323228,
-        t_ch: 2024011011484322,
-        id: 'i9hu8e'
-      }
     },
-    episode: {
-      '73c1jp': {
-        'entity$': '-/pdm/episode',
-        podcast_id: 'i9hu8e',
-        guid: '8a83a872-6db3-47b6-8643-ea5d33f7f6d9',
-        title: '8a83a872-6db3-47b6-8643-ea5d33f7f6d9',
-        link: '',
-        pubDate: 'Tue, 19 Dec 2023 08:00:00 +0000',
-        content: '\n' +
-          "                Webre taking a deep dive into the history of Node with this episodebs guest, Charlie Robbins. Charlie isn't just a greatly experienced engineer, who now lends his advice and consultancy skills to others - he was also one of the earliest adopters of Node, and is uniquely placed to give us a lesson not just in history, but also in the unique factors that gave Node the dominance it now holds.\r\n" +
-          '\r\n' +
-          'So how did Node take over the world? Well unlike movie supervillains, it wasnbt with a ray gun or a mind control serum, it was by being really good at what they did in the face of competitors asleep at the wheel, a natural selection process to which Charlie had a front row seat.\r\n' +
-          '\r\n' +
-          'Charlie went into financial services in the wake of the financial crash, when most people had either been pushed or jumped off that ship, but because of his knowledge of a brand new service called Node, he ended up working with people ten years his senior to figure out this new frontier.\r\n' +
-          '\r\n' +
-          'Charlie speaks about the conflation of jobs like accountants with engineers. People tend to think engineering is purely a numbers game, but as many will tell you, engineers are often brimming with creativity, and the variable is whether or not their boss will let them express it.\r\n' +
-          '\r\n' +
-          'This is a great discussion on how small actions can lead to big waves.\n' +
-          '            ',
-        url: 'https://media.resonaterecordings.com/voxgig-fireside-podcast/8a83a872-6db3-47b6-8643-ea5d33f7f6d9.mp3',
-        t_m: 1704887323534,
-        t_mh: 2024011011484353,
-        t_c: 1704887323534,
-        t_ch: 2024011011484353,
-        id: '73c1jp'
-      },
-    },
-    },
-    */
+  }
 }

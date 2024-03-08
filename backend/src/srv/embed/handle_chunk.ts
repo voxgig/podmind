@@ -1,5 +1,7 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime'
 
+import type { PodcastChunk } from '../../concern/types/shared-types'
+
 
 module.exports = function make_handle_chunk() {
   return async function handle_chunk(this: any, msg: any, meta: any) {
@@ -16,7 +18,7 @@ module.exports = function make_handle_chunk() {
     let batch = out.batch = msg.batch || ('B' + humanify())
     let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
 
-    let chunk = out.chunk = msg.chunk
+    let chunk: PodcastChunk = out.chunk = msg.chunk
     let chunker = out.chunker = msg.chunker //  chunking algo
     let podcast_id = out.podcast_id = msg.podcast_id
     let episode_id = out.episode_id = msg.episode_id
@@ -24,10 +26,11 @@ module.exports = function make_handle_chunk() {
     let doEmbed = out.doEmbed = !!msg.doEmbed
 
     debug('EMBED',
-      batch, mark, chunker, embeder, podcast_id, episode_id, chunk.length, doStore, doEmbed)
+      batch, mark, chunker, embeder, podcast_id, episode_id,
+      chunk.txt.length, chunk.bgn, chunk.dur, doStore, doEmbed)
 
     if (doEmbed) {
-      let embedding = await getEmbeddings(chunk, { region })
+      let embedding = await getEmbeddings(chunk.txt, { region })
 
       if (doStore) {
         const storeRes = await seneca.post('aim:embed,store:embed', {
@@ -56,7 +59,10 @@ module.exports = function make_handle_chunk() {
         batch,
         chunker,
         embeder,
-        chunklen: chunk.length,
+        len: chunk.txt.length,
+        bgn: chunk.bgn,
+        end: chunk.end,
+        dur: chunk.dur,
         embedlen: embedding.length,
         podcast_id,
         episode_id,

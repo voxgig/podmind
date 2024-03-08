@@ -1,6 +1,6 @@
 
 
-.container {
+.voxgig-podmind {
     --vxg-c0l: #f2307a;
     --vxg-c0d: #CE0246;
 
@@ -25,18 +25,18 @@
     font-family: tahoma;
 }
 
-.container h3 {
+.voxgig-podmind h3 {
     margin-top: 0;
     color: var(--vxg-c0d);
 }
 
-.container form {
+.voxgig-podmind form {
     margin: 0;
     display: flex;
     font-family: tahoma;
 }
 
-.container input {
+.voxgig-podmind input {
     padding: 8px;
     border-radius: 8px;
     font-size: 24px;
@@ -49,13 +49,13 @@
     font-family: andale mono;
 }
 
-.container input.thinking {
+.voxgig-podmind input.thinking {
     animation: thinking 2s infinite;
     background: linear-gradient(to right, var(--vxg-c3d),var(--vxg-c2d), var(--vxg-c3d));
     background-size: 200% 100%;
 }
 
-.container button {
+.voxgig-podmind button {
     font-family: tahoma;
     padding: 8px;
     border-radius: 8px;
@@ -66,18 +66,45 @@
     background-color: var(--vxg-c2l);
 }
 
-.container button:hover {
+.voxgig-podmind button:hover {
     cursor: pointer;
     background-color: var(--vxg-c4l);
     color: var(--vxg-c2l);
 }
 
-.container button:active {
+.voxgig-podmind button:active {
     cursor: pointer;
     background-color: var(--vxg-c2l);
     color: var(--vxg-c4l);
 }
 
+
+.voxgig-podmind .audio button {
+    margin-right: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    padding: 2px;
+    width: 28px;
+    border: 1px solid var(--vxg-c4d);
+    border-radius: 4px;
+}
+
+@keyframes pulse {
+    0% { opacity: 90%; transform: scale(1); }
+    50% { opacity: 100%; transform: scale(1.2); }
+    100% { opacity: 90%; transform: scale(1); }
+}
+
+.sound-symbol {
+    display: inline-block;
+    font-size: 20px;
+    opacity: 0%;
+}
+
+.sound-symbol-playing {
+    animation: pulse 1s infinite;
+}
 
 @keyframes thinking {
     0% {

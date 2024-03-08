@@ -3,8 +3,8 @@
 {
   "mappings": {
     "properties": {
-      "text": { "type": "text" },
-      "document_vector": {
+      "txt": { "type": "text" },
+      "vector": {
         "type": "knn_vector",
         "dimension": 1536,
         "method": {

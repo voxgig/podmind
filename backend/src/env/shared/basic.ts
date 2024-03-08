@@ -111,8 +111,8 @@ function setup(seneca: any, options?: any) {
         'vector/podchunk': '*'
       },
       index: {
-        exact: cloud.opensearch.index,
-        // exact: 'tt01'
+        // exact: cloud.opensearch.index,
+        exact: 'test02'
       },
       opensearch: {
         node: cloud.opensearch.url,

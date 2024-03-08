@@ -17,9 +17,9 @@ module.exports = function make_handle_chunk() {
         let episode_id = out.episode_id = msg.episode_id;
         let doStore = out.doStore = !!msg.doStore;
         let doEmbed = out.doEmbed = !!msg.doEmbed;
-        debug('EMBED', batch, mark, chunker, embeder, podcast_id, episode_id, chunk.length, doStore, doEmbed);
+        debug('EMBED', batch, mark, chunker, embeder, podcast_id, episode_id, chunk.txt.length, chunk.bgn, chunk.dur, doStore, doEmbed);
         if (doEmbed) {
-            let embedding = await getEmbeddings(chunk, { region });
+            let embedding = await getEmbeddings(chunk.txt, { region });
             if (doStore) {
                 const storeRes = await seneca.post('aim:embed,store:embed', {
                     mark,
@@ -44,7 +44,10 @@ module.exports = function make_handle_chunk() {
                 batch,
                 chunker,
                 embeder,
-                chunklen: chunk.length,
+                len: chunk.txt.length,
+                bgn: chunk.bgn,
+                end: chunk.end,
+                dur: chunk.dur,
                 embedlen: embedding.length,
                 podcast_id,
                 episode_id,

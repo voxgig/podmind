@@ -134,6 +134,7 @@ module.exports = function make_process_episode() {
           episodeEnt.topics = info.topics
           episodeEnt.links = info.links
           await episodeEnt.save$()
+          debug && debug('PROCESS-EPISODE', batch, mark, podcast_id, episodeEnt.id, episodeEnt)
         }
       }
 

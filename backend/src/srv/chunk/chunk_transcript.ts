@@ -1,4 +1,6 @@
 
+import type { PodcastChunk } from '../../concern/types/shared-types'
+
 
 module.exports = function make_chunk_transcript() {
   return async function chunk_transcript(this: any, msg: any, meta: any) {
@@ -29,10 +31,23 @@ module.exports = function make_chunk_transcript() {
     if (null == transcriptEnt) {
       out.why = 'transcript-not-found'
       out.details = { path, transcript_id, podcast_id, episode_id }
-      debug && debug('CHUNK-FAIL',
+      debug && debug('CHUNK-FAIL-TRANSCRIPT',
         'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out)
       return out
     }
+
+    const episodeEnt = await seneca.entity('pdm/episode')
+      .load$(episode_id)
+
+    if (null == episodeEnt) {
+      out.why = 'episode-not-found'
+      out.details = { path, transcript_id, podcast_id, episode_id }
+      debug && debug('CHUNK-FAIL-EPISODE',
+        'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out)
+      return out
+    }
+
+    const guestName = episodeEnt.guest || ''
 
     const batch = transcriptEnt.batch
 
@@ -52,7 +67,7 @@ module.exports = function make_chunk_transcript() {
     debug && debug('CHUNK-START',
       batch, mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out)
 
-    let chunks: string[] = []
+    let chunks: PodcastChunk[] = []
 
     // TUNING
     // assume para 0 is standard intro
@@ -73,7 +88,12 @@ module.exports = function make_chunk_transcript() {
       let answered = false
       while (para && 1 === para.speaker) {
         let answer = para.sentences.map((s: any) => s.text).join('')
-        let chunk = question + ' :: ' + answer
+        let chunk = {
+          txt: '\n<' + question + ' ~ ' + guestName + ': ' + answer + '>',
+          bgn: para.start,
+          end: para.end,
+          dur: para.end - para.start,
+        }
         chunks.push(chunk)
 
         para = paragraphs[++pI]
@@ -86,7 +106,7 @@ module.exports = function make_chunk_transcript() {
     }
 
 
-    chunks = chunks.filter((c: string) => 0 < c.length)
+    chunks = chunks.filter(c => 0 < c.txt.length)
 
     debug && debug('CHUNK-CHUNKS',
       mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, chunks.length)
@@ -100,7 +120,8 @@ module.exports = function make_chunk_transcript() {
         const slog = await seneca.export('PodmindUtility/makeSharedLog')(
           'podcast-ingest-01', podcast_id)
 
-        slog('CHUNK', batch, podcast_id, episode_id, chunkI, chunk.length, chunker)
+        slog('CHUNK', batch, podcast_id, episode_id,
+          chunkI, chunk.txt.length, chunk.bgn, chunk.dur, chunker)
 
         await seneca.post('aim:embed,handle:chunk', {
           chunker,
