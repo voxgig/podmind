@@ -9,7 +9,7 @@ import { Local, /* Concern */ } from '@voxgig/system'
 import { dive, get, pinify } from '@voxgig/model'
 
 import { basic, setup, base, finalSetup } from '../shared/basic'
-import PodmindUtility from '../../concern/PodmindUtility/PodmindUtility'
+// import PodmindUtility from '../../concern/PodmindUtility/PodmindUtility'
 
 import Pkg from '../../../package.json'
 import Model from '../../../model/model.json'
@@ -100,7 +100,7 @@ async function runSeneca(info: any) {
 
 
   // TODO: load as Concern
-  seneca.use(PodmindUtility)
+  // seneca.use(PodmindUtility)
 
   // .use(Concern, {
   //   folder: __dirname + '/../../../dist/concern'

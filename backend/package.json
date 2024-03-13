@@ -56,6 +56,7 @@
     "@seneca/sqs-transport": "^0.4.0",
     "@seneca/telemetry": "^0.0.3",
     "@seneca/user": "6.3.0",
+    "@seneca/webflow-provider": "^0.2.0",
     "@voxgig/model": "1.4.0",
     "@voxgig/podmind-common": "^0.0.5",
     "@voxgig/system": "0.9.0",

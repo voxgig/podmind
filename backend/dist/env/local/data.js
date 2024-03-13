@@ -90,6 +90,7 @@ module.exports = {
                 'entity$': '-/pdm/podcast',
                 feed: 'https://feeds.resonaterecordings.com/voxgig-fireside-podcast',
                 title: 'Fireside with Voxgig',
+                earmark: 'voxgigfireside',
                 desc: '\n' +
                     '            This DevRel focused podcast allows entrepreneur, author and coder Richard Rodger introduce you to interesting leaders and experienced professionals in the tech community. Richard and his guests chat not just about their current work or latest trend, but also about their experiences, good and bad, throughout their career. DevRel requires so many different skills and you can come to it from so many routes, that this podcast has featured conference creators, entrepreneurs, open source maintainers, developer advocates and community managers. Join us to learn about just how varied DevRel can be and get ideas to expand your work, impact and community.\n' +
                     '        ',

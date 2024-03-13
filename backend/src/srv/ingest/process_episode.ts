@@ -34,7 +34,6 @@ module.exports = function make_process_episode() {
     }
 
 
-
     if (doUpdate) {
       let episodeEnt = await seneca.entity('pdm/episode')
 
@@ -105,7 +104,6 @@ module.exports = function make_process_episode() {
 
         const query = promptRes.full
 
-
         let processRes = await seneca.post('sys:chat,submit:query', {
           query
         })
@@ -133,9 +131,33 @@ module.exports = function make_process_episode() {
           episodeEnt.guest = info.guest
           episodeEnt.topics = info.topics
           episodeEnt.links = info.links
-          await episodeEnt.save$()
-          debug && debug('PROCESS-EPISODE', batch, mark, podcast_id, episodeEnt.id, episodeEnt)
         }
+
+        const customRes = await seneca.post('concern:episode,process:episode', {
+          podcast_id: podcastEnt.id,
+          podcast_earmark: podcastEnt.earmark,
+          episode: episodeEnt,
+          default$: {
+            ok: true,
+            episode: episodeEnt
+          }
+        })
+
+        if (customRes.ok) {
+          episodeEnt.data$(customRes.episode)
+
+          await episodeEnt.save$()
+          debug && debug('PROCESS-EPISODE',
+            batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, episodeEnt)
+        }
+        else {
+          debug && debug('FAIL-CUSTOM',
+            batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, out, customRes)
+          slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid,
+            episodeEnt.title, podcastEnt.earmark, 'CUSTOM', customRes)
+        }
+
+
       }
 
       if (doAudio) {
@@ -150,7 +172,8 @@ module.exports = function make_process_episode() {
         })
       }
 
-      debug && debug('EPISODE-SAVE', batch, mark, podcastEnt.id, episodeEnt.id, episodeEnt.guid,
+      debug && debug('EPISODE-SAVE',
+        batch, mark, podcastEnt.id, podcastEnt.earmark, episodeEnt.id, episodeEnt.guid,
         doIngest, doAudio, doTranscribe)
     }
 

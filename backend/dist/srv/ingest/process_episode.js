@@ -100,8 +100,24 @@ module.exports = function make_process_episode() {
                     episodeEnt.guest = info.guest;
                     episodeEnt.topics = info.topics;
                     episodeEnt.links = info.links;
+                }
+                const customRes = await seneca.post('concern:episode,process:episode', {
+                    podcast_id: podcastEnt.id,
+                    podcast_earmark: podcastEnt.earmark,
+                    episode: episodeEnt,
+                    default$: {
+                        ok: true,
+                        episode: episodeEnt
+                    }
+                });
+                if (customRes.ok) {
+                    episodeEnt.data$(customRes.episode);
                     await episodeEnt.save$();
-                    debug && debug('PROCESS-EPISODE', batch, mark, podcast_id, episodeEnt.id, episodeEnt);
+                    debug && debug('PROCESS-EPISODE', batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, episodeEnt);
+                }
+                else {
+                    debug && debug('FAIL-CUSTOM', batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, out, customRes);
+                    slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, episodeEnt.title, podcastEnt.earmark, 'CUSTOM', customRes);
                 }
             }
             if (doAudio) {
@@ -115,7 +131,7 @@ module.exports = function make_process_episode() {
                     chunkEnd,
                 });
             }
-            debug && debug('EPISODE-SAVE', batch, mark, podcastEnt.id, episodeEnt.id, episodeEnt.guid, doIngest, doAudio, doTranscribe);
+            debug && debug('EPISODE-SAVE', batch, mark, podcastEnt.id, podcastEnt.earmark, episodeEnt.id, episodeEnt.guid, doIngest, doAudio, doTranscribe);
         }
         out.ok = true;
         return out;

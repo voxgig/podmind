@@ -45,3 +45,9 @@ plugin: 'gateway_auth$public': $.main.conf.shared.plugin.gateway_auth & {
 plugin: 'gateway_auth$private': $.main.conf.shared.plugin.gateway_auth & {
   spec: express_cookie: user: require: true
 }
+
+
+# TODO: move this to db
+plugin: PodcastProcess: {
+  podcast: voxgigfireside: webflow: collection_id: '62ac4be6f216e4e2796c3a8d'
+}

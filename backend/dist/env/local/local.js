@@ -10,7 +10,7 @@ const seneca_1 = __importDefault(require("seneca"));
 const system_1 = require("@voxgig/system");
 const model_1 = require("@voxgig/model");
 const basic_1 = require("../shared/basic");
-const PodmindUtility_1 = __importDefault(require("../../concern/PodmindUtility/PodmindUtility"));
+// import PodmindUtility from '../../concern/PodmindUtility/PodmindUtility'
 const package_json_1 = __importDefault(require("../../../package.json"));
 const model_json_1 = __importDefault(require("../../../model/model.json"));
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -76,7 +76,7 @@ async function runSeneca(info) {
     (0, basic_1.setup)(seneca);
     setupLocal(seneca);
     // TODO: load as Concern
-    seneca.use(PodmindUtility_1.default);
+    // seneca.use(PodmindUtility)
     // .use(Concern, {
     //   folder: __dirname + '/../../../dist/concern'
     // })

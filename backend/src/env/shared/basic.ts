@@ -2,6 +2,11 @@
 import { RateLimiterMemory, BurstyRateLimiter, RateLimiterQueue } from 'rate-limiter-flexible'
 
 
+// TODO: load with @voxgig/system.concern when implemented!
+import PodmindUtility from '../../concern/PodmindUtility/PodmindUtility'
+import PodcastProcess from '../../concern/PodcastProcess/PodcastProcess'
+
+
 export type Srv = {
   in?: Record<string, any>
   out?: Record<string, any>
@@ -80,12 +85,16 @@ function setup(seneca: any, options?: any) {
     })
 
     .use('entity-util', deep(base.options.entity_util, options.entity_util))
-    .use('env', {
-      file: [__dirname + '/../local/local-env.js;?'],
-      var: {
-        DEEPGRAM_APIKEY: String,
-      }
-    })
+    .use('env')
+    /*
+      , {
+          file: [__dirname + '/../local/local-env.js;?'],
+          var: {
+            DEEPGRAM_APIKEY: String,
+            WEBFLOW_ACCESSTOKEN_VOXGIG: String,
+          }
+          })
+          */
     .use('provider', {
       provider: {
         deepgram: {
@@ -93,8 +102,15 @@ function setup(seneca: any, options?: any) {
             apikey: { value: '$DEEPGRAM_APIKEY' },
           }
         },
+        // TODO: multiple webflow plugins
+        webflow: {
+          keys: {
+            accesstoken: { value: '$WEBFLOW_ACCESSTOKEN_VOXGIG' },
+          },
+        },
       }
     })
+    .use('webflow-provider')
     .use('bedrock-chat', {
       /*
       opensearch: {
@@ -118,6 +134,9 @@ function setup(seneca: any, options?: any) {
         node: cloud.opensearch.url,
       }
     })
+    .use(PodmindUtility)
+    .use(PodcastProcess)
+
 
   return seneca
 }
@@ -168,6 +187,8 @@ const base = {
     env: {
       file: [__dirname + '/../local/local-env.js;?'],
       var: {
+        DEEPGRAM_APIKEY: String,
+        WEBFLOW_ACCESSTOKEN_VOXGIG: String,
       }
     },
     entity: {},

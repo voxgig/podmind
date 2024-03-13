@@ -35,6 +35,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
   const Main = Model.main as any
 
+
   if (null == seneca) {
     let srv: Srv = Main.srv[srvname]
 

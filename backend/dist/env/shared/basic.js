@@ -1,7 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.finalSetup = exports.setup = exports.base = exports.basic = void 0;
 const rate_limiter_flexible_1 = require("rate-limiter-flexible");
+// TODO: load with @voxgig/system.concern when implemented!
+const PodmindUtility_1 = __importDefault(require("../../concern/PodmindUtility/PodmindUtility"));
+const PodcastProcess_1 = __importDefault(require("../../concern/PodcastProcess/PodcastProcess"));
 function basic(seneca, options) {
     options = options || {};
     const deep = seneca.util.deep;
@@ -47,12 +53,16 @@ function setup(seneca, options) {
         },
     })
         .use('entity-util', deep(base.options.entity_util, options.entity_util))
-        .use('env', {
-        file: [__dirname + '/../local/local-env.js;?'],
-        var: {
-            DEEPGRAM_APIKEY: String,
-        }
-    })
+        .use('env')
+        /*
+          , {
+              file: [__dirname + '/../local/local-env.js;?'],
+              var: {
+                DEEPGRAM_APIKEY: String,
+                WEBFLOW_ACCESSTOKEN_VOXGIG: String,
+              }
+              })
+              */
         .use('provider', {
         provider: {
             deepgram: {
@@ -60,8 +70,15 @@ function setup(seneca, options) {
                     apikey: { value: '$DEEPGRAM_APIKEY' },
                 }
             },
+            // TODO: multiple webflow plugins
+            webflow: {
+                keys: {
+                    accesstoken: { value: '$WEBFLOW_ACCESSTOKEN_VOXGIG' },
+                },
+            },
         }
     })
+        .use('webflow-provider')
         .use('bedrock-chat', {
     /*
     opensearch: {
@@ -84,7 +101,9 @@ function setup(seneca, options) {
         opensearch: {
             node: cloud.opensearch.url,
         }
-    });
+    })
+        .use(PodmindUtility_1.default)
+        .use(PodcastProcess_1.default);
     return seneca;
 }
 exports.setup = setup;
@@ -124,7 +143,10 @@ const base = {
         },
         env: {
             file: [__dirname + '/../local/local-env.js;?'],
-            var: {}
+            var: {
+                DEEPGRAM_APIKEY: String,
+                WEBFLOW_ACCESSTOKEN_VOXGIG: String,
+            }
         },
         entity: {},
         capture: {},
