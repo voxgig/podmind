@@ -24,13 +24,13 @@ module.exports = function make_process_episode() {
     let doTranscribe = out.doTranscribe = !!msg.doTranscribe
     let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1 /* -1 => all */
 
-    debug && debug('START', batch, mark, podcast_id, episode_id, !!episode)
+    debug && debug('PROCESS-START', batch, mark, podcast_id, episode_id, !!episode)
 
     let podcastEnt = await seneca.entity('pdm/podcast').load$(podcast_id)
 
     if (null == podcastEnt) {
       out.why = 'podcast-not-found'
-      debug && debug('FAIL-PODENT', batch, mark, podcast_id, out)
+      debug && debug('PROCESS-FAIL-PODENT', batch, mark, podcast_id, out)
       return out
     }
 
@@ -42,7 +42,8 @@ module.exports = function make_process_episode() {
         episodeEnt = await episodeEnt.load$(episode_id)
         if (null === episodeEnt) {
           out.why = 'podcast-not-found'
-          debug && debug('FAIL-EPISODEID-NOTFOUND', batch, mark, podcast_id, episode_id, out)
+          debug && debug('PROCESS-FAIL-EPISODEID-NOTFOUND',
+            batch, mark, podcast_id, episode_id, out)
           return out
         }
       }
@@ -55,7 +56,7 @@ module.exports = function make_process_episode() {
 
       else {
         out.why = 'podcast-not-found'
-        debug && debug('FAIL-NO-EPISODE', batch, mark, podcast_id, episode_id, out)
+        debug && debug('PROCESS-FAIL-NO-EPISODE', batch, mark, podcast_id, episode_id, out)
         return out
       }
 
@@ -75,6 +76,13 @@ module.exports = function make_process_episode() {
           batch,
           episode: JSON.stringify(episode),
         })
+      }
+
+
+      if (null == episodeEnt) {
+        out.why = 'podcast-not-found'
+        debug && debug('PROCESS-FAIL-NO-EPISODE-ENT', batch, mark, podcast_id, episode_id, out)
+        return out
       }
 
       const slog = await seneca.export('PodmindUtility/makeSharedLog')(
@@ -98,7 +106,7 @@ module.exports = function make_process_episode() {
 
           if (!promptRes.ok) {
             out.why = 'prompt-failed/' + promptRes.why
-            debug && debug('FAIL-PROMPT', batch, mark, podcast_id, episodeEnt.id, out)
+            debug && debug('PROCESS-FAIL-PROMPT', batch, mark, podcast_id, episodeEnt.id, out)
             return out
           }
 
@@ -114,7 +122,7 @@ module.exports = function make_process_episode() {
 
             if (!processRes.ok) {
               out.why = 'desc-failed/' + processRes.why
-              debug && debug('FAIL-DESC', batch, mark, podcast_id, episodeEnt.id, out)
+              debug && debug('PROCESS-FAIL-DESC', batch, mark, podcast_id, episodeEnt.id, out)
               return out
             }
 
@@ -125,7 +133,7 @@ module.exports = function make_process_episode() {
               info.ok = true
             }
             catch (e: any) {
-              debug && debug('FAIL-QUERY-JSON',
+              debug && debug('PROCESS-FAIL-QUERY-JSON',
                 batch, mark, podcast_id, episodeEnt.id, e.message, out, tryI, processRes.answer)
               slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid,
                 episodeEnt.title, 'QUERY-JSON', e.message, tryI)
@@ -159,7 +167,7 @@ module.exports = function make_process_episode() {
             batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, episodeEnt.title)
         }
         else {
-          debug && debug('FAIL-CUSTOM',
+          debug && debug('PROCESS-FAIL-CUSTOM',
             batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, out, customRes)
           slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid,
             episodeEnt.title, podcastEnt.earmark, 'CUSTOM', customRes)
@@ -180,7 +188,7 @@ module.exports = function make_process_episode() {
         })
       }
 
-      debug && debug('EPISODE-SAVE',
+      debug && debug('PROCESS-EPISODE-SAVE',
         batch, mark, podcastEnt.id, podcastEnt.earmark, episodeEnt.id, episodeEnt.guid,
         doIngest, doAudio, doTranscribe)
     }

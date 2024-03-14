@@ -66,8 +66,8 @@ async function makeCloudWatchLog(seneca, logGroupName, logStreamName) {
                     logStreamNamePrefix: logStreamName,
                 });
                 const response = await cloudwatchLogsClient.send(command);
-                console.log('DESCRIBE LOG STREAM');
-                console.dir(response, { depth: null });
+                // console.log('DESCRIBE LOG STREAM')
+                // console.dir(response, { depth: null })
                 return awsctx.sharedlog[logGroupName][logStreamName].seqtoken =
                     response?.logStreams[0].uploadSequenceToken;
             }
