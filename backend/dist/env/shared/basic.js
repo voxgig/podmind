@@ -79,24 +79,26 @@ function setup(seneca, options) {
         }
     })
         .use('webflow-provider')
-        .use('bedrock-chat', {
-    /*
-    opensearch: {
-      region: cloud.aws.region,
-
-      // TODO: move under aws
-      node: cloud.opensearch.url,
-      index: cloud.opensearch.index
-      }
-      */
-    })
-        .use('opensearch-store', {
+        .use('bedrock-chat')
+        .use('opensearch-store$ingest', {
         map: {
             'vector/podchunk': '*'
         },
         index: {
-            // exact: cloud.opensearch.index,
-            exact: 'test02'
+            exact: cloud.opensearch.index.ingest,
+            // exact: 'test02',
+        },
+        opensearch: {
+            node: cloud.opensearch.url,
+        }
+    })
+        .use('opensearch-store$query', {
+        map: {
+            'vector/podchunk_query': '*'
+        },
+        index: {
+            exact: cloud.opensearch.index.query,
+            // exact: 'test02',
         },
         opensearch: {
             node: cloud.opensearch.url,

@@ -11,22 +11,30 @@ module.exports = function make_process_episode_voxgigfireside() {
         const podcastEntry = podcastCache[podcast_id] || (podcastCache[podcast_id] = {
             webflow: { items: null }
         });
-        console.log('QQQ', podcastEntry, options);
         if (null == podcastEntry.webflow.items) {
             let q = {
                 collection_id: options.webflow?.collection_id
             };
+            console.log('WEBFLOW LIST');
             podcastEntry.webflow.items = await seneca.entity('provider/webflow/colitem').list$(q);
-            // const episodeItem = items.find()
-            // console.log('==============')
-            // console.log(q)
-            // console.log(episode)
-            // console.log(podcastEntry.webflow.items)
         }
+        seneca.root.context.vxgwf = (seneca.root.context.vxgwf || { found: [], notfound: [] });
         const item = podcastEntry.webflow.items
             .find((item) => episode.guid === item.fieldData.uuid);
-        episode.pageslug = item.fieldData.slug;
-        episode.guestlink = item.fieldData['guest-speaker-link-to-social-or-website'];
+        if (item) {
+            episode.pageslug = item.fieldData.slug;
+            episode.guestlink = item.fieldData['guest-speaker-link-to-social-or-website'];
+            episode.page = 'https://www.voxgig.com/podcast/' + episode.pageslug;
+            episode.vxgfound = true;
+            seneca.root.context.vxgwf.found.push({ u: episode.guid, s: item.fieldData.slug });
+        }
+        else {
+            episode.pageslug = '--none--';
+            episode.guestlink = 'https://www.voxgig.com/podcast';
+            episode.page = 'https://www.voxgig.com/podcast';
+            episode.vxgfound = false;
+            seneca.root.context.vxgwf.notfound.push({ u: episode.guid, t: episode.title });
+        }
         return {
             ok: true,
             episode,

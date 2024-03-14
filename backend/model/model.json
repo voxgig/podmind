@@ -200,7 +200,8 @@
             "info": {}
           },
           "chat": {
-            "query": {}
+            "query": {},
+            "oldquery": {}
           }
         },
         "req": {
@@ -947,7 +948,7 @@
         "short": "pdm",
         "token": "podmind-auth",
         "data": {
-          "chunker": "transcription01b"
+          "chunker": "transcription02"
         }
       },
       "cloud": {
@@ -960,7 +961,10 @@
         },
         "opensearch": {
           "url": "https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.com",
-          "index": "transcription01b"
+          "index": {
+            "ingest": "transcription02",
+            "query": "transcription01b"
+          }
         }
       },
       "shared": {

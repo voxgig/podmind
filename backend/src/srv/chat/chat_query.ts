@@ -30,7 +30,7 @@ module.exports = function make_chat_query() {
       vector: questionEmbeddings,
       directive$: { vector$: true }
     }
-    const list = await seneca.entity('vector/podchunk').list$(q)
+    const list = await seneca.entity('vector/podchunk_query').list$(q)
 
     console.log('LIST', list)
 
@@ -43,6 +43,8 @@ module.exports = function make_chat_query() {
     // TOOD: move into prompt service
     const clipped = context.substring(0, 7000)
 
+    // To update prompt via REPL:
+    // aim:prompt,add:prompt,name:chat.query.hive01,text:<% Load("data/config/prompt/chat.query.hive01-v0.txt") %>
     const promptRes =
       await seneca.post('aim:prompt,build:prompt,name:chat.query.hive01', {
         p: {
@@ -72,7 +74,7 @@ module.exports = function make_chat_query() {
     }
 
 
-    const hits = await Promise.all(list.map(async (n: any) => {
+    let hits = await Promise.all(list.map(async (n: any) => {
       // console.log('HIT', n)
       let episode_id = n.episode_id
       let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
@@ -86,7 +88,7 @@ module.exports = function make_chat_query() {
         guid: episodeEnt.guid,
         pubDate: episodeEnt.pubDate,
         audioUrl: episodeEnt.url,
-        page: 'PAGE',
+        guestlink: episodeEnt.guestlink,
         bgn: n.bgn,
         end: n.end,
         dur: n.dur,
@@ -97,9 +99,12 @@ module.exports = function make_chat_query() {
           .trim()
           .substring(episodeEnt.guest.length + 2, 111)
           .replace(/[<>]/g, '')
+          .replace(/\./g, '. ')
       }
     }))
 
+    // TODO: move score cut off to conf
+    hits = hits.filter((hit: any) => 0.6 < hit.score$)
 
     out.ok = true
     out.answer = answer

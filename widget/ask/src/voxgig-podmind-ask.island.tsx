@@ -50,10 +50,10 @@ export const VoxgigPodmind = (...args:any) => {
           'content-type': 'application/json'
         }
       })
-      // console.log('RES', res)
+      console.log('RES', res)
       let json:any = await res.json()
       console.log(islandName, 'json',json)
-      let answer = json.answer
+      let answer = json.answer || ''
       answer = answer.split(/\n/)
       let hits = json.hits
 
@@ -106,31 +106,41 @@ export const VoxgigPodmind = (...args:any) => {
         { result.answer.map(p=>
           <p>{p}</p>
         ) }
-        <h4>Listen to the relevant extracts:</h4>
-        { result.episodes.map((episode:any)=>
-          <div>
-            <h4 style="margin-bottom:4px;">
-              <a href={episode.page}>{episode.title}</a>
-            </h4>
-            <h5 style="margin:4px 0px;">
-              <a href={episode.links[0].url}>More about {episode.guest}</a>
-            </h5>
-            { episode.hits.map((hit:any, index:any)=>
+        { 0 < result.episodes.length ? (
+          <>
+            <h4>Listen to the relevant extracts:</h4>
+
+            { result.episodes.map((episode:any)=>
               <div>
-                <p style="margin-bottom:4px;">
-                  <span>{(hit.score$ * 100)|0}%</span>&nbsp;{hit.extract}&hellip;
-                </p>
-                <p style="display:flex;margin-top:4px;" className="audio">
-                  <button onClick={()=>playAudio(hit,index)} >&#9654;</button>
-                  <button onClick={()=>stopAudio(hit,index)} style="font-size:31px;padding-bottom:5px;">&#9632;</button>
-                  <div style="margin: 4px 8px 8px">{util.minsec(hit.bgn)}</div>
-                  <div id={'playing-'+hit.episode_id+'-'+index} class="sound-symbol">&#9835;</div>
-                  <audio id={'audio-'+hit.episode_id+'-'+index} src={hit.audioUrl}></audio>
-                </p>
+                <h4 style="margin-bottom:4px;">
+                  <a href={episode.guestlink}>{episode.title}</a>
+                </h4>
+                <h5 style="margin:4px 0px;">
+                  <a href={episode.guestlink || (episode.links||[{url:''}])[0].url}>
+                    More about {episode.guest}</a>
+                </h5>
+
+                { episode.hits.map((hit:any, index:any)=>
+                  <div>
+                    <p style="margin-bottom:4px;">
+                      <span>{(hit.score$ * 100)|0}%</span>&nbsp;&nbsp;&nbsp;
+                      <span style="font-style:italic">"{hit.extract}&hellip;"</span>
+                    </p>
+                    <p style="display:flex;margin-top:4px;" className="audio">
+                      <button onClick={()=>playAudio(hit,index)} >&#9654;</button>
+                      <button onClick={()=>stopAudio(hit,index)} style="font-size:31px;padding-bottom:5px;">&#9632;</button>
+                      <div style="margin: 4px 8px 8px">{util.minsec(hit.bgn)}</div>
+                      <div id={'playing-'+hit.episode_id+'-'+index} class="sound-symbol">&#9835;</div>
+                      <audio id={'audio-'+hit.episode_id+'-'+index} src={hit.audioUrl}></audio>
+                    </p>
+                  </div>
+                ) }
               </div>
             ) }
-          </div>
-      ) }
+            
+            
+          </>
+        ) : <></> }
       </div>
       }
     </div>

@@ -14,6 +14,7 @@ module.exports = function make_process_episode() {
         // Processing controls
         let doUpdate = out.doUpdate = !!msg.doUpdate;
         let doIngest = out.doIngest = !!msg.doIngest;
+        let doExtract = out.doExtract = !!msg.doExtract;
         let doAudio = out.doAudio = !!msg.doAudio;
         let doTranscribe = out.doTranscribe = !!msg.doTranscribe;
         let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1; /* -1 => all */
@@ -33,7 +34,6 @@ module.exports = function make_process_episode() {
                     debug && debug('FAIL-EPISODEID-NOTFOUND', batch, mark, podcast_id, episode_id, out);
                     return out;
                 }
-                console.log('EPISODE LOADED', episode_id, episodeEnt);
             }
             else if (null != episode) {
                 episodeEnt = await episodeEnt.load$({
@@ -65,41 +65,48 @@ module.exports = function make_process_episode() {
             slog('EPISODE', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, episodeEnt.title);
             if (doIngest) {
                 let description = `${episodeEnt.title}: ${episodeEnt.content}`;
-                // To update via REPL:
-                // aim:prompt,add:prompt,name:ingest.episode.meta01,
-                //   text:<% Load("data/config/prompt/ingest.episode.meta01-v0.txt") %>
-                const promptRes = await seneca.post('aim:prompt,build:prompt,name:ingest.episode.meta01', {
-                    p: {
-                        '<<DESCRIPTION>>': description
+                if (doExtract) {
+                    // To update via REPL:
+                    // aim:prompt,add:prompt,name:ingest.episode.meta01,
+                    //   text:<% Load("data/config/prompt/ingest.episode.meta01-v0.txt") %>
+                    const promptRes = await seneca.post('aim:prompt,build:prompt,name:ingest.episode.meta01', {
+                        p: {
+                            '<<DESCRIPTION>>': description
+                        }
+                    });
+                    if (!promptRes.ok) {
+                        out.why = 'prompt-failed/' + promptRes.why;
+                        debug && debug('FAIL-PROMPT', batch, mark, podcast_id, episodeEnt.id, out);
+                        return out;
                     }
-                });
-                if (!promptRes.ok) {
-                    out.why = 'prompt-failed/' + promptRes.why;
-                    debug && debug('FAIL-PROMPT', batch, mark, podcast_id, episodeEnt.id, out);
-                    return out;
-                }
-                const query = promptRes.full;
-                let processRes = await seneca.post('sys:chat,submit:query', {
-                    query
-                });
-                if (!processRes.ok) {
-                    out.why = 'desc-failed/' + processRes.why;
-                    debug && debug('FAIL-DESC', batch, mark, podcast_id, episodeEnt.id, out);
-                    return out;
-                }
-                let info = { ok: false };
-                try {
-                    info = JSON.parse(processRes.answer);
-                    info.ok = true;
-                }
-                catch (e) {
-                    debug && debug('FAIL-QUERY-JSON', batch, mark, podcast_id, episodeEnt.id, e.message, out, processRes.answer);
-                    slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, episodeEnt.title, 'QUERY-JSON', e.message);
-                }
-                if (info.ok) {
-                    episodeEnt.guest = info.guest;
-                    episodeEnt.topics = info.topics;
-                    episodeEnt.links = info.links;
+                    const query = promptRes.full;
+                    // Retry extraction if JSON reply is invalid
+                    extract: for (let tryI = 0; tryI < 3; tryI++) {
+                        let processRes = await seneca.post('sys:chat,submit:query', {
+                            query
+                        });
+                        if (!processRes.ok) {
+                            out.why = 'desc-failed/' + processRes.why;
+                            debug && debug('FAIL-DESC', batch, mark, podcast_id, episodeEnt.id, out);
+                            return out;
+                        }
+                        let info = { ok: false };
+                        try {
+                            info = JSON.parse(processRes.answer);
+                            info.ok = true;
+                        }
+                        catch (e) {
+                            debug && debug('FAIL-QUERY-JSON', batch, mark, podcast_id, episodeEnt.id, e.message, out, tryI, processRes.answer);
+                            slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, episodeEnt.title, 'QUERY-JSON', e.message, tryI);
+                        }
+                        if (info.ok) {
+                            episodeEnt.guest = info.guest;
+                            episodeEnt.topics = info.topics;
+                            episodeEnt.links = info.links;
+                            episodeEnt.extracted = Date.now();
+                            break extract;
+                        }
+                    }
                 }
                 const customRes = await seneca.post('concern:episode,process:episode', {
                     podcast_id: podcastEnt.id,
@@ -113,7 +120,7 @@ module.exports = function make_process_episode() {
                 if (customRes.ok) {
                     episodeEnt.data$(customRes.episode);
                     await episodeEnt.save$();
-                    debug && debug('PROCESS-EPISODE', batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, episodeEnt);
+                    debug && debug('PROCESS-EPISODE', batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, episodeEnt.title);
                 }
                 else {
                     debug && debug('FAIL-CUSTOM', batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, out, customRes);

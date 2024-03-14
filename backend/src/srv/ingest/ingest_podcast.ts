@@ -16,6 +16,7 @@ module.exports = function make_ingest_podcast() {
     // Processing controls
     let doUpdate = out.doUpdate = !!msg.doUpdate
     let doIngest = out.doIngest = !!msg.doIngest
+    let doExtract = out.doExtract = !!msg.doExtract
     let doAudio = out.doAudio = !!msg.doAudio
     let doTranscribe = out.doTranscribe = !!msg.doTranscribe
     let episodeStart = out.episodeStart = parseInt(msg.episodeStart) || 0
@@ -99,10 +100,11 @@ module.exports = function make_ingest_podcast() {
       await seneca.post('aim:ingest,process:episode', {
         episode,
         podcast_id,
+        doUpdate,
+        doExtract,
+        doIngest,
         doAudio,
         doTranscribe,
-        doIngest,
-        doUpdate,
         mark,
         batch,
         chunkEnd,
@@ -110,44 +112,6 @@ module.exports = function make_ingest_podcast() {
 
       debug && debug('EPISODE-PROCESS', batch, mark, podcastEnt.id, epI, episode.guid,
         doAudio, doTranscribe, doIngest, doUpdate)
-
-      /*
-      let episodeEnt = await seneca.entity('pdm/episode').load$({
-        guid: episode.guid
-      })
-
-      if (null == episodeEnt) {
-        episodeEnt = seneca.entity('pdm/episode')
-      }
-
-      episodeEnt = await episodeEnt.save$({
-        podcast_id: podcastEnt.id,
-        guid: episode.guid,
-        title: episode.title,
-        link: episode.link,
-        pubDate: episode.pubDate,
-        content: episode.content,
-        url: episode.enclosure?.url,
-        batch,
-        episode: JSON.stringify(episode),
-      })
-
-      slog('EPISODE', batch, podcastEnt.id, epI, episode.guid, episode.title)
-
-      if (doAudio) {
-        await seneca.post('aim:store,download:audio', {
-          episode_id: episodeEnt.id,
-          podcast_id,
-          doAudio,
-          doTranscribe,
-          mark,
-          batch,
-          chunkEnd,
-        })
-      }
-
-      debug && debug('EPISODE-SAVE', batch, mark, podcastEnt.id, epI, doIngest, episode.guid)
-      */
     }
 
     out.ok = true

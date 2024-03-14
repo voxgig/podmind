@@ -19,7 +19,9 @@ const util = {
         hits: []
       }))).hits
 
-      hits.push(hit)
+      if (hits.length < 3) {
+        hits.push(hit)
+      }
 
       return a
     }, {})

@@ -21,11 +21,13 @@ module.exports = function make_subscribe_podcast() {
     // RSS URL
     let feed = out.feed = '' + msg.feed
 
-    // Processing controls
-    let doUpdate = out.doUpdate = !!msg.doUpdate
-    let doIngest = out.doIngest = !!msg.doIngest
-    let doAudio = out.doAudio = !!msg.doAudio
-    let doTranscribe = out.doTranscribe = !!msg.doTranscribe
+    // Processing controls (mostly for REPL use)
+    let doUpdate = out.doUpdate = !!msg.doUpdate // update data
+    let doIngest = out.doIngest = !!msg.doIngest // run ingestion
+    let doExtract = out.doExtract = !!msg.doExtract // use llm to extract more info
+    let doAudio = out.doAudio = !!msg.doAudio // download audio
+    let doTranscribe = out.doTranscribe = !!msg.doTranscribe // transcribe audio
+
     let episodeStart = out.episodeStart = parseInt(msg.episodeStart) || 0
     let episodeEnd = out.episodeEnd = parseInt(msg.episodeEnd) || -1 /* -1 => all */
     let chunkEnd = out.chunkEnd = parseInt(msg.chunkEnd) || -1 /* -1 => all */
@@ -74,13 +76,14 @@ module.exports = function make_subscribe_podcast() {
           podcast_id: podcastEnt.id,
           doUpdate,
           doIngest,
-          mark,
-          batch,
+          doExtract,
           doAudio,
           doTranscribe,
           episodeStart,
           episodeEnd,
           chunkEnd,
+          mark,
+          batch,
         })
       }
     }

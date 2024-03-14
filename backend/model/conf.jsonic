@@ -3,7 +3,7 @@ core: name: podmind
 core: short: pdm
 core: token: 'podmind-auth'
 
-core: data: chunker: 'transcription01b'
+core: data: chunker: 'transcription02'
 
 
 cloud: aws: region: 'us-east-1'
@@ -12,8 +12,9 @@ cloud: aws: accountid: '975049884289'
 cloud: aws: bedrock: model: 'ai21.j2-ultra-v1'
 
 cloud: opensearch: url: 'https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.com'
-# cloud: opensearch: index: 'transcription01b'
-cloud: opensearch: index: $.main.conf.core.data.chunker
+
+cloud: opensearch: index: ingest: $.main.conf.core.data.chunker
+cloud: opensearch: index: query: 'transcription01b'
 
 
 
