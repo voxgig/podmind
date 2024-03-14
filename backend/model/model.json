@@ -135,7 +135,8 @@
                 "transport": {
                   "queue": {
                     "active": true,
-                    "timeout": 999
+                    "timeout": 999,
+                    "suffix": "01"
                   }
                 }
               }
@@ -171,7 +172,8 @@
                 "transport": {
                   "queue": {
                     "active": true,
-                    "timeout": 999
+                    "timeout": 999,
+                    "suffix": "01"
                   }
                 }
               }
@@ -183,7 +185,8 @@
                 "transport": {
                   "queue": {
                     "active": true,
-                    "timeout": 999
+                    "timeout": 999,
+                    "suffix": "01"
                   }
                 }
               }

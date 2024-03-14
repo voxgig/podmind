@@ -156,17 +156,17 @@ TablePdmChat:
 QueueAimStoreDownloadAudio:
   Type: "AWS::SQS::Queue"
   Properties:
-    QueueName: 'aim_store-download_audio-${self:provider.stage,"dev"}'
+    QueueName: 'aim_store-download_audio-01-${self:provider.stage,"dev"}'
     VisibilityTimeout: 999
 QueueAimEmbedHandleChunk:
   Type: "AWS::SQS::Queue"
   Properties:
-    QueueName: 'aim_embed-handle_chunk-${self:provider.stage,"dev"}'
+    QueueName: 'aim_embed-handle_chunk-01-${self:provider.stage,"dev"}'
     VisibilityTimeout: 999
 QueueAimEmbedStoreEmbed:
   Type: "AWS::SQS::Queue"
   Properties:
-    QueueName: 'aim_embed-store_embed-${self:provider.stage,"dev"}'
+    QueueName: 'aim_embed-store_embed-01-${self:provider.stage,"dev"}'
     VisibilityTimeout: 999
 
 BasicPodmindLambdaRole:

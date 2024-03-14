@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -84,7 +84,7 @@
     "@types/express": "^4.17.21",
     "@types/jest": "29.5.12",
     "@types/uuid": "^9.0.8",
-    "@voxgig/build": "2.3.0",
+    "@voxgig/build": "2.3.2",
     "cookie-parser": "1.4.6",
     "es-jest": "2.1.0",
     "esbuild": "0.20.1",

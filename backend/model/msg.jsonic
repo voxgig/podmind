@@ -116,12 +116,12 @@ aim: req: {
 # Message Transports
 
 aim: store: {
-  download: audio: '$': transport: queue: { active: true, timeout: 999 }
+  download: audio: '$': transport: queue: { active: true, timeout: 999, suffix: '01' }
 }
 
 aim: embed: {
-  handle: chunk: '$': transport: queue: { active: true, timeout: 999 }
-  store: embed: '$': transport: queue: { active: true, timeout: 999 }
+  handle: chunk: '$': transport: queue: { active: true, timeout: 999, suffix: '01' }
+  store: embed: '$': transport: queue: { active: true, timeout: 999, suffix: '01' }
 }
 
 
