@@ -161,7 +161,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 async function setupLambda(seneca: any, srv: Srv) {
   seneca
     .use('sqs-transport', {
-      suffix: '-' + STAGE
+      suffix: '-01-' + STAGE
     })
 
   if (srv.repl?.active) {

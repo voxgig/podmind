@@ -121,7 +121,7 @@ exports.getSeneca = getSeneca;
 async function setupLambda(seneca, srv) {
     seneca
         .use('sqs-transport', {
-        suffix: '-' + STAGE
+        suffix: '-01-' + STAGE
     });
     if (srv.repl?.active) {
         seneca.use('repl', { listen: false });
