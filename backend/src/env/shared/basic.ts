@@ -1,4 +1,5 @@
 
+import Uuid from 'uuid'
 import { RateLimiterMemory, BurstyRateLimiter, RateLimiterQueue } from 'rate-limiter-flexible'
 
 
@@ -193,7 +194,9 @@ const base = {
         WEBFLOW_ACCESSTOKEN_VOXGIG: String,
       }
     },
-    entity: {},
+    entity: {
+      generate_id: () => Uuid.v4().split('-').join('')
+    },
     capture: {},
     config: {},
     user: {

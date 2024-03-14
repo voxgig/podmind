@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.finalSetup = exports.setup = exports.base = exports.basic = void 0;
+const uuid_1 = __importDefault(require("uuid"));
 const rate_limiter_flexible_1 = require("rate-limiter-flexible");
 // TODO: load with @voxgig/system.concern when implemented!
 const PodmindUtility_1 = __importDefault(require("../../concern/PodmindUtility/PodmindUtility"));
@@ -150,7 +151,9 @@ const base = {
                 WEBFLOW_ACCESSTOKEN_VOXGIG: String,
             }
         },
-        entity: {},
+        entity: {
+            generate_id: () => uuid_1.default.v4().split('-').join('')
+        },
         capture: {},
         config: {},
         user: {
