@@ -59,33 +59,43 @@ async function makeCloudWatchLog(seneca, logGroupName, logStreamName) {
     awsctx.sharedlog[logGroupName][logStreamName] =
         (awsctx.sharedlog[logGroupName][logStreamName] || {});
     try {
-        try {
-            const createLogGroupCommand = new client_cloudwatch_logs_1.CreateLogGroupCommand({ logGroupName });
-            await cloudwatchLogsClient.send(createLogGroupCommand);
+        async function getLogStreamSequenceToken() {
+            try {
+                const command = new client_cloudwatch_logs_1.DescribeLogStreamsCommand({
+                    logGroupName,
+                    logStreamNamePrefix: logStreamName,
+                });
+                const response = await cloudwatchLogsClient.send(command);
+                console.log('DESCRIBE LOG STREAM');
+                console.dir(response, { depth: null });
+                return awsctx.sharedlog[logGroupName][logStreamName].seqtoken =
+                    response?.logStreams[0].uploadSequenceToken;
+            }
+            catch (e) {
+                console.log('ERROR: DESCRIBE LOG STREAM', logGroupName, logStreamName, e);
+                return null;
+            }
         }
-        catch (e) {
-            console.log('ERROR: CREATE LOG GROUP', logGroupName, logStreamName, e);
-        }
-        try {
-            const createLogStreamCommand = new client_cloudwatch_logs_1.CreateLogStreamCommand({ logGroupName, logStreamName });
-            await cloudwatchLogsClient.send(createLogStreamCommand);
-        }
-        catch (e) {
-            console.log('ERROR: CREATE LOG STREAM', logGroupName, logStreamName, e);
-        }
-        try {
-            const command = new client_cloudwatch_logs_1.DescribeLogStreamsCommand({
-                logGroupName,
-                logStreamNamePrefix: logStreamName,
-            });
-            const response = await cloudwatchLogsClient.send(command);
-            console.log('DESCRIBE LOG STREAM');
-            console.dir(response, { depth: null });
-            awsctx.sharedlog[logGroupName][logStreamName].seqtoken =
-                response?.logStreams[0].uploadSequenceToken;
-        }
-        catch (e) {
-            console.log('ERROR: DESCRIBE LOG STREAM', logGroupName, logStreamName, e);
+        let seqtoken = await getLogStreamSequenceToken();
+        if (null == seqtoken) {
+            try {
+                const createLogGroupCommand = new client_cloudwatch_logs_1.CreateLogGroupCommand({ logGroupName });
+                await cloudwatchLogsClient.send(createLogGroupCommand);
+            }
+            catch (e) {
+                console.log('ERROR: CREATE LOG GROUP', logGroupName, logStreamName, e);
+            }
+            try {
+                const createLogStreamCommand = new client_cloudwatch_logs_1.CreateLogStreamCommand({ logGroupName, logStreamName });
+                await cloudwatchLogsClient.send(createLogStreamCommand);
+            }
+            catch (e) {
+                console.log('ERROR: CREATE LOG STREAM', logGroupName, logStreamName, e);
+            }
+            seqtoken = await getLogStreamSequenceToken();
+            if (null == seqtoken) {
+                console.log('ERROR: GET LOG STREAM TOKEN', logGroupName, logStreamName, 'no-seqtoken');
+            }
         }
         return async function sharedlog(...args) {
             try {
