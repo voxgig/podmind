@@ -7,5 +7,5 @@ FileBucket01:
     OwnershipControls:
       Rules:
         - ObjectOwnership: ObjectWriter
-    BucketName: podmind01-backend01-file01-${self:provider.stage}
+    BucketName: podmind01-backend01-file02-${self:provider.stage}
     

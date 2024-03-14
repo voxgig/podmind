@@ -42,7 +42,7 @@ function setup(seneca, options) {
         prefix: '',
         folder: 'folder01',
         shared: {
-            Bucket: `podmind01-backend01-file01-${seneca.context.stage}`
+            Bucket: `podmind01-backend01-file02-${seneca.context.stage}`
         },
         s3: {
             Region: 'us-east-1'

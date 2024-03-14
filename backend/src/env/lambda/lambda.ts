@@ -126,30 +126,6 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         entity: dynamo_entity
       })
 
-    // TODO: unify with local
-    /*
-      .use('s3-store', {
-        map: {
-          '-/pdm/audio': '*',
-          '-/pdm/transcript': '*',
-          '-/pdm/rss': '*',
-        },
-        suffix: '',
-        prefix: '',
-
-        // TODO: bug in s3-store: local and s3 folder handling should the same 
-        // TODO: empty string value is significant - make actual folder used well-defined
-        folder: '',
-
-        shared: {
-          Bucket: `podmind01-backend01-file01-${STAGE}`
-        },
-        s3: {
-          Region: 'us-east-1'
-        },
-      })
-    */
-
     setup(seneca)
 
     setupLambda(seneca, srv)

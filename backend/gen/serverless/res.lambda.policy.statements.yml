@@ -5,8 +5,8 @@
                 - s3:DeleteObject
                 - s3:ListBucket
               Resource:
-                - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}/*
-                - arn:aws:s3:::podmind01-backend01-file01-${self:provider.stage,"dev"}
+                - arn:aws:s3:::podmind01-backend01-file02-${self:provider.stage,"dev"}/*
+                - arn:aws:s3:::podmind01-backend01-file02-${self:provider.stage,"dev"}
 
             - Effect: Allow
               Action:

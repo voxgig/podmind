@@ -120,7 +120,7 @@ audio:
   memorySize: 1024
   events:
     - s3:
-        bucket: podmind01-backend01-file01-${self:provider.stage}
+        bucket: podmind01-backend01-file02-${self:provider.stage}
         event: s3:ObjectCreated:*
         existing: true
         rules:
@@ -136,7 +136,7 @@ chunk:
   memorySize: 1024
   events:
     - s3:
-        bucket: podmind01-backend01-file01-${self:provider.stage}
+        bucket: podmind01-backend01-file02-${self:provider.stage}
         event: s3:ObjectCreated:*
         existing: true
         rules:
