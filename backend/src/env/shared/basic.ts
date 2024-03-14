@@ -1,5 +1,5 @@
 
-import Uuid from 'uuid'
+import { v4 } from 'uuid'
 import { RateLimiterMemory, BurstyRateLimiter, RateLimiterQueue } from 'rate-limiter-flexible'
 
 
@@ -195,7 +195,7 @@ const base = {
       }
     },
     entity: {
-      generate_id: () => Uuid.v4().split('-').join('')
+      generate_id: () => v4().split('-').join('')
     },
     capture: {},
     config: {},
