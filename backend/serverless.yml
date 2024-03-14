@@ -1,4 +1,4 @@
-service: pqdemo01-backend01
+service: vxgpdm01-backend01
 frameworkVersion: '3'
 
 custom:
