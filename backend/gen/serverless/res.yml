@@ -14,7 +14,7 @@ TableSysUser:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: SysUser.${self:provider.stage,"dev"}
+    TableName: SysUser01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -32,7 +32,7 @@ TableSysLogin:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: SysLogin.${self:provider.stage,"dev"}
+    TableName: SysLogin01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -50,7 +50,7 @@ TableSysCapture:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: SysCapture.${self:provider.stage,"dev"}
+    TableName: SysCapture01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -68,7 +68,7 @@ TablePdmPodcast:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: PdmPodcast.${self:provider.stage,"dev"}
+    TableName: PdmPodcast01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -86,7 +86,7 @@ TablePdmEpisode:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: PdmEpisode.${self:provider.stage,"dev"}
+    TableName: PdmEpisode01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -104,7 +104,7 @@ TablePdmChunk:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: PdmChunk.${self:provider.stage,"dev"}
+    TableName: PdmChunk01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -122,7 +122,7 @@ TablePdmWidget:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: PdmWidget.${self:provider.stage,"dev"}
+    TableName: PdmWidget01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -140,7 +140,7 @@ TablePdmChat:
   Type: AWS::DynamoDB::Table
   DeletionPolicy: Retain
   Properties:
-    TableName: PdmChat.${self:provider.stage,"dev"}
+    TableName: PdmChat01.${self:provider.stage,"dev"}
     BillingMode: PAY_PER_REQUEST
     PointInTimeRecoverySpecification:
       PointInTimeRecoveryEnabled: 'true'
@@ -196,14 +196,14 @@ BasicPodmindLambdaRole:
                 - dynamodb:Query
                 - dynamodb:Scan
               Resource: 
-                - arn:aws:dynamodb:us-east-1:975049884289:table/SysUser.${self:provider.stage,"dev"}
-                - arn:aws:dynamodb:us-east-1:975049884289:table/SysLogin.${self:provider.stage,"dev"}
-                - arn:aws:dynamodb:us-east-1:975049884289:table/SysCapture.${self:provider.stage,"dev"}
-                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmPodcast.${self:provider.stage,"dev"}
-                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmEpisode.${self:provider.stage,"dev"}
-                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChunk.${self:provider.stage,"dev"}
-                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmWidget.${self:provider.stage,"dev"}
-                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChat.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/SysUser01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/SysLogin01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/SysCapture01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmPodcast01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmEpisode01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChunk01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmWidget01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChat01.${self:provider.stage,"dev"}
             - Effect: Allow
               Action:
                 - s3:GetObject

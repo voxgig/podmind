@@ -1067,7 +1067,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true
@@ -1088,7 +1089,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true
@@ -1109,7 +1111,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true
@@ -1151,7 +1154,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true
@@ -1191,7 +1195,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true
@@ -1249,7 +1254,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true
@@ -1289,7 +1295,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true
@@ -1329,7 +1336,8 @@
             }
           },
           "dynamo": {
-            "active": true
+            "active": true,
+            "suffix": "01"
           },
           "stage": {
             "active": true

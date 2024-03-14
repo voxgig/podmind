@@ -2,6 +2,9 @@
 sys: &: dynamo: active: true
 pdm: &: dynamo: active: true
 
+sys: &: dynamo: suffix: '01'
+pdm: &: dynamo: suffix: '01'
+
 sys: &: stage: active: true
 pdm: &: stage: active: true
 
