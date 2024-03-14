@@ -112,7 +112,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
       path.join('/'),
       {
         table: {
-          name: `${camelify(path)}.${STAGE}`
+          name: `${camelify(path)}01.${STAGE}`
         }
       }
     ])
