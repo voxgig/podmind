@@ -3,7 +3,7 @@ frameworkVersion: '3'
 
 custom:
   index:
-    BasicLambdaRole: '02'
+    BasicLambdaRole: ${self:provider.stage}02
   
 provider:
   name: aws
