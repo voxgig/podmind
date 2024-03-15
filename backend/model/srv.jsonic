@@ -65,6 +65,10 @@ chat: {
   user: required: true
   api: web: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
+
+  deps: {
+    prompt: {}
+  }
 }
 
 
@@ -98,6 +102,9 @@ ingest: {
     active: true
     timeout: 222
     # memory: 2048
+  }
+  deps: {
+    prompt: {}
   }
 }
 

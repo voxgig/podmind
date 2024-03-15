@@ -543,7 +543,9 @@
           }
         },
         "out": {},
-        "deps": {},
+        "deps": {
+          "prompt": {}
+        },
         "user": {
           "required": true
         },
@@ -644,7 +646,9 @@
             }
           }
         },
-        "deps": {},
+        "deps": {
+          "prompt": {}
+        },
         "user": {
           "required": false
         },
