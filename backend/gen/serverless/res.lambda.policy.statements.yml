@@ -19,6 +19,7 @@
                 - arn:aws:sqs:us-east-1:975049884289:aim_store-download_audio-01-${self:provider.stage,"dev"}
                 - arn:aws:sqs:us-east-1:975049884289:aim_embed-handle_chunk-01-${self:provider.stage,"dev"}
                 - arn:aws:sqs:us-east-1:975049884289:aim_embed-store_embed-01-${self:provider.stage,"dev"}
+                - arn:aws:sqs:us-east-1:975049884289:aim_ingest-process_episode-01-${self:provider.stage,"dev"}
 
             - Effect: Allow
               Action:
