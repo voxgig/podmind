@@ -115,9 +115,9 @@ aim: req: {
 
 # Message Transports
 
-#aim: ingest: {
-#  process: episode: '$': transport: queue: { active: true, timeout: 999, suffix: '01' }
-#}
+aim: ingest: {
+ process: episode: '$': transport: queue: { active: true, timeout: 999, suffix: '01' }
+}
 
 aim: store: {
   download: audio: '$': transport: queue: { active: true, timeout: 999, suffix: '01' }

@@ -86,6 +86,14 @@ ingest:
   role: BasicPodmindLambdaRole
   timeout: 222
   memorySize: 1024
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - QueueAimIngestProcessEpisode
+            - Arn
+        batchSize: 1
+
 
 
 

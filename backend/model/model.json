@@ -76,7 +76,17 @@
             "podcast": {}
           },
           "process": {
-            "episode": {}
+            "episode": {
+              "$": {
+                "transport": {
+                  "queue": {
+                    "active": true,
+                    "timeout": 999,
+                    "suffix": "01"
+                  }
+                }
+              }
+            }
           }
         },
         "prompt": {
@@ -643,11 +653,27 @@
               "download": {
                 "audio": {}
               }
+            },
+            "ingest": {
+              "process": {
+                "episode": {}
+              }
             }
           }
         },
         "deps": {
           "prompt": {}
+        },
+        "on": {
+          "ingest": {
+            "provider": "aws",
+            "events": [
+              {
+                "source": "sqs",
+                "qrn": "QueueAimIngestProcessEpisode"
+              }
+            ]
+          }
         },
         "user": {
           "required": false

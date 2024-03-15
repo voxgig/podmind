@@ -189,6 +189,11 @@ TablePdmPrompt:
         KeyType: HASH
 
 
+QueueAimIngestProcessEpisode:
+  Type: "AWS::SQS::Queue"
+  Properties:
+    QueueName: 'aim_ingest-process_episode-01-${self:provider.stage,"dev"}'
+    VisibilityTimeout: 999
 QueueAimStoreDownloadAudio:
   Type: "AWS::SQS::Queue"
   Properties:
