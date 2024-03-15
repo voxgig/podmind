@@ -162,6 +162,8 @@ module.exports = function make_process_episode() {
         if (customRes.ok) {
           episodeEnt.data$(customRes.episode)
 
+          console.log('CUSTOM PROCESS', customRes.episode, episodeEnt)
+
           await episodeEnt.save$()
           debug && debug('PROCESS-EPISODE',
             batch, mark, podcast_id, episodeEnt.id, podcastEnt.earmark, episodeEnt.title)

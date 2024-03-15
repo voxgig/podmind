@@ -95,6 +95,16 @@ ingest: {
     aim: store: download: audio: {}
   }
 
+  # on: ingest: {
+  #   provider: aws
+  #   events: [
+  #     {
+  #       source: sqs
+  #       qrn: QueueAimIngestProcessEpisode
+  #     }
+  #   ]
+  # }
+
   user: required: false
   repl: active: true
   api: web: active: false
