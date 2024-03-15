@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.5.17",
+  "version": "0.5.18",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "@seneca/bedrock-chat": "^0.0.3",
     "@seneca/capture": "^0.5.0",
     "@seneca/config": "^0.4.0",
-    "@seneca/dynamo-store": "5.2.1",
+    "@seneca/dynamo-store": "6.0.0",
     "@seneca/entity-util": "2.0.0",
     "@seneca/env": "0.3.0",
     "@seneca/gateway": "1.2.0",
@@ -61,7 +61,7 @@
     "@voxgig/podmind-common": "^0.0.7",
     "@voxgig/system": "0.9.0",
     "argparse": "2.0.1",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "llm-chunk": "^0.0.1",
     "rate-limiter-flexible": "^5.0.0",
     "rss-parser": "^3.13.0",
