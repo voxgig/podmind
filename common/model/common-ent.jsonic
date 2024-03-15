@@ -1,6 +1,7 @@
 sys: &: $.main.shape.ent
 pdm: &: $.main.shape.ent
 
+  
 sys: user: {
   field: {}
 }
@@ -10,6 +11,10 @@ sys: login: {
 }
 
 sys: capture: {
+  field: {}
+}
+
+sys: config: {
   field: {}
 }
 
