@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-common",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Podmind Common",
   "main": "index.js",
   "scripts": {

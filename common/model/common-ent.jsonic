@@ -104,3 +104,12 @@ pdm: chat: {
   }
 }
 
+
+pdm: prompt: {
+  # title: 'Prompt'
+  field: {
+    id: {
+      label: 'ID'
+    }
+  }
+}
