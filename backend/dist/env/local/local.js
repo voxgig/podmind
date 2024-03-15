@@ -105,6 +105,7 @@ async function runExpress(info, seneca) {
         .listen(port.backend);
     return app;
 }
+// NOTE: only done locally; deployed versions must be updated manually.
 async function setupServices(seneca) {
     await seneca.post('aim:prompt,add:prompt,name:ingest.episode.meta01,kind:ingest,tag:v0', {
         text: node_fs_1.default.readFileSync(__dirname + '/../../../data/config/prompt/ingest.episode.meta01-v0.txt').toString()

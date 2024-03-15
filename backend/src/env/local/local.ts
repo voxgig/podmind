@@ -141,7 +141,7 @@ async function runExpress(info: any, seneca: any) {
 }
 
 
-
+// NOTE: only done locally; deployed versions must be updated manually.
 async function setupServices(seneca: any) {
   await seneca.post('aim:prompt,add:prompt,name:ingest.episode.meta01,kind:ingest,tag:v0', {
     text: Fs.readFileSync(

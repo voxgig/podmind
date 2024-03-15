@@ -1124,6 +1124,28 @@
           "stage": {
             "active": true
           }
+        },
+        "config": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "dynamo": {
+            "active": true,
+            "suffix": "01"
+          },
+          "stage": {
+            "active": true
+          }
         }
       },
       "pdm": {
