@@ -171,6 +171,24 @@ TablePdmChat:
         KeyType: HASH
 
 
+
+TablePdmPrompt:
+  Type: AWS::DynamoDB::Table
+  DeletionPolicy: Retain
+  Properties:
+    TableName: PdmPrompt01.${self:provider.stage,"dev"}
+    BillingMode: PAY_PER_REQUEST
+    PointInTimeRecoverySpecification:
+      PointInTimeRecoveryEnabled: 'true'
+    DeletionProtectionEnabled: true
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+
+
 QueueAimStoreDownloadAudio:
   Type: "AWS::SQS::Queue"
   Properties:
@@ -223,6 +241,7 @@ BasicPodmindLambdaRole:
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChunk01.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmWidget01.${self:provider.stage,"dev"}
                 - arn:aws:dynamodb:us-east-1:975049884289:table/PdmChat01.${self:provider.stage,"dev"}
+                - arn:aws:dynamodb:us-east-1:975049884289:table/PdmPrompt01.${self:provider.stage,"dev"}
             - Effect: Allow
               Action:
                 - s3:GetObject

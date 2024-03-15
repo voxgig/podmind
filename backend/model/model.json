@@ -1371,6 +1371,29 @@
           "stage": {
             "active": true
           }
+        },
+        "prompt": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "dynamo": {
+            "active": true,
+            "suffix": "01"
+          },
+          "stage": {
+            "active": true
+          }
         }
       }
     },

@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/podmind-backend",
-  "version": "0.5.15",
+  "version": "0.5.16",
   "description": "Podmind Backend",
   "main": "index.js",
   "scripts": {
@@ -58,7 +58,7 @@
     "@seneca/user": "6.3.0",
     "@seneca/webflow-provider": "^0.2.0",
     "@voxgig/model": "1.4.0",
-    "@voxgig/podmind-common": "^0.0.6",
+    "@voxgig/podmind-common": "^0.0.7",
     "@voxgig/system": "0.9.0",
     "argparse": "2.0.1",
     "axios": "^1.6.7",
