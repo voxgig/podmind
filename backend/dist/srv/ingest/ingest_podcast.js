@@ -71,6 +71,7 @@ module.exports = function make_ingest_podcast() {
         }
         async function handleEpisode(episode, epI) {
             debug && debug('HANDLE-EPISODE', batch, mark, podcastEnt.id, epI, episode?.guid, !!episode);
+            slog('SEND-PROCESS', batch, podcastEnt.id, epI, episode.guid, episode.title);
             await seneca.post('aim:ingest,process:episode', {
                 episode,
                 podcast_id,
