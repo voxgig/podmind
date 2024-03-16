@@ -115,6 +115,7 @@ module.exports = function make_process_episode() {
           // Retry extraction if JSON reply is invalid
           extract:
           for (let tryI = 0; tryI < 3; tryI++) {
+            slog('EPISODE-QUERY', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, tryI, episodeEnt.title)
 
             let processRes = await seneca.post('sys:chat,submit:query', {
               query
@@ -136,10 +137,8 @@ module.exports = function make_process_episode() {
               debug && debug('PROCESS-FAIL-QUERY-JSON',
                 batch, mark, podcast_id, episodeEnt.id, e.message, out, tryI, processRes.answer)
               slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid,
-                episodeEnt.title, 'QUERY-JSON', e.message, tryI)
+                episodeEnt.title, 'QUERY-JSON', tryI, e.message)
             }
-
-
 
             if (info.ok) {
               episodeEnt.guest = info.guest
@@ -149,8 +148,6 @@ module.exports = function make_process_episode() {
               await episodeEnt.save$()
               break extract
             }
-
-            slog('EPISODE-QUERY', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, tryI, info.ok, episodeEnt.title)
           }
         }
 
