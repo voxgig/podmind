@@ -85,8 +85,11 @@ module.exports = function make_process_episode() {
                         return out;
                     }
                     const query = promptRes.full;
+                    let info = {};
+                    let tryI = 0;
                     // Retry extraction if JSON reply is invalid
-                    extract: for (let tryI = 0; tryI < 3; tryI++) {
+                    extract: for (; tryI < 7; tryI++) {
+                        info.ok = false;
                         slog('EPISODE-QUERY', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, tryI, episodeEnt.title);
                         let processRes = await seneca.post('sys:chat,submit:query', {
                             query
@@ -96,14 +99,12 @@ module.exports = function make_process_episode() {
                             debug && debug('PROCESS-FAIL-DESC', batch, mark, podcast_id, episodeEnt.id, out);
                             return out;
                         }
-                        let info = { ok: false };
                         try {
                             info = JSON.parse(processRes.answer);
                             info.ok = true;
                         }
                         catch (e) {
                             debug && debug('PROCESS-FAIL-QUERY-JSON', batch, mark, podcast_id, episodeEnt.id, e.message, out, tryI, processRes.answer);
-                            slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, episodeEnt.title, 'QUERY-JSON', tryI, e.message);
                         }
                         if (info.ok) {
                             episodeEnt.guest = info.guest;
@@ -113,6 +114,11 @@ module.exports = function make_process_episode() {
                             await episodeEnt.save$();
                             break extract;
                         }
+                    }
+                    if (!info.ok) {
+                        slog('EPISODE-FAIL', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, episodeEnt.title, 'QUERY-JSON', tryI);
+                        episodeEnt.extracted = 0; // Mark as incomplete for manual correction
+                        await episodeEnt.save$();
                     }
                 }
                 const customRes = await seneca.post('concern:episode,process:episode', {
