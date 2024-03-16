@@ -25,7 +25,7 @@ function PodmindUtility(_options) {
         }
     };
 }
-async function makeLocalSharedLog(_seneca, groupName, streamName) {
+async function makeLocalSharedLog(seneca, groupName, streamName) {
     const logfolder = node_path_1.default.join(process.cwd(), 'log', groupName);
     try {
         await promises_1.default.stat(logfolder);
@@ -45,7 +45,7 @@ async function makeLocalSharedLog(_seneca, groupName, streamName) {
     });
     return async function sharedlog(...args) {
         const txt = lineify(args);
-        logstream.write(new Date().toISOString() + ' ' + txt);
+        logstream.write(new Date().toISOString() + ' ' + seneca.id + ' ' + txt);
         if (!txt.endsWith('\n')) {
             logstream.write('\n');
         }
@@ -99,7 +99,7 @@ async function makeCloudWatchLog(seneca, logGroupName, logStreamName) {
         }
         return async function sharedlog(...args) {
             try {
-                const txt = lineify(args);
+                const txt = seneca.id + ' ' + lineify(args);
                 const timestamp = new Date().getTime();
                 const seqtoken = awsctx.sharedlog[logGroupName][logStreamName].seqtoken;
                 const params = {

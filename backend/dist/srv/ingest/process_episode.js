@@ -109,8 +109,10 @@ module.exports = function make_process_episode() {
                             episodeEnt.topics = info.topics;
                             episodeEnt.links = info.links;
                             episodeEnt.extracted = Date.now();
+                            await episodeEnt.save$();
                             break extract;
                         }
+                        slog('EPISODE-QUERY', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, tryI, info.ok, episodeEnt.title);
                     }
                 }
                 const customRes = await seneca.post('concern:episode,process:episode', {

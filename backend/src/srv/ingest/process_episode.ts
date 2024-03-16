@@ -139,13 +139,18 @@ module.exports = function make_process_episode() {
                 episodeEnt.title, 'QUERY-JSON', e.message, tryI)
             }
 
+
+
             if (info.ok) {
               episodeEnt.guest = info.guest
               episodeEnt.topics = info.topics
               episodeEnt.links = info.links
               episodeEnt.extracted = Date.now()
+              await episodeEnt.save$()
               break extract
             }
+
+            slog('EPISODE-QUERY', batch, podcastEnt.id, episodeEnt.id, episodeEnt.guid, tryI, info.ok, episodeEnt.title)
           }
         }
 

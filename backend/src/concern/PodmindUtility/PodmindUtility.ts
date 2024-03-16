@@ -43,7 +43,7 @@ function PodmindUtility(this: any, _options: any) {
 
 
 
-async function makeLocalSharedLog(_seneca: any, groupName: string, streamName: string) {
+async function makeLocalSharedLog(seneca: any, groupName: string, streamName: string) {
   const logfolder = Path.join(process.cwd(), 'log', groupName)
 
   try {
@@ -66,7 +66,7 @@ async function makeLocalSharedLog(_seneca: any, groupName: string, streamName: s
 
   return async function sharedlog(...args: any) {
     const txt = lineify(args)
-    logstream.write(new Date().toISOString() + ' ' + txt)
+    logstream.write(new Date().toISOString() + ' ' + seneca.id + ' ' + txt)
     if (!txt.endsWith('\n')) {
       logstream.write('\n')
     }
@@ -137,7 +137,7 @@ async function makeCloudWatchLog(seneca: any, logGroupName: string, logStreamNam
 
     return async function sharedlog(...args: any) {
       try {
-        const txt = lineify(args)
+        const txt = seneca.id + ' ' + lineify(args)
         const timestamp = new Date().getTime()
         const seqtoken = awsctx.sharedlog[logGroupName][logStreamName].seqtoken
         const params = {
