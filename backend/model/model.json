@@ -607,7 +607,8 @@
         },
         "out": {},
         "deps": {
-          "chat": {}
+          "chat": {},
+          "prompt": {}
         },
         "user": {
           "required": false
