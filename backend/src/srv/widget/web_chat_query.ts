@@ -12,7 +12,7 @@ module.exports = function make_web_chat_query() {
     const query = msg.query
 
 
-    let res = await this.post('aim:chat,chat:oldquery', {
+    let res = await this.post('aim:chat,chat:query', {
       query
     })
 
