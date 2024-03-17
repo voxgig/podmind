@@ -20,7 +20,8 @@ custom:
     # stg: arn:aws:acm:us-east-1:975049884289:certificate/a21d5a86-b5af-4513-86d7-cf4d0a119a96
     # prd: arn:aws:acm:us-east-1:975049884289:certificate/a21d5a86-b5af-4513-86d7-cf4d0a119a96
   apidomain:
-    dev: m8bf2doa6e.execute-api.us-east-1.amazonaws.com
+    # dev: m8bf2doa6e.execute-api.us-east-1.amazonaws.com
+    dev: ilyu9neqta.execute-api.us-east-1.amazonaws.com 
     # stg: m8bf2doa6e.execute-api.us-east-1.amazonaws.com
     # prd: m8bf2doa6e.execute-api.us-east-1.amazonaws.com
   
