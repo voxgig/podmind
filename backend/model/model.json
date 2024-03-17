@@ -996,7 +996,7 @@
           "url": "https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.com",
           "index": {
             "ingest": "transcription02",
-            "query": "transcription01b"
+            "query": "transcription02"
           }
         }
       },

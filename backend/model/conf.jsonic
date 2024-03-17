@@ -14,7 +14,7 @@ cloud: aws: bedrock: model: 'ai21.j2-ultra-v1'
 cloud: opensearch: url: 'https://01erp6tlhe66yfmpiawf.us-east-1.aoss.amazonaws.com'
 
 cloud: opensearch: index: ingest: $.main.conf.core.data.chunker
-cloud: opensearch: index: query: 'transcription01b'
+cloud: opensearch: index: query: $.main.conf.core.data.chunker
 
 
 
