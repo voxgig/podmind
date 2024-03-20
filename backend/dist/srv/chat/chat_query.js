@@ -67,6 +67,7 @@ module.exports = function make_chat_query() {
                 pubDate: episodeEnt.pubDate,
                 audioUrl: episodeEnt.url,
                 guestlink: episodeEnt.guestlink,
+                page: episodeEnt.page,
                 bgn: n.bgn,
                 end: n.end,
                 dur: n.dur,
