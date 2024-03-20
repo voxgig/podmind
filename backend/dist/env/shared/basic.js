@@ -55,15 +55,6 @@ function setup(seneca, options) {
     })
         .use('entity-util', deep(base.options.entity_util, options.entity_util))
         .use('env')
-        /*
-          , {
-              file: [__dirname + '/../local/local-env.js;?'],
-              var: {
-                DEEPGRAM_APIKEY: String,
-                WEBFLOW_ACCESSTOKEN_VOXGIG: String,
-              }
-              })
-              */
         .use('provider', {
         provider: {
             deepgram: {

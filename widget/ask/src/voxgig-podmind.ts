@@ -1,11 +1,11 @@
 
 
 const util = {
-  findAudioElems: (extracts: any, hit: any, index: number) => {
+  findAudioElems: (extractsRef: any, hit: any, index: number) => {
     const audio_id = '#audio-' + hit.episode_id + '-' + index
     const playing_id = '#playing-' + hit.episode_id + '-' + index
-    const audio_elem: any = extracts.current.querySelector(audio_id)
-    const playing_elem: any = extracts.current.querySelector(playing_id)
+    const audio_elem: any = extractsRef.current.querySelector(audio_id)
+    const playing_elem: any = extractsRef.current.querySelector(playing_id)
     return {
       audio: audio_elem,
       playing: playing_elem,
@@ -13,7 +13,19 @@ const util = {
   },
 
   groupByEpisode: (hits: any[]): any[] => {
+    let repeats: any = {}
     let episodeMap = hits.reduce((a: any, hit: any) => {
+
+      // Skip repeat episodes
+      if (repeats[hit.guest]) {
+        if (hit.episode_id !== repeats[hit.guest]) {
+          return a
+        }
+      }
+      else {
+        repeats[hit.guest] = hit.episode_id
+      }
+
       const hits = ((a[hit.episode_id] = (a[hit.episode_id] || {
         ...hit,
         hits: []

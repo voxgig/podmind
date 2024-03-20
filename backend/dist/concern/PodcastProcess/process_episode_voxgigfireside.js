@@ -15,7 +15,7 @@ module.exports = function make_process_episode_voxgigfireside() {
             let q = {
                 collection_id: options.webflow?.collection_id
             };
-            console.log('WEBFLOW LIST');
+            console.log('WEBFLOW LIST', q);
             podcastEntry.webflow.items = await seneca.entity('provider/webflow/colitem').list$(q);
         }
         seneca.root.context.vxgwf = (seneca.root.context.vxgwf || { found: [], notfound: [] });
