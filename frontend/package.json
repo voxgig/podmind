@@ -1,7 +1,7 @@
 {
   "name": "@voxgig/podmind-frontend",
   "private": true,
-  "version": "0.0.12",
+  "version": "0.0.14",
   "type": "module",
   "scripts": {
     "test": "echo no-test",
@@ -22,9 +22,9 @@
     "configure-dev": "npm run check-aws-profile && npm run repo-tag && sls deploy --stage dev",
     "configure-stg": "npm run check-aws-profile && npm run repo-tag && sls deploy --stage stg",
     "configure-prd": "npm run check-aws-profile && npm run repo-tag && sls deploy --stage prd",
-    "publish-dev": "npm run reset && npm publish-quick-dev",
-    "publish-stg": "npm run reset && npm publish-quick-stg",
-    "publish-prd": "npm run reset && npm publish-quick-prd",
+    "publish-dev": "npm run reset && npm run publish-quick-dev",
+    "publish-stg": "npm run reset && npm run publish-quick-stg",
+    "publish-prd": "npm run reset && npm run publish-quick-prd",
     "publish-quick-dev": "echo PUBLISH:dev && npm run publish-quick && echo 'serverless deploy' && serverless client deploy --no-delete-contents --no-config-change --no-policy-change --no-cors-change --no-confirm --stage dev && npm run invcf-dev",
     "publish-quick-stg": "echo PUBLISH:stg && npm run publish-quick && echo 'serverless deploy' && serverless client deploy --no-delete-contents --no-config-change --no-policy-change --no-cors-change --no-confirm --stage stg && npm run invcf-stg",
     "publish-quick-prd": "echo PUBLISH:prd && npm run publish-quick && serverless client deploy --no-delete-contents --no-config-change --no-policy-change --no-cors-change --no-confirm --stage prd && npm run invcf-prd",
