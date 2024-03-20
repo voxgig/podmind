@@ -17,11 +17,15 @@ const STAGE = process.env.PODCASTIC_STAGE || 'local'
 
 const domain = `podmin${'prd' === STAGE ? '' : '-' + STAGE}.voxgig.com`
 
+const pluginConf = Model.main.conf.plugin
+
 
 let seneca: any = null
 
 async function getSeneca(srvname: string, complete: Function): Promise<any> {
-  const mark = Seneca.util.Nid()
+  const { deep, Nid } = Seneca.util
+
+  const mark = Nid()
 
   console.log(
     'SRV-getSeneca',
@@ -41,11 +45,11 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
 
     let baseOptions = {
       tag: srvname + '-pdm01-' + STAGE + '@' + Pkg.version,
-      ...base.seneca,
-      timeout: srv.env.lambda.timeout * 60 * 1000
+      timeout: srv.env.lambda.timeout * 60 * 1000,
+      plugin: pluginConf,
     }
 
-    seneca = await Seneca(baseOptions).test()
+    seneca = await Seneca(deep(base.seneca, baseOptions)).test()
     // seneca.test('print')
 
     seneca.context.model = Model

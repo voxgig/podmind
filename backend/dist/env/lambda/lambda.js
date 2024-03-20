@@ -14,19 +14,21 @@ const model_json_1 = __importDefault(require("../../../model/model.json"));
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const STAGE = process.env.PODCASTIC_STAGE || 'local';
 const domain = `podmin${'prd' === STAGE ? '' : '-' + STAGE}.voxgig.com`;
+const pluginConf = model_json_1.default.main.conf.plugin;
 let seneca = null;
 async function getSeneca(srvname, complete) {
-    const mark = seneca_1.default.util.Nid();
+    const { deep, Nid } = seneca_1.default.util;
+    const mark = Nid();
     console.log('SRV-getSeneca', 'init ', mark, srvname, 'VERSION', package_json_1.default.version, 'options');
     const Main = model_json_1.default.main;
     if (null == seneca) {
         let srv = Main.srv[srvname];
         let baseOptions = {
             tag: srvname + '-pdm01-' + STAGE + '@' + package_json_1.default.version,
-            ...basic_1.base.seneca,
-            timeout: srv.env.lambda.timeout * 60 * 1000
+            timeout: srv.env.lambda.timeout * 60 * 1000,
+            plugin: pluginConf,
         };
-        seneca = await (0, seneca_1.default)(baseOptions).test();
+        seneca = await (0, seneca_1.default)(deep(basic_1.base.seneca, baseOptions)).test();
         // seneca.test('print')
         seneca.context.model = model_json_1.default;
         seneca.context.srvname = srvname;
