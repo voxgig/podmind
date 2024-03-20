@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // Custom podcast processing
-function PodcastProcess(_options) {
+function PodcastProcess(options) {
     const seneca = this;
+    console.log('PodcastProcess OPTIONS');
+    console.dir(options, { depth: null });
     // NOTE: assumes a serverless function, so cache is not cleared, and lives for as long as the
     // function instance.
     this.shared.cache = {};

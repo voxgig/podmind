@@ -4,8 +4,12 @@
 
 
 // Custom podcast processing
-function PodcastProcess(this: any, _options: any) {
+function PodcastProcess(this: any, options: any) {
   const seneca = this
+
+  console.log('PodcastProcess OPTIONS')
+  console.dir(options, { depth: null })
+
 
   // NOTE: assumes a serverless function, so cache is not cleared, and lives for as long as the
   // function instance.
