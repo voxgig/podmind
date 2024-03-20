@@ -120,7 +120,7 @@ export const VoxgigPodmind = (...args:any) => {
   return (
     <div className="voxgig-podmind">
       <h3>Ask our podcast guests a question about developer relations!</h3>
-      <p>You'll get a summary and relevant extractsRef (audio+text) from our discussions, as well as links with more information about our guests.</p>
+      <p>You'll get a summary and relevant extracts (audio+text) from our discussions, as well as links with more information about our guests.</p>
       
       <form ref={formRef} onSubmit={submitFormQuery}>
         <input
@@ -147,7 +147,7 @@ export const VoxgigPodmind = (...args:any) => {
             { result.episodes.map((episode:any)=>
               <div>
                 <h4 style="margin-bottom:4px;">
-                  <a href={episode.guestlink}>{episode.title}</a>
+                  <a href={episode.page}>{episode.title}</a>
                 </h4>
                 <h5 style="margin:4px 0px;">
                   <a href={episode.guestlink || (episode.links||[{url:''}])[0].url}>
