@@ -26,6 +26,7 @@ module.exports = function make_chunk_transcript() {
         let transcript_id;
         if (null != path) {
             transcript_id = path.replace(/^folder01\//, '');
+            console.log('TID-PATH', transcript_id);
         }
         else {
             if (null == batch) {
@@ -33,7 +34,9 @@ module.exports = function make_chunk_transcript() {
             }
             transcript_id = 'transcript01/' + episodeEnt.podcast_id + '/' +
                 episodeEnt.id + '-' + batch + '-dg01.json';
+            console.log('TID-EP', transcript_id);
         }
+        out.transcript_id = transcript_id;
         // TODO: s3-store should auto strip folder
         const transcriptEnt = await seneca.entity('pdm/transcript')
             .load$(transcript_id);

@@ -84,7 +84,7 @@ widget:
 ingest:
   handler: dist/handler/lambda/ingest.handler
   role: BasicPodmindLambdaRole
-  timeout: 222
+  timeout: 333
   memorySize: 1024
   events:
     - sqs:
@@ -100,7 +100,7 @@ ingest:
 prompt:
   handler: dist/handler/lambda/prompt.handler
   role: BasicPodmindLambdaRole
-  timeout: 222
+  timeout: 333
   memorySize: 1024
 
 
@@ -108,7 +108,7 @@ prompt:
 store:
   handler: dist/handler/lambda/store.handler
   role: BasicPodmindLambdaRole
-  timeout: 222
+  timeout: 30
   memorySize: 1024
   events:
     - sqs:
@@ -124,7 +124,7 @@ store:
 audio:
   handler: dist/handler/lambda/audio.handler
   role: BasicPodmindLambdaRole
-  timeout: 222
+  timeout: 333
   memorySize: 1024
   events:
     - s3:
@@ -140,7 +140,7 @@ audio:
 chunk:
   handler: dist/handler/lambda/chunk.handler
   role: BasicPodmindLambdaRole
-  timeout: 222
+  timeout: 333
   memorySize: 1024
   events:
     - s3:
@@ -156,7 +156,7 @@ chunk:
 embed:
   handler: dist/handler/lambda/embed.handler
   role: BasicPodmindLambdaRole
-  timeout: 222
+  timeout: 333
   memorySize: 1024
   events:
     - sqs:

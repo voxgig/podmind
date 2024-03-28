@@ -627,7 +627,7 @@
               }
             },
             "active": true,
-            "timeout": 222,
+            "timeout": 333,
             "kind": "standard"
           }
         },
@@ -696,7 +696,7 @@
               }
             },
             "active": true,
-            "timeout": 222,
+            "timeout": 333,
             "kind": "standard"
           }
         },
@@ -739,7 +739,7 @@
               }
             },
             "active": true,
-            "timeout": 222,
+            "timeout": 30,
             "kind": "standard"
           }
         },
@@ -793,7 +793,7 @@
               }
             },
             "active": true,
-            "timeout": 222,
+            "timeout": 333,
             "kind": "standard"
           }
         },
@@ -852,7 +852,7 @@
               }
             },
             "active": true,
-            "timeout": 222,
+            "timeout": 333,
             "kind": "standard"
           }
         },
@@ -919,7 +919,7 @@
               }
             },
             "active": true,
-            "timeout": 222,
+            "timeout": 333,
             "kind": "standard"
           }
         },

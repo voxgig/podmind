@@ -112,7 +112,7 @@ ingest: {
   api: web: active: false
   env: lambda: {
     active: true
-    timeout: 222
+    timeout: 333
     # memory: 2048
   }
   deps: {
@@ -130,7 +130,7 @@ prompt: {
   api: web: active: false
   env: lambda: {
     active: true
-    timeout: 222
+    timeout: 333
   }
 }
 
@@ -156,7 +156,6 @@ store: {
   api: web: active: false
   env: lambda: {
     active: true
-    timeout: 222
     # memory: 2048
   }
 
@@ -186,7 +185,7 @@ audio: {
   api: web: active: false
   env: lambda: {
     active: true
-    timeout: 222
+    timeout: 333
     # memory: 2048
   }
 }
@@ -218,7 +217,7 @@ chunk: {
   api: web: active: false
   env: lambda: {
     active: true
-    timeout: 222
+    timeout: 333
     # memory: 2048
   }
 }
@@ -251,7 +250,7 @@ embed: {
   api: web: active: false
   env: lambda: {
     active: true
-    timeout: 222
+    timeout: 333
     # memory: 2048
   }
 }
