@@ -56,6 +56,9 @@ module.exports = function make_chat_query() {
             // console.log('HIT', n)
             let episode_id = n.episode_id;
             let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id);
+            if (null == episodeEnt) {
+                return null;
+            }
             return {
                 episode_id,
                 podcast_id: episodeEnt.podcast_id,
@@ -81,7 +84,8 @@ module.exports = function make_chat_query() {
             };
         }));
         // TODO: move score cut off to conf
-        hits = hits.filter((hit) => 0.6 < hit.score$);
+        hits = hits
+            .filter((hit) => null != hit && 0.6 < hit.score$);
         out.ok = true;
         out.answer = answer;
         out.context = { hits };

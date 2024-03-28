@@ -7,11 +7,11 @@ module.exports = function make_ingest_podcast() {
     const debug = seneca.shared.debug(meta.action)
     const { humanify } = seneca.export('PodmindUtility/getUtils')()
 
-    let out: any = { ok: false, why: '' }
-    let batch = out.batch = msg.batch || ('B' + humanify())
-    let mark = out.mark = msg.mark || ('M' + seneca.util.Nid())
+    const out: any = { ok: false, why: '' }
+    const batch: string = out.batch = msg.batch || ('B' + humanify())
+    const mark: string = out.mark = msg.mark || ('M' + seneca.util.Nid())
 
-    let podcast_id = msg.podcast_id
+    const podcast_id = out.podcast_id = msg.podcast_id
 
     // Processing controls
     let doUpdate = out.doUpdate = !!msg.doUpdate
@@ -30,7 +30,7 @@ module.exports = function make_ingest_podcast() {
 
     if (null == podcastEnt) {
       out.why = 'podcast-not-found'
-      debug && debug('FAIL-PODENT', batch, mark, podcast_id, out)
+      debug && debug('FAIL-PODCAST-ENTITY', batch, mark, podcast_id, out)
       return out
     }
 

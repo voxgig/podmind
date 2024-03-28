@@ -5,10 +5,10 @@ module.exports = function make_ingest_podcast() {
         const seneca = this;
         const debug = seneca.shared.debug(meta.action);
         const { humanify } = seneca.export('PodmindUtility/getUtils')();
-        let out = { ok: false, why: '' };
-        let batch = out.batch = msg.batch || ('B' + humanify());
-        let mark = out.mark = msg.mark || ('M' + seneca.util.Nid());
-        let podcast_id = msg.podcast_id;
+        const out = { ok: false, why: '' };
+        const batch = out.batch = msg.batch || ('B' + humanify());
+        const mark = out.mark = msg.mark || ('M' + seneca.util.Nid());
+        const podcast_id = out.podcast_id = msg.podcast_id;
         // Processing controls
         let doUpdate = out.doUpdate = !!msg.doUpdate;
         let doIngest = out.doIngest = !!msg.doIngest;
@@ -23,7 +23,7 @@ module.exports = function make_ingest_podcast() {
         let podcastEnt = await seneca.entity('pdm/podcast').load$(podcast_id);
         if (null == podcastEnt) {
             out.why = 'podcast-not-found';
-            debug && debug('FAIL-PODENT', batch, mark, podcast_id, out);
+            debug && debug('FAIL-PODCAST-ENTITY', batch, mark, podcast_id, out);
             return out;
         }
         let feed = podcastEnt.feed;

@@ -31,9 +31,9 @@ module.exports = function make_process_episode_voxgigfireside() {
       .find((item: any) => episode.guid === item.fieldData.uuid)
 
     if (item) {
-      episode.pageslug = item.fieldData.slug
-      episode.guestlink = item.fieldData['guest-speaker-link-to-social-or-website']
-      episode.page = 'https://www.voxgig.com/podcast/' + episode.pageslug
+      episode.pageslug = episode.pageslug || item.fieldData.slug
+      episode.guestlink = episode.guestlink || item.fieldData['guest-speaker-link-to-social-or-website']
+      episode.page = episode.page || 'https://www.voxgig.com/podcast/' + episode.pageslug
       episode.vxgfound = true
 
       seneca.root.context.vxgwf.found.push({ u: episode.guid, s: item.fieldData.slug })
