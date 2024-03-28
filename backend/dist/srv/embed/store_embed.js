@@ -20,6 +20,7 @@ module.exports = function make_store_embed() {
         const slog = await seneca.export('PodmindUtility/makeSharedLog')('podcast-ingest-01', podcast_id);
         debug('STORE', batch, mark, chunker, embeder, podcast_id, episode_id);
         const data = {
+            knd: chunk.knd,
             txt: chunk.txt,
             bgn: chunk.bgn,
             end: chunk.end,

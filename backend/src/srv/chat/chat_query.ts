@@ -98,6 +98,7 @@ module.exports = function make_chat_query() {
         bgn: n.bgn,
         end: n.end,
         dur: n.dur,
+        knd: n.knd || 'tlk',
         score$: n.custom$.score,
 
         // TODO: refactor - this is too fragile
@@ -111,7 +112,12 @@ module.exports = function make_chat_query() {
 
     // TODO: move score cut off to conf
     hits = hits
-      .filter((hit: any) => null != hit && 0.6 < hit.score$)
+      .filter(
+        (hit: any) =>
+          null != hit &&
+          'tlk' === hit.knd &&
+          0.6 < hit.score$
+      )
 
     out.ok = true
     out.answer = answer

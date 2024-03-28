@@ -7,6 +7,7 @@ module.exports = function make_chunk_transcript() {
         let out = { ok: false, why: '' };
         const chunker = out.chunker = 'c01';
         let path = out.path = msg.path;
+        let batch = out.batch = msg.batch;
         let podcast_id = out.podcast_id = msg.podcast_id;
         let episode_id = out.episode_id = msg.episode_id;
         let doEmbed = out.doEmbed = false !== msg.doEmbed; // default true as queue event
@@ -14,7 +15,25 @@ module.exports = function make_chunk_transcript() {
         let chunkEnd = out.chunkEnd = msg.chunkEnd;
         let mark = msg.mark || seneca.util.Nid();
         debug && debug('CHUNK', 'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore);
-        let transcript_id = path.replace(/^folder01\//, '');
+        const episodeEnt = await seneca.entity('pdm/episode')
+            .load$(episode_id);
+        if (null == episodeEnt) {
+            out.why = 'episode-not-found';
+            out.details = { path, podcast_id, episode_id };
+            debug && debug('CHUNK-FAIL-EPISODE', 'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out);
+            return out;
+        }
+        let transcript_id;
+        if (null != path) {
+            transcript_id = path.replace(/^folder01\//, '');
+        }
+        else {
+            if (null == batch) {
+                batch = episodeEnt.batch;
+            }
+            transcript_id = 'transcript01/' + episodeEnt.podcast_id + '/' +
+                episodeEnt.id + '-' + batch + '-dg01.json';
+        }
         // TODO: s3-store should auto strip folder
         const transcriptEnt = await seneca.entity('pdm/transcript')
             .load$(transcript_id);
@@ -24,16 +43,8 @@ module.exports = function make_chunk_transcript() {
             debug && debug('CHUNK-FAIL-TRANSCRIPT', 'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out);
             return out;
         }
-        const episodeEnt = await seneca.entity('pdm/episode')
-            .load$(episode_id);
-        if (null == episodeEnt) {
-            out.why = 'episode-not-found';
-            out.details = { path, transcript_id, podcast_id, episode_id };
-            debug && debug('CHUNK-FAIL-EPISODE', 'no-batch', mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out);
-            return out;
-        }
         const guestName = episodeEnt.guest || '';
-        const batch = transcriptEnt.batch;
+        batch = transcriptEnt.batch;
         const transcriptResults = transcriptEnt.deepgram.results;
         const alt0 = transcriptResults
             .channels[0]
@@ -44,6 +55,25 @@ module.exports = function make_chunk_transcript() {
         out.paragraphs = paragraphs.length;
         debug && debug('CHUNK-START', batch, mark, chunker, path, podcast_id, episode_id, doEmbed, doStore, out);
         let chunks = [];
+        chunks.push({
+            knd: 'txt',
+            txt: `For episode ${episodeEnt.title}, ` +
+                `the guest is ${episodeEnt.guest}. The topics are: {episodeEnt.topics.join('.')}`,
+            bgn: 0,
+            end: 0,
+            dur: 0,
+        });
+        const content = episodeEnt.content;
+        for (let p = 0; p < content.length; p += 111) {
+            chunks.push({
+                knd: 'txt',
+                txt: content.substring(p, p + 133).replace(/\s+\w+$/, ''),
+                bgn: 0,
+                end: 0,
+                dur: 0,
+            });
+        }
+        console.log('TXT-CHUNKS', chunks);
         // TUNING
         // assume para 0 is standard intro
         // let speaker: any[] = []
@@ -60,6 +90,7 @@ module.exports = function make_chunk_transcript() {
             while (para && 1 === para.speaker) {
                 let answer = para.sentences.map((s) => s.text).join('');
                 let chunk = {
+                    knd: 'tlk',
                     txt: '\n<' + question + ' ~ ' + guestName + ': ' + answer + '>',
                     bgn: para.start,
                     end: para.end,

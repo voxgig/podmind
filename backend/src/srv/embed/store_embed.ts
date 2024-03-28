@@ -32,6 +32,7 @@ module.exports = function make_store_embed() {
     debug('STORE', batch, mark, chunker, embeder, podcast_id, episode_id)
 
     const data: any = {
+      knd: chunk.knd,
       txt: chunk.txt,
       bgn: chunk.bgn,
       end: chunk.end,
