@@ -75,7 +75,7 @@ module.exports = function make_chat_query() {
 
 
     let hits = await Promise.all(list.map(async (n: any) => {
-      // console.log('HIT', n)
+      console.log('HIT', n)
       let episode_id = n.episode_id
       let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id)
 

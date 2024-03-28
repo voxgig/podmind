@@ -53,7 +53,7 @@ module.exports = function make_chat_query() {
             console.log('PROMPT-BUILD-FAILED', promptRes);
         }
         let hits = await Promise.all(list.map(async (n) => {
-            // console.log('HIT', n)
+            console.log('HIT', n);
             let episode_id = n.episode_id;
             let episodeEnt = await seneca.entity('pdm/episode').load$(episode_id);
             if (null == episodeEnt) {

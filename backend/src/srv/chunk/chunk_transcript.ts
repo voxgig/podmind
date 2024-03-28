@@ -90,7 +90,7 @@ module.exports = function make_chunk_transcript() {
     chunks.push({
       knd: 'txt',
       txt: `For episode ${episodeEnt.title}, ` +
-        `the guest is ${episodeEnt.guest}. The topics are: {episodeEnt.topics.join('.')}`,
+        `the guest is ${episodeEnt.guest}. The topics are: ${episodeEnt.topics.join('.')}`,
       bgn: 0,
       end: 0,
       dur: 0,
@@ -98,10 +98,17 @@ module.exports = function make_chunk_transcript() {
 
 
     const content = episodeEnt.content
-    for (let p = 0; p < content.length; p += 111) {
+    for (let p = 0; p < content.length; p += 222) {
+      let txt = content.substring(p, p + 255).replace(/\s+\w+$/, '')
+      if (0 < p) {
+        txt = txt.replace(/^\w+\s+/, '')
+      }
+
+      txt += 'Describing ${episodeEnt.guest}: ' + txt
+
       chunks.push({
         knd: 'txt',
-        txt: content.substring(p, p + 133).replace(/\s+\w+$/, ''),
+        txt,
         bgn: 0,
         end: 0,
         dur: 0,
