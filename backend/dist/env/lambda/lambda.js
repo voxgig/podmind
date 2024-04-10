@@ -65,7 +65,7 @@ async function getSeneca(srvname, complete) {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'OPTIONS,POST',
-                'Access-Control-Allow-Headers': 'voxgig-podmind-widget',
+                // 'Access-Control-Allow-Headers': 'voxgig-podmind-widget',
             }
         })
             .use('gateway-auth', {

@@ -91,7 +91,7 @@ async function getSeneca(srvname: string, complete: Function): Promise<any> {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'OPTIONS,POST',
-          'Access-Control-Allow-Headers': 'voxgig-podmind-widget',
+          // 'Access-Control-Allow-Headers': 'voxgig-podmind-widget',
         }
       })
       .use('gateway-auth', {
