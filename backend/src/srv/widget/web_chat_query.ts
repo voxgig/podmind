@@ -3,9 +3,6 @@ module.exports = function make_web_chat_query() {
   return async function web_chat_query(this: any, msg: any, meta: any) {
     const seneca = this
 
-    console.log('FULLMSG')
-    console.dir(msg, { depth: null })
-
     let out: any = {
       ok: false,
       why: '',
@@ -13,7 +10,8 @@ module.exports = function make_web_chat_query() {
     }
 
     const query = msg.query
-
+    const vxghdr = msg.gateway.headers['voxgig-podmind-widget']
+    console.log('VXGHDR', vxghdr)
 
     let res = await this.post('aim:chat,chat:query', {
       query

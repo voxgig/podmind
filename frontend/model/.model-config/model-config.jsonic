@@ -1,6 +1,6 @@
 # Copyright (c) Nodezoo Ltd. USED UNDER LICENSE.
 
-@'@voxgig/model/model/.model-config/sys.jsonic'
+@'@voxgig/model/model/.model-config/model-config.jsonic'
 
 sys: model: builders: {
 

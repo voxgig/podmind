@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = function make_web_chat_query() {
     return async function web_chat_query(msg, meta) {
         const seneca = this;
-        console.log('FULLMSG');
-        console.dir(msg, { depth: null });
         let out = {
             ok: false,
             why: '',
             answer: '',
         };
         const query = msg.query;
+        const vxghdr = msg.gateway.headers['voxgig-podmind-widget'];
+        console.log('VXGHDR', vxghdr);
         let res = await this.post('aim:chat,chat:query', {
             query
         });
