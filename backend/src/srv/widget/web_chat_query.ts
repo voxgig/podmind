@@ -3,6 +3,9 @@ module.exports = function make_web_chat_query() {
   return async function web_chat_query(this: any, msg: any, meta: any) {
     const seneca = this
 
+    console.log('FULLMSG')
+    console.dir(msg, { depth: null })
+
     let out: any = {
       ok: false,
       why: '',

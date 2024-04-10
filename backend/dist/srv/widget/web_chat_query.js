@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = function make_web_chat_query() {
     return async function web_chat_query(msg, meta) {
         const seneca = this;
+        console.log('FULLMSG');
+        console.dir(msg, { depth: null });
         let out = {
             ok: false,
             why: '',
