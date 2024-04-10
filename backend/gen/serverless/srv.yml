@@ -75,7 +75,8 @@ widget:
     - http:
         path: "/api/public/widget"
         method: POST
-        cors: false
+        cors: 
+          headers: ['Content-Type','X-Amz-Date','Authorization','X-Api-Key','X-Amz-Security-Token','X-Amz-User-Agent','voxgig-podmind-widget']
 
 
 

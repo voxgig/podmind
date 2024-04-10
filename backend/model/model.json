@@ -582,7 +582,10 @@
             "active": true,
             "method": "POST",
             "cors": {
-              "active": false
+              "active": true,
+              "props": {
+                "headers": "['Content-Type','X-Amz-Date','Authorization','X-Api-Key','X-Amz-Security-Token','X-Amz-User-Agent','voxgig-podmind-widget']"
+              }
             },
             "path": {
               "prefix": "/api/",

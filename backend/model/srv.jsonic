@@ -78,7 +78,13 @@ widget: {
     aim: req: on: widget: '$': allow: true
   }
   user: required: false
+
   api: web: path: { area: 'public/', suffix: ''  }
+  api: web: cors: {
+    active: true
+    props: headers: `['Content-Type','X-Amz-Date','Authorization','X-Api-Key','X-Amz-Security-Token','X-Amz-User-Agent','voxgig-podmind-widget']`
+  }
+    
   env: lambda: active: true
 
   deps: {
